@@ -18,10 +18,20 @@ html {
 
 }
 
-.img {
+.imgblock {
   display: inline-block;
   padding: 10px;
   margin-left: auto;
   margin-right: auto;
   width: 30%;
+}
+
+
+
+.card-1 {
+  width: 14rem;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 20px;
+  padding: 0px;
 }

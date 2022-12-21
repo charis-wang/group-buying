@@ -1,16 +1,11 @@
 import React from 'react'
-import Navbar from './Navbar'
+import { Router, Route, Link, Switch, useLocation } from 'react-router-dom'
 import HomePage from '../contexts/HomePage'
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <HomePage />
-      </div>
 
-    )
-
-  }
+const App = () => {
+  return (
+    <HomePage />
+  )
 }
 
 export default App

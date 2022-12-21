@@ -5,51 +5,27 @@ import './index.css'
 
 class Sidebar extends React.Component {
 
-  constructor(props) {
-    super(props)
-    this.state = ({ isSidebarOpen: false })
-    this.onButtonClickHandler = this.onButtonClickHandler.bind(this)
-  }
 
-  onButtonClickHandler() {
-    console.log(this)
-    this.setState({ isSidebarOpen: true })
-    console.log(this.state.isSidebarOpen)
-  }
 
   render() {
     return (
-      <div className="container row">
-        <div className="col-3">
-          <ul className="nav flex-column">
-            <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">Whole Menu</a>
-            </li>
-            <li className="nav-item" >
-              <a className="nav-link" href="#" > Drink</a >
-            </li >
-            <li className="nav-item" >
-              <a className="nav-link" href="#" > Lunch Box</a >
-            </li >
-          </ul >
 
-          <button
-            className="btn"
-            onClick={() => this.onButtonClickHandler()}
-          >
-            Drinks
-
-          </button >
-        </div >
-
-
-        <div className="col-9">
-          <p>show menu</p>
-          <img src='../../background-image.jpeg' className="img" alt="..." />
-          <img src='../../background-image.jpeg' className="img" alt="..." />
-          <img src='../../background-image.jpeg' className="img" alt="..." />
-        </div>
+      <div className="col-2">
+        <ul className="nav flex-column mt-5">
+          <li className="nav-item">
+            <a className="nav-link active" aria-current="page" href="/">All</a>
+          </li>
+          <li className="nav-item" >
+            <a className="nav-link" href="/drinks" > Drink</a >
+          </li >
+          <li className="nav-item" >
+            <a className="nav-link" href="lunchbox" > Lunch Box</a >
+          </li >
+        </ul >
       </div >
+
+
+
     )
   }
 }
