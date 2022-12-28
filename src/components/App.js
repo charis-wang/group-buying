@@ -7,6 +7,7 @@ import {
 import HomePage from '../contexts/HomePage'
 import MenuCreate from '../contexts/MenuCreate';
 import CreateMenu from '../contexts/MenuCreate'
+import OrderCreate from '../contexts/OrderCreate';
 
 
 
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/new',
     element: <MenuCreate />
+  },
+  {
+    path: '/order/create',
+    element: <OrderCreate />
   }
 ]);
 
