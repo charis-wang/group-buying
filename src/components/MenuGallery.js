@@ -6,27 +6,27 @@ const MenuGallery = () => {
       <p className="fw-light pt-2 fs-4">SHOW MENU</p>
       <div className="row">
         <div className="card card-1" >
-          <img src="../../background-image.jpeg" className="card-img-top " alt="..." />
+          <img src="http://localhost:3000/background-image.jpeg" className="card-img-top " alt="..." />
           <div className="card-body text-center">
             milkshop
           </div>
         </div>
 
         <div className="card card-1" >
-          <img src="../../background-image.jpeg" className="card-img-top" alt="..." />
+          <img src="http://localhost:3000/background-image.jpeg" className="card-img-top" alt="..." />
           <div className="card-body text-center">
             milkshop
           </div>
         </div>
 
         <div className="card card-1" >
-          <img src="../../background-image.jpeg" className="card-img-top" alt="..." />
+          <img src="http://localhost:3000/background-image.jpeg" className="card-img-top" alt="..." />
           <div className="card-body text-center">
             milkshop
           </div>
         </div>
         <div className="card card-1" >
-          <img src="../../background-image.jpeg" className="card-img-top" alt="..." />
+          <img src="http://localhost:3000//background-image.jpeg" className="card-img-top" alt="..." />
           <div className="card-body text-center">
             milkshop
           </div>

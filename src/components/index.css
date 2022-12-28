@@ -4,7 +4,7 @@ html {
 }
 
 .bg {
-  background-image: url('../../public/background-image.jpeg');
+  background-image: url('http://localhost:3000/background-image.jpeg');
   background-color: gray;
   height: 35vh;
   background-position: center;
