@@ -4,13 +4,13 @@ import { Form, Field } from 'react-final-form'
 
 const MenuTableForm = (props) => {
 
-  console.log(props)
+  // console.log(props)
   const onSubmit = (formValues) => {
 
-    console.log(formValues)
+    //console.log(formValues)
 
-    //props.onSubmit(formValues)
-    console.log(props)
+    props.onSubmit(formValues)
+    // console.log(props)
 
   }
   const required = value => (value ? undefined : 'Required')

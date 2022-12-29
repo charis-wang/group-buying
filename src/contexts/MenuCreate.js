@@ -10,12 +10,22 @@ import MenuTableForm from "../components/menu/MenuTableForm";
 class MenuCreate extends React.Component {
   constructor(props) {
     super(props)
-    this.state = { formValues: '' }
+    this.state = {
+      formValues: null
+    }
   }
-  // onSubmit = (formValues) => {
-  //this.props.onSubmit(formValues)
-  // console.log(formValues)
-  //}
+
+  onSubmit = (value) => {
+    //console.log('before', this.state)
+    // console.log('tettttt', this.state)
+    this.setState({
+      'formValues': value
+    })
+    //this.state.formValues.item = value.item
+    //this.state = { formValues: value }
+    //console.log('after', this.state)
+  }
+
 
   render() {
     return (
@@ -29,7 +39,7 @@ class MenuCreate extends React.Component {
               <MenuForm />
             </div>
             <div className="col-8" >
-              <MenuTableForm onSubmit={this.state.formValues} />
+              <MenuTableForm onSubmit={this.onSubmit} />
               <MenuTable value={this.state.formValues} />
             </div>
           </div>
