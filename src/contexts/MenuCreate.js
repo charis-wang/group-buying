@@ -56,7 +56,7 @@ class MenuCreate extends React.Component {
             <Typography my={1.5} mx={0.5} variant="h6" gutterBottom>
               Create Shop
             </Typography>
-            <MenuForm onSubmit={this.onSubmitOfShop} />
+            <MenuForm onSubmit={this.onSubmitOfShop} buttonName={"Add Shop"} />
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography m={1} variant="h6" gutterBottom>
