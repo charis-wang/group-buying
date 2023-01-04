@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "../contexts/HomePage";
 import MenuCreate from "../contexts/MenuCreate";
 import CreateMenu from "../contexts/MenuCreate";
-import MenuEdit from "../contexts/MenuEdit";
+//import MenuEdit from "../contexts/MenuEdit";
 import OrderCreate from "../contexts/OrderCreate";
 
 const router = createBrowserRouter([
@@ -21,8 +21,8 @@ const router = createBrowserRouter([
     element: <OrderCreate />,
   },
   {
-    path: "/menu/edit",
-    element: <MenuEdit />,
+    path: "/menu/new",
+    element: <MenuCreate />,
   },
 ]);
 
