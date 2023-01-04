@@ -49,14 +49,14 @@ class MenuEdit extends React.Component {
               }}
               component="h4"
             >
-              Edit Menu of "ShopName"
+              Edit Menu of {this.state.formValuesOfShop.shopName}
             </Typography>
           </Grid>
           <Grid item xs={12} md={3}>
             <Typography my={1.5} mx={0.5} variant="h6" gutterBottom>
               Edit Shop
             </Typography>
-            <MenuForm onSubmit={this.onSubmitOfShop} />
+            <MenuForm onSubmit={this.onSubmitOfShop} buttonName="Edit Shop" />
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography m={1} variant="h6" gutterBottom>
@@ -77,7 +77,7 @@ class MenuEdit extends React.Component {
               >
                 Save
               </Button>
-              <spacing> </spacing>
+              <span> </span>
               <Button
                 type="button"
                 size="large"
