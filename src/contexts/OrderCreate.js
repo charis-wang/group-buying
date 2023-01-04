@@ -1,30 +1,41 @@
 import React from "react";
-import { connect } from 'react-redux'
+//import { connect } from 'react-redux'
+import { Typography, Button, Grid, Box } from "@mui/material";
 import Navbar from "../components/Navbar";
-import BackgroundImagePage from '../components/Background';
-
-import OrderDateTimePicker from "../components/order/OrderDateTimePicker";
+import BackgroundImagePage from "../components/Background";
 import OrderForm from "../components/order/OrderForm";
 
 class OrderCreate extends React.Component {
-
-
   render() {
     return (
-      <div>
+      <Box>
         <Navbar />
         <BackgroundImagePage />
-        <div className="text-info p-3">Order Now!</div>
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography
+              pb={1.5}
+              m={1.5}
+              align="center"
+              variant="h4"
+              gutterBottom
+              sx={{
+                fontWeight: "bold",
+                fontStyle: "Italic",
+                color: "darkseagreen",
+              }}
+            >
+              Create New Order
+            </Typography>
+          </Grid>
 
-        <div className="m-3">
-
-          <OrderForm />
-        </div>
-      </div>
-    )
+          <Grid item xs={12}>
+            <OrderForm />
+          </Grid>
+        </Grid>
+      </Box>
+    );
   }
 }
 
-
-
-export default OrderCreate
+export default OrderCreate;
