@@ -1,26 +1,32 @@
-import React, { useState } from "react"
-//import { render } from 'react-dom'
-import { Form, Field } from 'react-final-form'
+import React, { useState } from "react";
+import { Box, TextField, Button } from "@mui/material";
 
 const MenuTableForm = (props) => {
+  const [state, setState] = useState({
+    item: "",
+    unit: "",
+    price: "",
+  });
 
-  console.log(props)
   const onSubmit = (formValues) => {
+    formValues.preventDefault();
+    console.log("onSubmit", state);
+    props.onSubmit(state);
+  };
 
-    console.log(formValues)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
 
-    //props.onSubmit(formValues)
-    console.log(props)
-
-  }
-  const required = value => (value ? undefined : 'Required')
+  const required = (value) => (value ? undefined : "Required");
 
   const renderError = ({ error, touched }) => {
     // console.log({ error, touched })
     if (touched && error) {
-      return <span className="text-danger">{error}</span>
+      return <span className="text-danger">{error}</span>;
     }
-  }
+  };
 
   const renderInput = ({ input, label, meta }) => {
     const className = `field ${meta.error && meta.touched ? "error" : ""}`;
@@ -35,44 +41,45 @@ const MenuTableForm = (props) => {
   };
 
   return (
-    <Form
+    <Box
+      component="form"
+      sx={{
+        display: "flex",
+        "& > :not(style)": { m: 1, width: "15ch" },
+      }}
+      autoComplete="off"
       onSubmit={onSubmit}
-      initialValues={props.initialValues}
-      render={({ handleSubmit, form, submitting, pristine }) => (
-        <form onSubmit={handleSubmit}>
-          <button
-            type="submit"
-            className="btn btn-success"
-            disabled={submitting || pristine}
-          >
-            +
-          </button>
-
-          <Field
-            label="Item"
-            name="item"
-            component={renderInput}
-            validate={required}
-          />
-
-          <Field
-            label="Unit"
-            name="unit"
-            component={renderInput}
-            validate={required}
-          />
-
-          <Field
-            label="Price"
-            name="price"
-            component={renderInput}
-            validate={required}
-          />
-
-        </form>
-      )}
-    />
+    >
+      <TextField
+        name="item"
+        label="Item"
+        variant="outlined"
+        onChange={handleChange}
+        required
+      />
+      <TextField
+        name="unit"
+        label="Unit"
+        variant="outlined"
+        onChange={handleChange}
+        required
+      />
+      <TextField
+        name="price"
+        type="number"
+        inputProps={{
+          min: "0",
+        }}
+        label="Price"
+        variant="outlined"
+        onChange={handleChange}
+        required
+      />
+      <Button type="submit" variant="outlined">
+        Add Item
+      </Button>
+    </Box>
   );
-}
+};
 
-export default MenuTableForm
+export default MenuTableForm;
