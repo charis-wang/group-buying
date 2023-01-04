@@ -127,7 +127,7 @@ const MenuForm = (props) => {
         </Grid>
         <Grid item xs={12} mx={5}>
           <Button type="submit" variant="outlined">
-            Add Shop
+            {props.buttonName}
           </Button>
         </Grid>
       </Grid>
