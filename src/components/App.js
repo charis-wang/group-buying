@@ -21,7 +21,7 @@ const router = createBrowserRouter([
     element: <OrderCreate />,
   },
   {
-    path: "/menu/edit/:id",
+    path: "/menu/:id/edit",
     element: <MenuEdit />,
   },
 ]);
