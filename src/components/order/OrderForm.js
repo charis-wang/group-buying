@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, TextField, Button, Grid } from "@mui/material";
+import { Box, TextField, Button, Grid, MenuItem } from "@mui/material";
 
 import OrderDateTimePicker from "./OrderDateTimePicker";
 
@@ -23,7 +23,8 @@ export default function OrderForm() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === "orderDatetime") setState({ ...state, initiator: value });
+    console.log(name, value);
+    if (name === "orderDatetime") setState({ ...state, orderDatetime: value });
     if (name === "initiator") setState({ ...state, initiator: value });
     if (name === "shop") setState({ ...state, shop: value });
   };
@@ -39,7 +40,8 @@ export default function OrderForm() {
       component="form"
       sx={{
         "& > :not(style)": {
-          ml: 5,
+          mx: 0,
+          px: 4,
           py: 2,
         },
       }}
@@ -52,15 +54,8 @@ export default function OrderForm() {
         direction="row"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: "100%", maxWidth: "100%" }}
+        style={{ height: "100%" }}
       >
-        <Grid item xs={12} md="auto">
-          <OrderDateTimePicker
-            name="orderDatetime"
-            value={state.orderDatetime}
-            onChange-={handleChange}
-          />
-        </Grid>
         <Grid item xs={12} md="auto">
           <TextField
             id="outlined-name"
@@ -69,32 +64,41 @@ export default function OrderForm() {
             value={state.initiator}
             onChange={handleChange}
             error={!state.initiator}
+            InputProps={{ inputProps: { minLength: 1, maxLength: 10 } }}
             required
           />
         </Grid>
+
         <Grid item xs={12} md="auto">
           <TextField
             name="shop"
             select
             label="Select Shop"
-            SelectProps={{
-              native: true,
-            }}
+            value={state.shop}
             onChange={handleChange}
             error={!state.shop}
             required
+            style={{ minWidth: "19.5ch" }}
           >
             {shopOptions.map((option) => (
-              <option key={option.value} value={option.value}>
+              <MenuItem key={option.value} value={option.value}>
                 {option.label}
-              </option>
+              </MenuItem>
             ))}
           </TextField>
         </Grid>
 
         <Grid item xs={12} md="auto">
+          <OrderDateTimePicker
+            name="orderDatetime"
+            value={state.orderDatetime}
+            onChange={handleChange}
+          />
+        </Grid>
+
+        <Grid item xs={12} md="auto">
           <Button
-            sx={{ minHeight: "6.5ch" }}
+            sx={{ minHeight: "6.5ch", p: 1.5 }}
             type="submit"
             size="large"
             variant="contained"
