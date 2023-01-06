@@ -8,7 +8,7 @@ import MenuForm from "../components/menu/MenuForm";
 import MenuTable from "../components/menu/MenuTable";
 import MenuTableForm from "../components/menu/MenuTableForm";
 
-class MenuCreate extends React.Component {
+class MenuEdit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -49,23 +49,24 @@ class MenuCreate extends React.Component {
               }}
               component="h4"
             >
-              Create New Menu
+              Edit Menu of {this.state.formValuesOfShop.shopName}
             </Typography>
           </Grid>
           <Grid item xs={12} md={3}>
             <Typography my={1.5} mx={0.5} variant="h6" gutterBottom>
-              Create Shop
+              Edit Shop
             </Typography>
-            <MenuForm onSubmit={this.onSubmitOfShop} buttonName={"Add Shop"} />
+            <MenuForm onSubmit={this.onSubmitOfShop} buttonName="Edit Shop" />
           </Grid>
           <Grid item xs={12} md={9}>
             <Typography m={1} variant="h6" gutterBottom>
-              Create Menu of {this.state.formValuesOfShop.shopName}
+              Edit Menu of {this.state.formValuesOfShop.shopName}
             </Typography>
 
             <MenuTableForm onSubmit={this.onSubmit} />
             <MenuTable value={this.state.formValues} />
           </Grid>
+
           <Grid item xs={12} md={12}>
             <Typography align="center">
               <Button
@@ -76,6 +77,15 @@ class MenuCreate extends React.Component {
               >
                 Save
               </Button>
+              <span> </span>
+              <Button
+                type="button"
+                size="large"
+                variant="contained"
+                color="error"
+              >
+                Delete
+              </Button>
             </Typography>
           </Grid>
         </Grid>
@@ -84,4 +94,4 @@ class MenuCreate extends React.Component {
   }
 }
 
-export default MenuCreate;
+export default MenuEdit;

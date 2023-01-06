@@ -1,107 +1,138 @@
-import React from "react"
+import React, { useState } from "react";
 //import { render } from 'react-dom'
-import { Form, Field } from 'react-final-form'
+import { Box, TextField, Button, MenuItem, Grid } from "@mui/material";
+import { getByDisplayValue } from "@testing-library/react";
 
-const MenuForm = () => {
+const shopTypes = [
+  {
+    value: "Drinks",
+    label: "Drinks",
+  },
+  {
+    value: "Lunch",
+    label: "Lunch",
+  },
+  {
+    value: "Dessert",
+    label: "Dessert",
+  },
+];
+
+const MenuForm = (props) => {
+  const [state, setState] = useState({
+    shopName: "",
+    shopType: "",
+    shopPhoneNumber: "",
+    shopAddress: "",
+    shopInfo: "",
+  });
 
   const onSubmit = (formValues) => {
-    //props.onSubmit(formValues);
-    console.log(formValues)
-  }
-  const required = value => (value ? undefined : 'Required')
+    formValues.preventDefault();
+    console.log("onSubmit", state);
+    props.onSubmit(state);
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    console.log({ ...state, [name]: value });
+    setState({ ...state, [name]: value });
+  };
+
+  const validateForm = (state) => {
+    if (!state.shopName) {
+      return <span>unvalid</span>;
+    }
+  };
+
+  const required = (value) => (value ? undefined : "Required");
 
   const renderError = ({ error, touched }) => {
     // console.log({ error, touched })
     if (touched && error) {
-      return <span className="text-danger">{error}</span>
+      return <span className="text-danger">{error}</span>;
     }
-  }
-
-  const renderInput = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
-    return (
-      <div className={className}>
-        <label>{label}</label>
-        <br />
-        <input {...input} autoComplete="off" />
-        {renderError(meta)}
-      </div>
-    );
   };
 
   return (
+    <Box
+      component="form"
+      sx={{
+        "& > :not(style)": { minWidth: "20ch" },
+      }}
+      autoComplete="off"
+      onSubmit={onSubmit}
+    >
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <TextField
+            name="shopName"
+            label="Shop Name"
+            variant="outlined"
+            onChange={handleChange}
+            required
+            error={!state.shopName}
+          ></TextField>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            name="shopType"
+            select
+            label="Select Type of Shop"
+            onChange={handleChange}
+            error={!state.shopType}
+            value={state.shopType}
+            required
+            style={{ minWidth: "19.5ch" }}
+          >
+            {shopTypes.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            type="tel"
+            name="shopPhoneNumber"
+            label="Phone Number"
+            variant="outlined"
+            onChange={handleChange}
+            error={!state.shopPhoneNumber.match(/^0[0-9]{1}-[0-9]{7,8}$/)}
+            placeholder="02-12345678"
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            name="shopAddress"
+            label="Address"
+            variant="outlined"
+            onChange={handleChange}
+            error={!state.shopAddress}
+            required
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            name="shopInfo"
+            label="Info"
+            variant="outlined"
+            placeholder="other info"
+            multiline
+            rows={3}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} mx={5}>
+          <Button type="submit" variant="outlined">
+            {props.buttonName}
+          </Button>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
 
-
-    <div className="mx-2">
-      <Form
-        onSubmit={onSubmit}
-        initialValues={{}}
-
-        render={({ handleSubmit, form, submitting, pristine }) => (
-          <form onSubmit={handleSubmit}>
-
-            <Field
-              label="Shop"
-              name="shop"
-              component={renderInput}
-              validate={required}
-            />
-
-            <div>
-              <label>Type</label>
-              <br />
-              <Field
-                name="shopType"
-                component="select"
-              >
-                <option value="choose">Choose...</option>
-                <option value="Drinks" >Drinks</option>
-                <option value="Lunch" >Lunch</option>
-                <option value="Dessert" >Dessert</option>
-              </Field>
-            </div>
-
-            <Field
-              label="Phone Number"
-              name="phoneNumber"
-              component={renderInput}
-              validate={required}
-            />
-
-            <Field
-              label="Address"
-              name="address"
-              component={renderInput}
-              validate={required}
-            />
-
-            <div>
-              <label>Notes</label>
-              <br />
-              <Field name="notes" component='textarea' placeholder="other info" />
-            </div>
-            <div className="buttons">
-              <button
-                type="submit"
-                className="btn btn-success"
-                disabled={submitting || pristine}
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                className="btn btn-light"
-                onClick={form.reset}
-                disabled={submitting || pristine}
-              >
-                Reset
-              </button>
-            </div>
-          </form>
-        )}
-      />
-    </div>
-  )
-}
-
-export default MenuForm
+export default MenuForm;

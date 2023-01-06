@@ -1,15 +1,12 @@
-import React from 'react'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom"
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import HomePage from '../contexts/HomePage'
-import MenuCreate from '../contexts/MenuCreate';
-import OrderCreate from '../contexts/OrderCreate';
-import OrderListItem from '../contexts/OrderListItem'
-
-
+import HomePage from "../contexts/HomePage";
+import MenuCreate from "../contexts/MenuCreate";
+import CreateMenu from "../contexts/MenuCreate";
+import MenuEdit from "../contexts/MenuEdit";
+import OrderCreate from "../contexts/OrderCreate";
+import OrderListItem from "../contexts/OrderListItem";
 
 const router = createBrowserRouter([
   {
@@ -17,25 +14,25 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: '/new',
-    element: <MenuCreate />
+    path: "menu/new",
+    element: <MenuCreate />,
   },
   {
-    path: '/order/list/:id',
-    element: <OrderListItem />
+    path: "/menu/:id/edit",
+    element: <MenuEdit />,
   },
   {
-    path: '/order/create',
-    element: <OrderCreate />
-  }
+    path: "/order/list/:id",
+    element: <OrderListItem />,
+  },
+  {
+    path: "/order/create",
+    element: <OrderCreate />,
+  },
 ]);
 
-
-
 const AppProvider = () => {
-  return (
-    <RouterProvider router={router} />
-  )
-}
+  return <RouterProvider router={router} />;
+};
 
-export default AppProvider
+export default AppProvider;
