@@ -22,12 +22,12 @@ const router = createBrowserRouter([
     element: <MenuEdit />,
   },
   {
-    path: "/order/list/:id",
-    element: <OrderListItem />,
-  },
-  {
     path: "/order/create",
     element: <OrderCreate />,
+  },
+  {
+    path: "/order/:id",
+    element: <OrderListItem />,
   },
 ]);
 
