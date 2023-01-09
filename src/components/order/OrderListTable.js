@@ -1,151 +1,120 @@
-import * as React from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TableFooter,
-  Paper,
-  Button,
-  ButtonGroup,
-  Box,
-  IconButton,
-  Typography,
-  Collapse,
-} from "@mui/material";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import { React, useState } from "react";
+import { TableContainer, Paper, Button, ButtonGroup } from "@mui/material";
+import ReorderOutlinedIcon from "@mui/icons-material/ReorderOutlined";
+import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
+import { getGroupData, add, getOrderSubTotal } from "../../utils/base";
+import { orderRawData } from "../../utils/mockData";
+import OrderTableView from "./OrderTableView";
 
-function createData(item, unit, price, count, detail, vvv) {
-  const sum = price * count;
-
-  return { item, unit, price, count, detail, sum, vvv };
-}
-
-const rows = [
-  createData("伯爵紅茶拿鐵M", "杯", 50, 1, "無糖去冰", 1),
-  createData("伯爵紅茶拿鐵L", "杯", 60, 1, "熱", 6),
-  createData("大正紅茶拿鐵M", "杯", 50, 1, "半糖去冰", 2),
-  createData("大正紅茶拿鐵L", "杯", 60, 1, "正常", 3),
-  createData("青檸香茶L", "杯", 60, 5, "溫", 5),
-];
-
-const DataOfOrderCreate = {
+const dataOfOrderCreate = {
   initiator: "Charis",
   shop: "KFC",
   deadline: 1672985611,
 };
 
-export default function OrderListTable() {
-  const theDeadline = new Date(DataOfOrderCreate.deadline * 1000).toString();
+const TableTitlesMap = {
+  buyer: [
+    { key: "buyer", value: "Buyer" },
+    { key: "amount", value: "Amount" },
+    { key: "sum", value: "Sum" },
+    { key: "status", value: "Status" },
+  ],
+  item: [
+    { key: "item", value: "Item" },
+    { key: "price", value: "Price" },
+    { key: "amount", value: "Amount" },
+    { key: "sum", value: "Sum" },
+    { key: "detail", value: "Detail" },
+  ],
+};
+const CollapseTableTitlesMap = {
+  buyer: [
+    { key: "item", value: "Item" },
+    { key: "price", value: "Price" },
+    { key: "amount", value: "Amount" },
+  ],
+  item: [
+    { key: "buyer", value: "Buyer" },
+    { key: "item", value: "Item" },
+    { key: "amount", value: "Amount" },
+    { key: "detail", value: "Detail" },
+  ],
+};
 
-  const CollapsibleRow = (props) => {
-    const row = props.row;
-    const [open, setOpen] = React.useState(false);
-    return (
-      <React.Fragment>
-        <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
-          <TableCell>
-            <IconButton
-              aria-label="expand row"
-              size="small"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-            </IconButton>
-          </TableCell>
-          <TableCell component="th" scope="row">
-            {row.item}
-          </TableCell>
-          <TableCell align="center">{row.unit}</TableCell>
-          <TableCell align="center">{row.price}</TableCell>
-          <TableCell align="center">{row.count}</TableCell>
-          <TableCell align="center">{row.sum}</TableCell>
-          <TableCell align="center">{row.detail}</TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography variant="h6" gutterBottom component="div">
-                  List of Buyers
-                </Typography>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Buyer</TableCell>
-                      <TableCell>Item</TableCell>
-                      <TableCell align="right">Detail</TableCell>
-                      <TableCell align="right">Amount</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow key={row.vvv}>
-                      <TableCell component="th" scope="row">
-                        {"buyer"}
-                      </TableCell>
-                      <TableCell>{"item"}</TableCell>
-                      <TableCell align="right">{"detail"}</TableCell>
-                      <TableCell align="right">{"amount"}</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </Box>
-            </Collapse>
-          </TableCell>
-        </TableRow>
-      </React.Fragment>
-    );
-  };
+const getItemOrderMap = (data) => {
+  let itemOrderMap = getGroupData(data, "item");
+
+  for (let item in itemOrderMap) {
+    const orders = itemOrderMap[item];
+    itemOrderMap[item] = {
+      summary: {
+        item,
+        price: orders[0].price,
+        amount: orders.map((row) => row.amount).reduce(add),
+        sum: orders.map(getOrderSubTotal).reduce(add),
+        detail: "hello world",
+      },
+      orders: orders,
+    };
+  }
+
+  return itemOrderMap;
+};
+
+const getBuyerOrderMap = (data) => {
+  let buyerOrderMap = getGroupData(data, "buyer");
+
+  for (let buyer in buyerOrderMap) {
+    const orders = buyerOrderMap[buyer];
+    buyerOrderMap[buyer] = {
+      summary: {
+        buyer,
+        amount: orders.map((row) => row.amount).reduce(add),
+        sum: orders.map(getOrderSubTotal).reduce(add),
+        status: orders[0].status == "paid" ? "收到錢" : "給我錢",
+      },
+      orders: orders,
+    };
+  }
+
+  return buyerOrderMap;
+};
+
+export default function OrderListTable() {
+  const [ViewStatus, setViewStatus] = useState("item");
   return (
     <TableContainer component={Paper}>
       <ButtonGroup size="small" aria-label="small button group">
-        <Button variant="contained">group by order</Button>
-        <Button>group by person</Button>
+        <Button
+          variant={ViewStatus == "item" ? "contained" : "outlined"}
+          startIcon={<ReorderOutlinedIcon />}
+          onClick={() => setViewStatus("item")}
+        >
+          item view
+        </Button>
+        <Button
+          variant={ViewStatus == "buyer" ? "contained" : "outlined"}
+          startIcon={<PeopleOutlineOutlinedIcon />}
+          onClick={() => setViewStatus("buyer")}
+        >
+          buyer view
+        </Button>
       </ButtonGroup>
-
-      <Table sx={{ minWidth: 100 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell align="left" colSpan={7}>
-              Initiator: {DataOfOrderCreate.initiator}
-              <br />
-              Shop: {DataOfOrderCreate.shop}
-              <br />
-              Deadline: {theDeadline}
-            </TableCell>
-          </TableRow>
-
-          <TableRow>
-            <TableCell />
-            <TableCell>Item</TableCell>
-            <TableCell align="center">Unit</TableCell>
-            <TableCell align="center">Price</TableCell>
-            <TableCell align="center">Count</TableCell>
-            <TableCell align="center">Sum</TableCell>
-            <TableCell align="center">Detail</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <CollapsibleRow key={row.item} row={row} />
-          ))}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TableCell align="center" colSpan={4} />
-            <TableCell align="center" colSpan={1} sx={{ fontSize: 14 }}>
-              Total
-            </TableCell>
-            <TableCell align="center" colSpan={1} sx={{ fontSize: 14 }}>
-              {rows.map((r) => r.sum).reduce((a, b) => a + b)}
-            </TableCell>
-            <TableCell align="center" colSpan={1} />
-          </TableRow>
-        </TableFooter>
-      </Table>
+      {ViewStatus == "item" ? (
+        <OrderTableView
+          dataOfOrderCreate={dataOfOrderCreate}
+          tableTitles={TableTitlesMap.item}
+          collapseTableTitles={CollapseTableTitlesMap.item}
+          orderData={getItemOrderMap(orderRawData)}
+        />
+      ) : (
+        <OrderTableView
+          dataOfOrderCreate={dataOfOrderCreate}
+          tableTitles={TableTitlesMap.buyer}
+          collapseTableTitles={CollapseTableTitlesMap.buyer}
+          orderData={getBuyerOrderMap(orderRawData)}
+        />
+      )}
     </TableContainer>
   );
 }

@@ -1,0 +1,58 @@
+const orderRawData = [
+  {
+    orderId: "11111",
+    buyer: "Ami",
+    item: "紅茶",
+    detail: "",
+    price: 10,
+    amount: 3,
+    status: "paid",
+  },
+  {
+    orderId: "11112",
+    buyer: "Jeffrey",
+    item: "綠茶",
+    detail: "",
+    price: 20,
+    amount: 1,
+    status: "paid",
+  },
+  {
+    orderId: "11113",
+    buyer: "B",
+    item: "麥茶",
+    detail: "",
+    price: 30,
+    amount: 1,
+    status: "paid",
+  },
+  {
+    orderId: "11114",
+    buyer: "Jeffrey",
+    item: "紅茶",
+    detail: "",
+    price: 10,
+    amount: 2,
+    status: "paid",
+  },
+  {
+    orderId: "11115",
+    buyer: "C",
+    item: "四季春",
+    detail: "",
+    price: 40,
+    amount: 5,
+    status: "unpaid",
+  },
+  {
+    orderId: "11116",
+    buyer: "C",
+    item: "抹茶拿鐵",
+    detail: "",
+    price: 40,
+    amount: 5,
+    status: "unpaid",
+  },
+];
+
+export { orderRawData };

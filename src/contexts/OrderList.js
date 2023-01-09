@@ -5,7 +5,6 @@ import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import MenuTable from "../components/menu/MenuTable";
 import OrderListTable from "../components/order/OrderListTable";
-import OrderListTableByPerson from "../components/order/OrderListTableByPerson";
 
 class OrderListItem extends React.Component {
   render() {
@@ -14,7 +13,7 @@ class OrderListItem extends React.Component {
         <Navbar />
         <BackgroundImagePage />
         <Grid justifyContent="center" container spacing={2} my={2}>
-          <Grid item xs={12} md={12}>
+          <Grid item xs={9} md={12}>
             <Typography
               m={0}
               align="center"
@@ -30,10 +29,8 @@ class OrderListItem extends React.Component {
               View Order Detail
             </Typography>
           </Grid>
-          <Grid item xs={12} md={9}>
+          <Grid item xs={9} md={9} mb={3}>
             <OrderListTable />
-            <p>-----------</p>
-            <OrderListTableByPerson />
           </Grid>
         </Grid>
       </Box>

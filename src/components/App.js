@@ -6,7 +6,7 @@ import MenuCreate from "../contexts/MenuCreate";
 import CreateMenu from "../contexts/MenuCreate";
 import MenuEdit from "../contexts/MenuEdit";
 import OrderCreate from "../contexts/OrderCreate";
-import OrderListItem from "../contexts/OrderListItem";
+import OrderList from "../contexts/OrderList";
 
 const router = createBrowserRouter([
   {
@@ -27,7 +27,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/order/:id",
-    element: <OrderListItem />,
+    element: <OrderList />,
   },
 ]);
 
