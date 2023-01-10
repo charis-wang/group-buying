@@ -3,9 +3,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import HomePage from "../contexts/HomePage";
 import MenuCreate from "../contexts/MenuCreate";
-import CreateMenu from "../contexts/MenuCreate";
 import MenuEdit from "../contexts/MenuEdit";
 import OrderCreate from "../contexts/OrderCreate";
+import OrderJoin from "../contexts/OrderJoin";
 import OrderList from "../contexts/OrderList";
 
 const router = createBrowserRouter([
@@ -25,6 +25,7 @@ const router = createBrowserRouter([
     path: "/order/create",
     element: <OrderCreate />,
   },
+  { path: "/order/:id/join", element: <OrderJoin /> },
   {
     path: "/order/:id",
     element: <OrderList />,
