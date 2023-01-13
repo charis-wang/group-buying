@@ -157,4 +157,9 @@ const orderInfo = {
   shopName: "Enjoy Drinking",
 };
 
-export { orderRawData, groupMenus, orderInfo };
+const detailTagOfDrinks = {
+  sugar: ["正常糖", "少糖", "半糖", "微糖", "無糖"],
+  ice: ["正常冰", "少冰", "微冰", "去冰", "常溫", "溫熱"],
+};
+
+export { orderRawData, groupMenus, orderInfo, detailTagOfDrinks };

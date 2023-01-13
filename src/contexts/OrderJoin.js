@@ -4,6 +4,7 @@ import { Typography, Grid, Box } from "@mui/material";
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderMenu from "../components/order/join/OrderMenu";
+import { ShoppingCart } from "../components/order/join/ShoppingCart";
 
 import { orderInfo } from "../utils/mockData";
 import { getDatetimeString } from "../utils/base";
@@ -14,7 +15,13 @@ class OrderJoin extends React.Component {
       <Box>
         <Navbar />
         <BackgroundImagePage />
-        <Grid container justifyContent="center" spacing={2} my={2}>
+        <Grid
+          container
+          justifyContent="center"
+          direction="row"
+          spacing={2}
+          my={2}
+        >
           <Grid item xs={9} md={12}>
             <Typography
               m={0}
@@ -39,6 +46,9 @@ class OrderJoin extends React.Component {
           </Grid>
           <Grid item xs={9} md={9} mb={3}>
             <OrderMenu />
+          </Grid>
+          <Grid item xs={9} md={9} mb={3} alignItems="flex-end">
+            <ShoppingCart />
           </Grid>
         </Grid>
       </Box>

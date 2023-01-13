@@ -1,9 +1,14 @@
-import { CREATE_MENU } from "./types"
-import menus from "../apis/menus"
+import { ADD_CART_ITEM } from "./types";
 
-export const createMenu = (formValues) => async (dispatch, getState) => {
-  //const {userId} = getState().auth
-  const response = await menus.post('/', { ...formValues })
-  dispatch({ type: CREATE_MENU, payload: response.data })
-  //history.push('/')
-}
+export const AddCartItem = (formValues) => (dispatch, getState) => {
+  dispatch({
+    type: ADD_CART_ITEM,
+    payload: {
+      itemId: formValues.itemId,
+      itemName: formValues.itemName,
+      detail: formValues.detail,
+      price: formValues.price,
+      amount: formValues.amount,
+    },
+  });
+};
