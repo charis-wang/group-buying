@@ -4,7 +4,7 @@ import { Typography, Grid, Box } from "@mui/material";
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderMenu from "../components/order/join/OrderMenu";
-import { ShoppingCart } from "../components/order/join/ShoppingCart";
+import ShoppingCart from "../components/order/join/ShoppingCart";
 
 import { orderInfo } from "../utils/mockData";
 import { getDatetimeString } from "../utils/base";

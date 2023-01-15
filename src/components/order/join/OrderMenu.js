@@ -1,4 +1,4 @@
-import React from "react";
+import { React, Component } from "react";
 import {
   Paper,
   MenuList,
@@ -14,7 +14,7 @@ import { orderInfo, groupMenus } from "../../../utils/mockData";
 import Item from "./Item";
 import { AddCartItem } from "../../../actions";
 
-class OrderMenu extends React.Component {
+class OrderMenu extends Component {
   onSubmit = (formValues) => {
     this.props.AddCartItem(formValues);
   };
