@@ -13,6 +13,7 @@ import { CartItem } from "./CartItem";
 export const CartDialog = (props) => {
   const { open } = props;
   const [cartValues, setCartValues] = useState([]);
+  const [disable, setDisable] = useState(true);
 
   const handleClose = () => open.set(false);
 
@@ -54,7 +55,12 @@ export const CartDialog = (props) => {
         ))}
       </DialogContent>
       <DialogActions>
-        <Button type="submit">Save</Button>
+        <Button
+          type="submit"
+          disabled={Object.values(cartValues).length ? false : true}
+        >
+          Save
+        </Button>
         <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
     </Dialog>
