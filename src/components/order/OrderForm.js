@@ -1,60 +1,54 @@
-import React, { useState } from 'react';
-import { Box, TextField, Button } from '@mui/material'
+import React, { useState } from "react";
+import { Box, TextField, Button } from "@mui/material";
 
-import OrderDateTimePicker from './OrderDateTimePicker';
-
+import OrderDateTimePicker from "./OrderDateTimePicker";
 
 const shopOptions = [
   {
-    value: 'MOS',
-    label: '摩斯',
+    value: "MOS",
+    label: "摩斯",
   },
   {
-    value: 'KFC',
-    label: '肯德基',
-  }
+    value: "KFC",
+    label: "肯德基",
+  },
 ];
 
 export default function OrderForm() {
-
-
-
   const [state, setState] = useState({
     initiator: "Charis",
     shop: "",
-  })
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'initiator') setState({ ...state, initiator: value })
-    if (name === 'shop') setState({ ...state, shop: value })
+    if (name === "initiator") setState({ ...state, initiator: value });
+    if (name === "shop") setState({ ...state, shop: value });
     //console.log('onChange:', state)
-  }
+  };
 
   const submitHandler = (formValues) => {
-    console.log('submit called');
-    formValues.preventDefault()
-    console.log('onSubmit', state)
-  }
+    console.log("submit called");
+    formValues.preventDefault();
+    console.log("onSubmit", state);
+  };
 
   return (
     <Box
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, minWidth: '15ch', minHeight: '7ch' },
+        "& > :not(style)": { m: 1, minWidth: "15ch", minHeight: "7ch" },
       }}
       noValidate
       autoComplete="off"
       onSubmit={submitHandler}
     >
-
       <OrderDateTimePicker />
-
 
       <TextField
         id="outlined-name"
         label="Initiator"
-        name='initiator'
+        name="initiator"
         value={state.initiator}
         onChange={handleChange}
         helperText="Please enter the username of initiator"
@@ -84,7 +78,7 @@ export default function OrderForm() {
         size="medium"
         variant="contained"
         onClick={() => {
-          console.log('click button')
+          console.log("click button");
         }}
       >
         create order form

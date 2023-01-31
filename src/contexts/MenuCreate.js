@@ -1,10 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Typography, Button, Grid, Box } from "@mui/material";
-//import { connect } from 'react-redux'
+
+import { connect } from "react-redux";
+import { CreateShop, CreateMenu } from "../actions";
+
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
-import MenuForm from "../components/menu/MenuForm";
-//import { createMenu } from "../actions"
+import ShopForm from "../components/menu/ShopForm";
 import MenuTable from "../components/menu/MenuTable";
 import MenuTableForm from "../components/menu/MenuTableForm";
 
@@ -13,21 +15,27 @@ class MenuCreate extends React.Component {
     super(props);
     this.state = {
       formValues: null,
-      formValuesOfShop: { shopName: "ShopName" },
+      formValuesOfShop: { shopName: "Shop" },
+      displayMenu: false,
     };
   }
 
   onSubmit = (value) => {
+    this.props.CreateMenu(value);
+
     this.setState({
       formValues: value,
     });
   };
 
   onSubmitOfShop = (value) => {
+    this.props.CreateShop(value);
+
     this.setState({
       formValuesOfShop: value,
     });
-    //console.log(this.state.formValuesOfShop)
+
+    this.displayMenu = true;
   };
 
   render() {
@@ -52,36 +60,43 @@ class MenuCreate extends React.Component {
               Create New Menu
             </Typography>
           </Grid>
+
           <Grid item xs={12} md={3}>
             <Typography my={1.5} mx={0.5} variant="h6" gutterBottom>
               Create Shop
             </Typography>
-            <MenuForm onSubmit={this.onSubmitOfShop} buttonName={"Add Shop"} />
+            <ShopForm onSubmit={this.onSubmitOfShop} buttonName={"Add Shop"} />
           </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography m={1} variant="h6" gutterBottom>
-              Create Menu of {this.state.formValuesOfShop.shopName}
-            </Typography>
 
-            <MenuTableForm onSubmit={this.onSubmit} />
-            <MenuTable value={this.state.formValues} />
-          </Grid>
-          <Grid item xs={12} md={12}>
-            <Typography align="center">
-              <Button
-                type="submit"
-                size="large"
-                variant="contained"
-                color="success"
-              >
-                Save
-              </Button>
-            </Typography>
-          </Grid>
+          {this.displayMenu ? (
+            <Fragment>
+              <Grid item xs={12} md={9}>
+                <Typography m={1} variant="h6" gutterBottom>
+                  Create Menu of {this.state.formValuesOfShop.shopName}
+                </Typography>
+
+                <MenuTableForm onSubmit={this.onSubmit} />
+                <MenuTable value={this.state.formValues} />
+              </Grid>
+
+              <Grid item xs={12} md={12}>
+                <Typography align="center">
+                  <Button
+                    type="submit"
+                    size="large"
+                    variant="contained"
+                    color="success"
+                  >
+                    Save
+                  </Button>
+                </Typography>
+              </Grid>
+            </Fragment>
+          ) : null}
         </Grid>
       </Box>
     );
   }
 }
 
-export default MenuCreate;
+export default connect(null, { CreateShop, CreateMenu })(MenuCreate);

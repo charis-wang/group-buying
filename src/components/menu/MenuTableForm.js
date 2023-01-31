@@ -1,17 +1,24 @@
 import React, { useState } from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, IconButton } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const MenuTableForm = (props) => {
   const [state, setState] = useState({
-    item: "",
-    unit: "",
+    groupName: "",
+    itemName: "",
     price: "",
+    detail: "",
   });
 
   const onSubmit = (formValues) => {
     formValues.preventDefault();
-    console.log("onSubmit", state);
     props.onSubmit(state);
+    setState({
+      groupName: "",
+      itemName: "",
+      price: "",
+      detail: "",
+    });
   };
 
   const handleChange = (e) => {
@@ -19,50 +26,32 @@ const MenuTableForm = (props) => {
     setState({ ...state, [name]: value });
   };
 
-  const required = (value) => (value ? undefined : "Required");
-
-  const renderError = ({ error, touched }) => {
-    // console.log({ error, touched })
-    if (touched && error) {
-      return <span className="text-danger">{error}</span>;
-    }
-  };
-
-  const renderInput = ({ input, label, meta }) => {
-    const className = `field ${meta.error && meta.touched ? "error" : ""}`;
-    return (
-      <div className={className}>
-        <label>{label}</label>
-        <br />
-        <input {...input} autoComplete="off" />
-        {renderError(meta)}
-      </div>
-    );
-  };
-
   return (
     <Box
       component="form"
       sx={{
         display: "flex",
-        "& > :not(style)": { m: 1, width: "15ch" },
+        "& > :not(style)": { m: 1 },
       }}
       autoComplete="off"
       onSubmit={onSubmit}
     >
       <TextField
-        name="item"
-        label="Item"
-        variant="outlined"
+        name="groupName"
+        label="Group Name"
+        variant="standard"
         onChange={handleChange}
         required
+        sx={{ width: "11ch" }}
+        value={state.groupName}
       />
       <TextField
-        name="unit"
-        label="Unit"
-        variant="outlined"
+        name="itemName"
+        label="ItemName"
+        variant="standard"
         onChange={handleChange}
         required
+        value={state.itemName}
       />
       <TextField
         name="price"
@@ -71,13 +60,24 @@ const MenuTableForm = (props) => {
           min: "0",
         }}
         label="Price"
-        variant="outlined"
+        variant="standard"
         onChange={handleChange}
         required
+        sx={{ width: "8ch" }}
+        value={state.price}
       />
-      <Button type="submit" variant="outlined">
-        Add Item
-      </Button>
+      <TextField
+        name="detail"
+        label="Detail"
+        variant="standard"
+        onChange={handleChange}
+        required
+        sx={{ width: "11ch" }}
+        value={state.detail}
+      />
+      <IconButton type="submit" variant="outlined">
+        <AddIcon />
+      </IconButton>
     </Box>
   );
 };

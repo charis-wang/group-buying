@@ -3,7 +3,7 @@ import { Typography, Button, Grid, Box } from "@mui/material";
 //import { connect } from 'react-redux'
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
-import MenuForm from "../components/menu/MenuForm";
+import MenuForm from "../components/menu/ShopForm";
 //import { createMenu } from "../actions"
 import MenuTable from "../components/menu/MenuTable";
 import MenuTableForm from "../components/menu/MenuTableForm";
@@ -27,7 +27,6 @@ class MenuEdit extends React.Component {
     this.setState({
       formValuesOfShop: value,
     });
-    //console.log(this.state.formValuesOfShop)
   };
 
   render() {

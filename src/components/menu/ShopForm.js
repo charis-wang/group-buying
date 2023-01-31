@@ -1,24 +1,26 @@
 import React, { useState } from "react";
-//import { render } from 'react-dom'
 import { Box, TextField, Button, MenuItem, Grid } from "@mui/material";
-import { getByDisplayValue } from "@testing-library/react";
 
 const shopTypes = [
   {
-    value: "Drinks",
-    label: "Drinks",
+    value: "boxedMeal",
+    label: "便當",
   },
   {
-    value: "Lunch",
-    label: "Lunch",
+    value: "beverage",
+    label: "飲料",
   },
   {
-    value: "Dessert",
-    label: "Dessert",
+    value: "vegan",
+    label: "蔬食",
+  },
+  {
+    value: "fastFood",
+    label: "速食",
   },
 ];
 
-const MenuForm = (props) => {
+const ShopForm = (props) => {
   const [state, setState] = useState({
     shopName: "",
     shopType: "",
@@ -26,32 +28,17 @@ const MenuForm = (props) => {
     shopAddress: "",
     shopInfo: "",
   });
+  const [readOnly, setReadOnly] = useState(false);
 
   const onSubmit = (formValues) => {
     formValues.preventDefault();
-    console.log("onSubmit", state);
     props.onSubmit(state);
+    setReadOnly(true);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log({ ...state, [name]: value });
     setState({ ...state, [name]: value });
-  };
-
-  const validateForm = (state) => {
-    if (!state.shopName) {
-      return <span>unvalid</span>;
-    }
-  };
-
-  const required = (value) => (value ? undefined : "Required");
-
-  const renderError = ({ error, touched }) => {
-    // console.log({ error, touched })
-    if (touched && error) {
-      return <span className="text-danger">{error}</span>;
-    }
   };
 
   return (
@@ -72,6 +59,7 @@ const MenuForm = (props) => {
             onChange={handleChange}
             required
             error={!state.shopName}
+            disabled={readOnly}
           ></TextField>
         </Grid>
         <Grid item xs={12}>
@@ -84,6 +72,7 @@ const MenuForm = (props) => {
             value={state.shopType}
             required
             style={{ minWidth: "19.5ch" }}
+            disabled={readOnly}
           >
             {shopTypes.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -102,6 +91,7 @@ const MenuForm = (props) => {
             error={!state.shopPhoneNumber.match(/^0[0-9]{1}-[0-9]{7,8}$/)}
             placeholder="02-12345678"
             required
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12}>
@@ -112,6 +102,7 @@ const MenuForm = (props) => {
             onChange={handleChange}
             error={!state.shopAddress}
             required
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12}>
@@ -123,10 +114,11 @@ const MenuForm = (props) => {
             multiline
             rows={3}
             onChange={handleChange}
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12} mx={5}>
-          <Button type="submit" variant="outlined">
+          <Button type="submit" variant="outlined" disabled={readOnly}>
             {props.buttonName}
           </Button>
         </Grid>
@@ -135,4 +127,4 @@ const MenuForm = (props) => {
   );
 };
 
-export default MenuForm;
+export default ShopForm;
