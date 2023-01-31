@@ -16,7 +16,7 @@ class MenuCreate extends React.Component {
     this.state = {
       formValues: null,
       formValuesOfShop: { shopName: "Shop" },
-      displayMenu: false,
+      displayMenu: true,
     };
   }
 
@@ -33,9 +33,8 @@ class MenuCreate extends React.Component {
 
     this.setState({
       formValuesOfShop: value,
+      displayMenu: true,
     });
-
-    this.displayMenu = true;
   };
 
   render() {
@@ -43,7 +42,13 @@ class MenuCreate extends React.Component {
       <Box>
         <Navbar />
         <BackgroundImagePage />
-        <Grid container spacing={2} mx={2} p={2}>
+        <Grid
+          container
+          spacing={2}
+          p={2}
+          alignItems="flex-start"
+          justifyContent="center"
+        >
           <Grid item xs={12} md={12}>
             <Typography
               m={0}
@@ -62,16 +67,22 @@ class MenuCreate extends React.Component {
           </Grid>
 
           <Grid item xs={12} md={3}>
-            <Typography my={1.5} mx={0.5} variant="h6" gutterBottom>
+            <Typography
+              my={1.5}
+              mx={0.5}
+              variant="h6"
+              gutterBottom
+              align="center"
+            >
               Create Shop
             </Typography>
             <ShopForm onSubmit={this.onSubmitOfShop} buttonName={"Add Shop"} />
           </Grid>
 
-          {this.displayMenu ? (
+          {this.state.displayMenu ? (
             <Fragment>
               <Grid item xs={12} md={9}>
-                <Typography m={1} variant="h6" gutterBottom>
+                <Typography m={1} variant="h6" gutterBottom align="center">
                   Create Menu of {this.state.formValuesOfShop.shopName}
                 </Typography>
 

@@ -50,7 +50,7 @@ const ShopForm = (props) => {
       autoComplete="off"
       onSubmit={onSubmit}
     >
-      <Grid container spacing={3}>
+      <Grid container spacing={3} direction="column" alignItems="center">
         <Grid item xs={12}>
           <TextField
             name="shopName"
