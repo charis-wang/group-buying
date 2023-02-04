@@ -16,7 +16,7 @@ class MenuCreate extends React.Component {
     this.state = {
       formValues: null,
       formValuesOfShop: { shopName: "Shop" },
-      displayMenu: true,
+      displayMenu: false,
     };
   }
 

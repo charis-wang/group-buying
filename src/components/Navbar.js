@@ -1,24 +1,70 @@
-import React from "react";
+import React, { Fragment } from "react";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  Typography,
+  Button,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-class Navbar extends React.Component {
+import NavbarDrawer from "./NavbarDrawer";
+import { ButtonGroup } from "react-bootstrap";
 
-  render() {
-    return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
-        <div className="container-fluid">
-          <a className="navbar-brand" href='/'>Group Buying</a>
+const pages = ["Products", "Pricing", "Blog"];
 
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav ms-auto">
+const Navbar = () => {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
 
-              <a className="nav-link " href="/login">Login</a>
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
 
-            </div>
-          </div>
-        </div>
-      </nav >
-    )
-  }
-}
+  return (
+    <Box sx={{ flexGrow: 2, justifyContent: "space-between" }}>
+      <AppBar position="static" sx={{ bgcolor: "#d7ccc8" }}>
+        <Toolbar>
+          <NavbarDrawer />
+          <Typography
+            noWrap
+            href="/"
+            variant="h6"
+            component="a"
+            sx={{
+              mr: 2,
+              display: "flex",
+              color: "inherit",
+              textDecoration: "none",
+              ":hover": { color: "#ffffff" },
+            }}
+          >
+            Group Buying
+          </Typography>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "flex", md: "flex" },
 
-export default Navbar
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Button color="inherit">Menu</Button>
+            <Button color="inherit" href="/menu/new" component="Link">
+              Create Menu
+            </Button>
+            <Button color="inherit">Create Order</Button>
+            <Button color="inherit">Join Order</Button>
+          </Box>
+          <Box>
+            <Button color="inherit">Login</Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+};
+
+export default Navbar;

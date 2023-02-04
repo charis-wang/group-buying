@@ -44,7 +44,7 @@ const MenuTableForm = (props) => {
         alignItems="center"
         spacing={{ xs: 0.5, md: 1 }}
       >
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} sm={5} md={2}>
           <TextField
             name="groupName"
             label="Group Name"
@@ -55,7 +55,7 @@ const MenuTableForm = (props) => {
             value={state.groupName}
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} sm={5} md={2}>
           <TextField
             name="itemName"
             label="ItemName"
@@ -66,7 +66,8 @@ const MenuTableForm = (props) => {
             value={state.itemName}
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+
+        <Grid item xs={12} sm={5} md={2}>
           <TextField
             name="price"
             type="number"
@@ -81,7 +82,7 @@ const MenuTableForm = (props) => {
             value={state.price}
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} sm={5} md={2}>
           <TextField
             name="detail"
             label="Detail"
@@ -92,7 +93,7 @@ const MenuTableForm = (props) => {
             value={state.detail}
           />
         </Grid>
-        <Grid item xs={12} md={1}>
+        <Grid item xs={12} sm={12} md={1}>
           <IconButton type="submit" variant="outlined">
             <AddIcon />
           </IconButton>

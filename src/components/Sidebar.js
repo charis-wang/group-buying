@@ -1,33 +1,50 @@
-import React, { useState } from "react";
-//import { useNavigate } from 'react-router-dom'
-import { clickMenu } from "../actions";
-import './index.css'
+import React, { Fragment, useState } from "react";
+import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 
-class Sidebar extends React.Component {
+import "./index.css";
 
+const Sidebar = () => {
+  return (
+    <Box m={3}>
+      <List>
+        <ListItem component="a" href="/">
+          <ListItemText
+            primary={
+              <Typography
+                sx={{ color: "#8d6e63", "&:hover": { color: "black" } }}
+              >
+                All
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem component="a" href="/">
+          <ListItemText
+            color="#d7ccc8"
+            primary={
+              <Typography
+                sx={{ color: "#8d6e63", "&:hover": { color: "black" } }}
+              >
+                Beverage
+              </Typography>
+            }
+          />
+        </ListItem>
+        <ListItem component="a" href="/">
+          <ListItemText
+            color="#d7ccc8"
+            primary={
+              <Typography
+                sx={{ color: "#8d6e63", "&:hover": { color: "black" } }}
+              >
+                LunchBox
+              </Typography>
+            }
+          />
+        </ListItem>
+      </List>
+    </Box>
+  );
+};
 
-
-  render() {
-    return (
-
-      <div className="col-2">
-        <ul className="nav flex-column mt-5">
-          <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="/">All</a>
-          </li>
-          <li className="nav-item" >
-            <a className="nav-link" href="/drinks" > Drink</a >
-          </li >
-          <li className="nav-item" >
-            <a className="nav-link" href="lunchbox" > Lunch Box</a >
-          </li >
-        </ul >
-      </div >
-
-
-
-    )
-  }
-}
-
-export default Sidebar
+export default Sidebar;

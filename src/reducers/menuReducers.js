@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { CREATE_MENU, DELETE_MENU } from "../actions/types";
+import { CREATE_MENU, DELETE_MENU, EDIT_MENU } from "../actions/types";
 
 export default function menuReducers(state = {}, action) {
   const key = (action.payload || {}).groupName;
@@ -14,6 +14,8 @@ export default function menuReducers(state = {}, action) {
   switch (action.type) {
     case CREATE_MENU:
       return { ...state, [key]: (state[key] || []).concat(action.payload) };
+    case EDIT_MENU:
+      return { ...state, ...action.payload };
     case DELETE_MENU:
       const filterData = state[key].filter((doc) => doc !== action.payload);
 
