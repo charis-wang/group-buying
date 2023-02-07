@@ -7,6 +7,7 @@ import MenuEdit from "../contexts/MenuEdit";
 import OrderCreate from "../contexts/OrderCreate";
 import OrderJoin from "../contexts/OrderJoin";
 import OrderList from "../contexts/OrderList";
+import LoginPage from "../contexts/LoginPage";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
   {
     path: "/order/:id",
     element: <OrderList />,
+  },
+  {
+    path: "/login",
+    element: <LoginPage />,
   },
 ]);
 

@@ -52,7 +52,15 @@ const Navbar = () => {
             }}
           >
             <Button color="inherit">Menu</Button>
-            <Button color="inherit" href="/menu/new" component="Link">
+            <Button
+              color="inherit"
+              href="/menu/new"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
               Create Menu
             </Button>
             <Button color="inherit">Create Order</Button>

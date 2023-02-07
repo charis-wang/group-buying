@@ -1,5 +1,10 @@
-import axios from 'axios'
+import userRequest from "./base";
 
-export default axios.create({
-  baseURL: " http://localhost:3001"
-})
+const get_menu = (id) =>
+  userRequest.get("/get_menu", {
+    params: {
+      id,
+    },
+  });
+
+export { get_menu };

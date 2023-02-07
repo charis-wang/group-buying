@@ -20,7 +20,7 @@ const BackgroundImagePage = (props) => {
             textShadow: "0.1em 0.1em 0.2em black",
           }}
         >
-          HomePage
+          {props.title}
         </Typography>
       </Paper>
     </Fragment>
