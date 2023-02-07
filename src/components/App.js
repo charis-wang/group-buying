@@ -8,6 +8,7 @@ import OrderCreate from "../contexts/OrderCreate";
 import OrderJoin from "../contexts/OrderJoin";
 import OrderList from "../contexts/OrderList";
 import LoginPage from "../contexts/LoginPage";
+import SignupPage from "../contexts/SignupPage";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/signup",
+    element: <SignupPage />,
   },
 ]);
 
