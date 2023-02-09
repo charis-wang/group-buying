@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, TextField, Button, MenuItem, Grid } from "@mui/material";
 
 const shopTypes = [
@@ -24,10 +24,11 @@ const ShopForm = (props) => {
   const [state, setState] = useState({
     shopName: "",
     shopType: "",
-    shopPhoneNumber: "",
+    shopPhoneNumber: "02-12345678",
     shopAddress: "",
     shopInfo: "",
   });
+
   const [readOnly, setReadOnly] = useState(false);
 
   const onSubmit = (formValues) => {
@@ -40,6 +41,10 @@ const ShopForm = (props) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
+
+  useEffect(() => {
+    setReadOnly(props.display !== "shop");
+  }, [props.display]);
 
   return (
     <Box
@@ -90,6 +95,7 @@ const ShopForm = (props) => {
             onChange={handleChange}
             error={!state.shopPhoneNumber.match(/^0[0-9]{1}-[0-9]{7,8}$/)}
             placeholder="02-12345678"
+            value={state.shopPhoneNumber}
             required
             disabled={readOnly}
           />

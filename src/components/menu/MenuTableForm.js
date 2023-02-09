@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { React, useEffect, useState } from "react";
 import { Box, TextField, IconButton, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -9,6 +9,8 @@ const MenuTableForm = (props) => {
     price: "",
     detail: "",
   });
+
+  const [readOnly, setReadOnly] = useState(false);
 
   const onSubmit = (formValues) => {
     formValues.preventDefault();
@@ -25,6 +27,10 @@ const MenuTableForm = (props) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
+
+  useEffect(() => {
+    setReadOnly(props.display !== "menu");
+  }, [props.display]);
 
   return (
     <Box
@@ -53,6 +59,7 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.groupName}
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={2}>
@@ -64,6 +71,7 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.itemName}
+            disabled={readOnly}
           />
         </Grid>
 
@@ -80,6 +88,7 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.price}
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={2}>
@@ -91,10 +100,11 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.detail}
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={1}>
-          <IconButton type="submit" variant="outlined">
+          <IconButton type="submit" variant="outlined" disabled={readOnly}>
             <AddIcon />
           </IconButton>
         </Grid>

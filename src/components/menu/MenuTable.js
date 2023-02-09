@@ -13,18 +13,18 @@ import {
 import MenuTableRow from "./MenuTableRow";
 
 export default function MenuTable(props) {
-  const [getFormValues, setGetFormValues] = useState("");
   const [rows, setRows] = useState([]);
 
-  const updateGetFormValues = () => {
+  const updateFormValues = () => {
     if (!props.value) return;
-    setGetFormValues(props.value);
+
     setRows([...rows, props.value]);
   };
 
   useEffect(() => {
     if (props.value !== null) {
-      updateGetFormValues();
+      updateFormValues();
+      // eslint-disable-next-line
     }
   }, [props.value]);
 

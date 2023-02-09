@@ -1,10 +1,10 @@
 import userRequest from "./base";
 
-const get_menu = (id) =>
-  userRequest.get("/get_menu", {
+const getMenu = (id) =>
+  userRequest.get("/getMenu", {
     params: {
       id,
     },
   });
 
-export { get_menu };
+export { getMenu };

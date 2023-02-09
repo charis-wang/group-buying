@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import { React, useState } from "react";
 import { Typography, Button, Grid, Box } from "@mui/material";
 
 import { connect } from "react-redux";
@@ -10,104 +10,105 @@ import ShopForm from "../components/menu/ShopForm";
 import MenuTable from "../components/menu/MenuTable";
 import MenuTableForm from "../components/menu/MenuTableForm";
 
-class MenuCreate extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      formValues: null,
-      formValuesOfShop: { shopName: "Shop" },
-      displayMenu: false,
-    };
-  }
+import { postShop } from "../apis/shop";
+import { store } from "../store";
 
-  onSubmit = (value) => {
-    this.props.CreateMenu(value);
+const MenuCreate = (props) => {
+  const [state, setState] = useState({
+    formValues: null,
+    formValuesOfShop: {},
+    display: "shop",
+  });
 
-    this.setState({
+  const onSubmitOfMenuTableRow = (value) => {
+    props.CreateMenu(value);
+
+    setState({
+      ...state,
       formValues: value,
     });
   };
 
-  onSubmitOfShop = (value) => {
-    this.props.CreateShop(value);
+  const onSubmitOfShop = (value) => {
+    props.CreateShop(value);
 
-    this.setState({
+    setState({
+      ...state,
       formValuesOfShop: value,
-      displayMenu: true,
+      display: "menu",
     });
   };
 
-  render() {
-    return (
-      <Box>
-        <Navbar />
-        <BackgroundImagePage />
-        <Grid
-          container
-          spacing={2}
-          p={2}
-          alignItems="flex-start"
-          justifyContent="center"
-        >
-          <Grid item xs={12} md={12}>
-            <Typography
-              m={0}
-              align="center"
-              variant="h5"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-                fontStyle: "Italic",
-                color: "darkseagreen",
-              }}
-              component="h4"
-            >
-              Create New Menu
-            </Typography>
-          </Grid>
+  const save = () => {
+    const stateOfMenu = store.getState().menu;
+    const sendData = { shop: state.formValuesOfShop, menu: stateOfMenu };
 
-          <Grid item xs={12} md={3}>
-            <Typography
-              my={1.5}
-              mx={0.5}
-              variant="h6"
-              gutterBottom
-              align="center"
-            >
-              Create Shop
-            </Typography>
-            <ShopForm onSubmit={this.onSubmitOfShop} buttonName={"Add Shop"} />
-          </Grid>
+    postShop(sendData).then((res) => {
+      window.location.href = `/menu/${res.data.id}`;
+      window.history.replaceState(null, "", "/");
+    });
+  };
 
-          {this.state.displayMenu ? (
-            <Fragment>
-              <Grid item xs={12} md={9}>
-                <Typography m={1} variant="h6" gutterBottom align="center">
-                  Create Menu of {this.state.formValuesOfShop.shopName}
-                </Typography>
-
-                <MenuTableForm onSubmit={this.onSubmit} />
-                <MenuTable value={this.state.formValues} />
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <Typography align="center">
-                  <Button
-                    type="submit"
-                    size="large"
-                    variant="contained"
-                    color="success"
-                  >
-                    Save
-                  </Button>
-                </Typography>
-              </Grid>
-            </Fragment>
-          ) : null}
+  return (
+    <Box>
+      <Navbar />
+      <BackgroundImagePage title="Create New Menu" />
+      <Grid
+        container
+        spacing={2}
+        p={2}
+        alignItems="flex-start"
+        justifyContent="center"
+      >
+        <Grid item xs={12} md={3}>
+          <Typography
+            my={1.5}
+            mx={0.5}
+            variant="h6"
+            gutterBottom
+            align="center"
+          >
+            Create Shop
+          </Typography>
+          <ShopForm
+            onSubmit={onSubmitOfShop}
+            display={state.display}
+            buttonName={"next step"}
+          />
         </Grid>
-      </Box>
-    );
-  }
-}
 
-export default connect(null, { CreateShop, CreateMenu })(MenuCreate);
+        <Grid item xs={12} md={9}>
+          <Typography m={1} variant="h6" gutterBottom align="center">
+            Create Menu
+          </Typography>
+
+          <MenuTableForm
+            onSubmit={onSubmitOfMenuTableRow}
+            display={state.display}
+          />
+          <MenuTable value={state.formValues} />
+        </Grid>
+
+        <Grid item xs={12} md={12}>
+          <Typography align="center">
+            <Button
+              size="large"
+              variant="contained"
+              color="success"
+              disabled={state.display !== "menu"}
+              onClick={save}
+            >
+              Save
+            </Button>
+          </Typography>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return { state };
+};
+
+export default connect(mapStateToProps, { CreateShop, CreateMenu })(MenuCreate);
