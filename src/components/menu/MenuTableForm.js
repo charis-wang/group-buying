@@ -1,36 +1,33 @@
 import { React, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Box, TextField, IconButton, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-const MenuTableForm = (props) => {
-  const [state, setState] = useState({
-    groupName: "",
-    itemName: "",
-    price: "",
-    detail: "",
-  });
+import { CreateMenu } from "../../actions/menu";
 
+const initialState = {
+  groupName: "",
+  itemName: "",
+  price: "",
+  detail: "",
+};
+
+const MenuTableForm = (props) => {
+  const [state, setState] = useState({ ...initialState });
   const [readOnly, setReadOnly] = useState(false);
 
-  const onSubmit = (formValues) => {
-    formValues.preventDefault();
-    props.onSubmit(state);
-    setState({
-      groupName: "",
-      itemName: "",
-      price: "",
-      detail: "",
-    });
+  useEffect(() => setReadOnly(props.display !== "menu"), [props.display]);
+
+  const onSubmit = (e) => {
+    props.CreateMenu(state);
+    setState({ ...initialState });
+    e.preventDefault();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
-
-  useEffect(() => {
-    setReadOnly(props.display !== "menu");
-  }, [props.display]);
 
   return (
     <Box
@@ -113,4 +110,4 @@ const MenuTableForm = (props) => {
   );
 };
 
-export default MenuTableForm;
+export default connect(null, { CreateMenu })(MenuTableForm);

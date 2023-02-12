@@ -1,114 +1,103 @@
-import React from "react";
-import { Typography, Button, Grid, Box } from "@mui/material";
-
+import { React, useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { EditMenu } from "../actions";
+import { useParams } from "react-router-dom";
+import { Typography, Button, Grid, Box } from "@mui/material";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
-import MenuForm from "../components/menu/ShopForm";
+import ShopForm from "../components/menu/ShopForm";
 import MenuTable from "../components/menu/MenuTable";
 import MenuTableForm from "../components/menu/MenuTableForm";
+import { FetchShop, SaveShopAndMenu, DeleteShopAndMenu } from "../actions/shop";
+import { FetchMenu } from "../actions/menu";
 
-class MenuEdit extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      formValues: null,
-      formValuesOfShop: { shopName: "ShopName" },
-    };
-  }
+const MenuEdit = (props) => {
+  const shopId = useParams().id;
 
-  onSubmit = (value) => {
-    this.setState({
-      formValues: value,
+  const [display, setDisplay] = useState("shop");
+
+  const saveShop = () => {
+    props.SaveShopAndMenu().then(() => {
+      window.location.href = `/menu/${shopId}`;
     });
   };
 
-  onSubmitOfShop = (value) => {
-    this.setState({
-      formValuesOfShop: value,
-    });
+  const deleteShop = () => {
+    props.DeleteShopAndMenu(shopId);
   };
 
-  render() {
-    return (
-      <Box>
-        <Navbar />
-        <BackgroundImagePage />
-        <Grid
-          container
-          spacing={2}
-          p={2}
-          alignItems="flex-start"
-          justifyContent="center"
-        >
-          <Grid item xs={12} md={12}>
-            <Typography
-              m={0}
-              align="center"
-              variant="h5"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-                fontStyle: "Italic",
-                color: "darkseagreen",
-              }}
-              component="h4"
-            >
-              Edit Menu of {this.state.formValuesOfShop.shopName}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={3}>
-            <Typography
-              my={1.5}
-              mx={0.5}
-              variant="h6"
-              gutterBottom
-              align="center"
-            >
-              Edit Shop
-            </Typography>
-            <MenuForm onSubmit={this.onSubmitOfShop} buttonName="Edit Shop" />
-          </Grid>
-          <Grid item xs={12} md={9}>
-            <Typography m={1} variant="h6" gutterBottom align="center">
-              Edit Menu of {this.state.formValuesOfShop.shopName}
-            </Typography>
+  // initial (from api)
+  useEffect(() => {
+    props.FetchShop(shopId);
+    props.FetchMenu(shopId);
+  }, []);
 
-            <MenuTableForm onSubmit={this.onSubmit} />
-            <MenuTable value={console.log(this.props.menu)} />
-          </Grid>
-
-          <Grid item xs={12} md={12}>
-            <Typography align="center">
-              <Button
-                type="submit"
-                size="large"
-                variant="contained"
-                color="success"
-              >
-                Save
-              </Button>
-              <span> </span>
-              <Button
-                type="button"
-                size="large"
-                variant="contained"
-                color="error"
-              >
-                Delete
-              </Button>
-            </Typography>
-          </Grid>
+  return (
+    <Box>
+      <Navbar />
+      <BackgroundImagePage title="Edit Menu" />
+      <Grid
+        container
+        spacing={2}
+        p={2}
+        alignItems="flex-start"
+        justifyContent="center"
+      >
+        <Grid item xs={12} md={3}>
+          <Typography
+            my={1.5}
+            mx={0.5}
+            variant="h6"
+            gutterBottom
+            align="center"
+          >
+            Edit Shop
+          </Typography>
+          <ShopForm setDisplay={setDisplay} display={display} />
         </Grid>
-      </Box>
-    );
-  }
-}
+        <Grid item xs={12} md={9}>
+          <Typography m={1} variant="h6" gutterBottom align="center">
+            Edit Menu
+          </Typography>
 
-const mapStateToProps = (state) => {
-  return { menu: state.menu };
+          <MenuTableForm display={display} />
+          <MenuTable />
+        </Grid>
+
+        <Grid item xs={12} md={12}>
+          <Typography align="center">
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              color="success"
+              disabled={display !== "menu"}
+              onClick={saveShop}
+            >
+              Save
+            </Button>
+            <span> </span>
+            <Button
+              type="button"
+              size="large"
+              variant="contained"
+              color="error"
+              onClick={deleteShop}
+            >
+              Delete
+            </Button>
+          </Typography>
+        </Grid>
+      </Grid>
+    </Box>
+  );
 };
 
-export default connect(mapStateToProps, { EditMenu })(MenuEdit);
+const mapStateToProps = (state) => ({ menu: state.menu });
+
+export default connect(mapStateToProps, {
+  FetchShop,
+  FetchMenu,
+  SaveShopAndMenu,
+  DeleteShopAndMenu,
+})(MenuEdit);

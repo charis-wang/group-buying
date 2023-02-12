@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import {
   Table,
   TableBody,
@@ -9,24 +10,17 @@ import {
   Paper,
   Grid,
 } from "@mui/material";
-
 import MenuTableRow from "./MenuTableRow";
 
+const unzipMenuByGroup = (menu) => {
+  return Object.values(menu).reduce(
+    (accumulator, currentValue) => accumulator.concat(currentValue),
+    []
+  );
+};
+
 export default function MenuTable(props) {
-  const [rows, setRows] = useState([]);
-
-  const updateFormValues = () => {
-    if (!props.value) return;
-
-    setRows([...rows, props.value]);
-  };
-
-  useEffect(() => {
-    if (props.value !== null) {
-      updateFormValues();
-      // eslint-disable-next-line
-    }
-  }, [props.value]);
+  const menus = useSelector((state) => unzipMenuByGroup(state.menu));
 
   return (
     <Grid container justifyContent="center">
@@ -50,7 +44,7 @@ export default function MenuTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {menus.map((row) => (
               <MenuTableRow key={row.groupName + row.itemName} row={row} />
             ))}
           </TableBody>

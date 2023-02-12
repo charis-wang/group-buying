@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
 import { TableCell, TableRow, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { connect } from "react-redux";
-import { DeleteMenu } from "../../actions";
+import { DeleteMenu } from "../../actions/menu";
 
 const MenuTableRow = (props) => {
   const { row } = props;
@@ -36,8 +36,4 @@ const MenuTableRow = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { menu: state.menu };
-};
-
-export default connect(mapStateToProps, { DeleteMenu })(MenuTableRow);
+export default connect(null, { DeleteMenu })(MenuTableRow);

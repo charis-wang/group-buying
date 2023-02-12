@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import NavbarDrawer from "./NavbarDrawer";
+import NavbarDrawer from "./NavbarDrawer.js";
 import { ButtonGroup } from "react-bootstrap";
 
 const pages = ["Products", "Pricing", "Blog"];

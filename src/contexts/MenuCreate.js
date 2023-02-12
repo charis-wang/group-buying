@@ -1,54 +1,22 @@
 import { React, useState } from "react";
-import { Typography, Button, Grid, Box } from "@mui/material";
-
 import { connect } from "react-redux";
-import { CreateShop, CreateMenu } from "../actions";
+import { Typography, Button, Grid, Box } from "@mui/material";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import ShopForm from "../components/menu/ShopForm";
 import MenuTable from "../components/menu/MenuTable";
 import MenuTableForm from "../components/menu/MenuTableForm";
-
-import { postShop } from "../apis/shop";
-import { store } from "../store";
+import { SaveShopAndMenu } from "../actions/shop";
 
 const MenuCreate = (props) => {
-  const [state, setState] = useState({
-    formValues: null,
-    formValuesOfShop: {},
-    display: "shop",
-  });
-
-  const onSubmitOfMenuTableRow = (value) => {
-    props.CreateMenu(value);
-
-    setState({
-      ...state,
-      formValues: value,
+  const [display, setDisplay] = useState("shop");
+  const saveShop = () => {
+    props.SaveShopAndMenu().then((res) => {
+      const shopId = res.data.id;
+      window.location.href = `/menu/${shopId}`;
     });
   };
-
-  const onSubmitOfShop = (value) => {
-    props.CreateShop(value);
-
-    setState({
-      ...state,
-      formValuesOfShop: value,
-      display: "menu",
-    });
-  };
-
-  const save = () => {
-    const stateOfMenu = store.getState().menu;
-    const sendData = { shop: state.formValuesOfShop, menu: stateOfMenu };
-
-    postShop(sendData).then((res) => {
-      window.location.href = `/menu/${res.data.id}`;
-      window.history.replaceState(null, "", "/");
-    });
-  };
-
   return (
     <Box>
       <Navbar />
@@ -71,8 +39,8 @@ const MenuCreate = (props) => {
             Create Shop
           </Typography>
           <ShopForm
-            onSubmit={onSubmitOfShop}
-            display={state.display}
+            display={display}
+            setDisplay={setDisplay}
             buttonName={"next step"}
           />
         </Grid>
@@ -82,11 +50,8 @@ const MenuCreate = (props) => {
             Create Menu
           </Typography>
 
-          <MenuTableForm
-            onSubmit={onSubmitOfMenuTableRow}
-            display={state.display}
-          />
-          <MenuTable value={state.formValues} />
+          <MenuTableForm display={display} />
+          <MenuTable />
         </Grid>
 
         <Grid item xs={12} md={12}>
@@ -95,8 +60,8 @@ const MenuCreate = (props) => {
               size="large"
               variant="contained"
               color="success"
-              disabled={state.display !== "menu"}
-              onClick={save}
+              disabled={display !== "menu"}
+              onClick={saveShop}
             >
               Save
             </Button>
@@ -107,8 +72,6 @@ const MenuCreate = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return { state };
-};
-
-export default connect(mapStateToProps, { CreateShop, CreateMenu })(MenuCreate);
+export default connect(null, {
+  SaveShopAndMenu,
+})(MenuCreate);
