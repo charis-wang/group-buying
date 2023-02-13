@@ -1,24 +1,91 @@
-import React from "react";
+import { React } from "react";
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
-class Navbar extends React.Component {
+import NavbarDrawer from "./NavbarDrawer.js";
 
-  render() {
-    return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark ">
-        <div className="container-fluid">
-          <a className="navbar-brand" href='/'>Group Buying</a>
+const Navbar = () => {
+  return (
+    <Box sx={{ flexGrow: 2, justifyContent: "space-between" }}>
+      <AppBar position="static" sx={{ bgcolor: "#d7ccc8" }}>
+        <Toolbar>
+          <NavbarDrawer />
+          <Typography
+            noWrap
+            href="/"
+            variant="h6"
+            component="a"
+            sx={{
+              mr: 2,
+              display: "flex",
+              color: "inherit",
+              textDecoration: "none",
+              ":hover": { color: "#ffffff" },
+            }}
+          >
+            Group Buying
+          </Typography>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: "flex", md: "flex" },
 
-          <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div className="navbar-nav ms-auto">
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Button color="inherit">Menu</Button>
+            <Button
+              color="inherit"
+              href="/menu/new"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              Create Menu
+            </Button>
+            <Button
+              color="inherit"
+              href="/order/new"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              Create Order
+            </Button>
+            <Button color="inherit">Join Order</Button>
+          </Box>
+          <Box sx={{ whiteSpace: "nowrap" }}>
+            <Button
+              color="inherit"
+              href="/login"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              Login
+            </Button>
+            |
+            <Button
+              color="inherit"
+              href="/signup"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              Sign Up
+            </Button>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+};
 
-              <a className="nav-link " href="/login">Login</a>
-
-            </div>
-          </div>
-        </div>
-      </nav >
-    )
-  }
-}
-
-export default Navbar
+export default Navbar;

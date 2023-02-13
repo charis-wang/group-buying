@@ -30,7 +30,6 @@ export default function OrderForm() {
   };
 
   const submitHandler = (formValues) => {
-    //console.log("submit called");
     formValues.preventDefault();
     console.log("onSubmit", state);
   };
@@ -39,11 +38,7 @@ export default function OrderForm() {
     <Box
       component="form"
       sx={{
-        "& > :not(style)": {
-          mx: 0,
-          px: 4,
-          py: 2,
-        },
+        "& > :not(style)": { m: 1, minWidth: "15ch", minHeight: "7ch" },
       }}
       autoComplete="off"
       onSubmit={submitHandler}

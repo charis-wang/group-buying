@@ -1,8 +1,11 @@
 import { combineReducers } from "redux";
 
-//import authReducer from "./authReducer";
-import menuReducer from "./menuReducers";
+import cartReducers from "./cartReducers";
+import menuReducers from "./menuReducers";
+import shopReducers from "./shopReducers";
 
 export default combineReducers({
-  menu: menuReducer,
+  cart: cartReducers,
+  menu: menuReducers,
+  shop: shopReducers,
 });

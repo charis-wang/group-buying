@@ -1,22 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
 body,
 html {
   height: 100%;
 }
 
 .bg {
-  background-image: url('http://localhost:3000/background-image.jpeg');
+  background-image: url('https://res.cloudinary.com/dzufwjonc/image/upload/v1675419632/Group%20Buying/img/ella-olsson-oPBjWBCcAEo-unsplash_ioulr3.jpg');
   background-color: gray;
   height: 35vh;
+  background-origin: border-box;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: 50% 30%;
 
 }
 
-.banner {
-  color: green;
-
-}
 
 .imgblock {
   display: inline-block;
@@ -27,11 +27,3 @@ html {
 }
 
 
-
-.card-1 {
-  width: 14rem;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  padding: 0px;
-}

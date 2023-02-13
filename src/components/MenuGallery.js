@@ -1,41 +1,63 @@
 import React from "react";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  CardActionArea,
+  Typography,
+  Grid,
+} from "@mui/material";
 
 const MenuGallery = () => {
   return (
-    <div className="col-10 ">
-      <p className="fw-light pt-2 fs-4">SHOW MENU</p>
-      <div className="row">
-        <div className="card card-1" >
-          <img src="http://localhost:3000/background-image.jpeg" className="card-img-top " alt="..." />
-          <div className="card-body text-center">
-            milkshop
-          </div>
-        </div>
+    <Grid
+      container
+      direction="row"
+      spacing={2}
+      justifyContent={{ xs: "center", sm: "flex-start", md: "flex-start" }}
+    >
+      <Grid item>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardActionArea href="/">
+            <CardMedia
+              width="140"
+              height="140"
+              component="img"
+              image="http://localhost:3000/background-image.jpeg"
+            />
 
-        <div className="card card-1" >
-          <img src="http://localhost:3000/background-image.jpeg" className="card-img-top" alt="..." />
-          <div className="card-body text-center">
-            milkshop
-          </div>
-        </div>
+            <CardContent>
+              <Typography
+                sx={{ color: "#8d6e63", "&:hover": { color: "black" } }}
+              >
+                milkshop
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Card sx={{ maxWidth: 345 }}>
+          <CardActionArea href="/">
+            <CardMedia
+              width="140"
+              height="140"
+              component="img"
+              image="http://localhost:3000/background-image.jpeg"
+            />
 
-        <div className="card card-1" >
-          <img src="http://localhost:3000/background-image.jpeg" className="card-img-top" alt="..." />
-          <div className="card-body text-center">
-            milkshop
-          </div>
-        </div>
-        <div className="card card-1" >
-          <img src="http://localhost:3000//background-image.jpeg" className="card-img-top" alt="..." />
-          <div className="card-body text-center">
-            milkshop
-          </div>
-        </div>
+            <CardContent>
+              <Typography
+                sx={{ color: "#8d6e63", "&:hover": { color: "black" } }}
+              >
+                milkshop
+              </Typography>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Grid>
+    </Grid>
+  );
+};
 
-      </div>
-    </div>
-
-  )
-}
-
-export default MenuGallery
+export default MenuGallery;
