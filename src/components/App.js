@@ -28,7 +28,7 @@ const router = createBrowserRouter([
     element: "",
   },
   {
-    path: "/order/create",
+    path: "/order/new",
     element: <OrderCreate />,
   },
   { path: "/order/:id/join", element: <OrderJoin /> },

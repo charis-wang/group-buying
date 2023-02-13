@@ -1,9 +1,7 @@
-import React from "react";
-
+import { React, useState, Fragment } from "react";
 import {
   Box,
   Drawer,
-  Button,
   List,
   IconButton,
   ListItem,
@@ -13,8 +11,15 @@ import {
 
 import MenuIcon from "@mui/icons-material/Menu";
 
+const pages = ["Homepage", "Menu", "Create Menu", "Create Order", "Join Order"];
+const ref = (text) => {
+  if (text === "Create Menu") return "/menu/new";
+  else if (text === "Create Order") return "/order/new";
+  return "/";
+};
+
 export default function NavbarDrawer() {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     top: false,
     left: false,
     bottom: false,
@@ -40,27 +45,25 @@ export default function NavbarDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Homepage", "Menu", "Create Menu", "Create Order", "Join Order"].map(
-          (text) => (
-            <ListItem
-              key={text}
-              disablePadding
-              sx={{
-                color: "inherit",
-                "&:hover": {
-                  color: "white",
-                  backgroundColor: "gray",
-                },
-              }}
-              component="a"
-              href="/menu/new"
-            >
-              <ListItemButton>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+        {pages.map((text) => (
+          <ListItem
+            key={text}
+            disablePadding
+            sx={{
+              color: "inherit",
+              "&:hover": {
+                color: "white",
+                backgroundColor: "gray",
+              },
+            }}
+            component="a"
+            href={ref(text)}
+          >
+            <ListItemButton>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
@@ -68,7 +71,7 @@ export default function NavbarDrawer() {
   return (
     <div>
       {["left"].map((anchor) => (
-        <React.Fragment key={anchor}>
+        <Fragment key={anchor}>
           <IconButton
             onClick={toggleDrawer(anchor, true)}
             size="large"
@@ -87,7 +90,7 @@ export default function NavbarDrawer() {
           >
             {list(anchor)}
           </Drawer>
-        </React.Fragment>
+        </Fragment>
       ))}
     </div>
   );

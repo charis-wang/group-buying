@@ -1,28 +1,9 @@
-import React, { Fragment } from "react";
-import {
-  AppBar,
-  Box,
-  Toolbar,
-  Typography,
-  Button,
-  IconButton,
-  Menu,
-  MenuItem,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import { React } from "react";
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
 import NavbarDrawer from "./NavbarDrawer.js";
-import { ButtonGroup } from "react-bootstrap";
-
-const pages = ["Products", "Pricing", "Blog"];
 
 const Navbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
   return (
     <Box sx={{ flexGrow: 2, justifyContent: "space-between" }}>
       <AppBar position="static" sx={{ bgcolor: "#d7ccc8" }}>
@@ -63,11 +44,43 @@ const Navbar = () => {
             >
               Create Menu
             </Button>
-            <Button color="inherit">Create Order</Button>
+            <Button
+              color="inherit"
+              href="/order/new"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              Create Order
+            </Button>
             <Button color="inherit">Join Order</Button>
           </Box>
-          <Box>
-            <Button color="inherit">Login</Button>
+          <Box sx={{ whiteSpace: "nowrap" }}>
+            <Button
+              color="inherit"
+              href="/login"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              Login
+            </Button>
+            |
+            <Button
+              color="inherit"
+              href="/signup"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              Sign Up
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
