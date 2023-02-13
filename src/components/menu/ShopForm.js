@@ -1,44 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { connect, useSelector } from "react-redux";
 import { Box, TextField, Button, MenuItem, Grid } from "@mui/material";
+import { EditShop } from "../../actions/shop";
 
 const shopTypes = [
-  {
-    value: "boxedMeal",
-    label: "便當",
-  },
-  {
-    value: "beverage",
-    label: "飲料",
-  },
-  {
-    value: "vegan",
-    label: "蔬食",
-  },
-  {
-    value: "fastFood",
-    label: "速食",
-  },
+  { value: "boxedMeal", label: "便當" },
+  { value: "beverage", label: "飲料" },
+  { value: "vegan", label: "蔬食" },
+  { value: "fastFood", label: "速食" },
 ];
 
 const ShopForm = (props) => {
-  const [state, setState] = useState({
-    shopName: "",
-    shopType: "",
-    shopPhoneNumber: "",
-    shopAddress: "",
-    shopInfo: "",
-  });
+  const shop = useSelector((state) => state.shop);
   const [readOnly, setReadOnly] = useState(false);
 
-  const onSubmit = (formValues) => {
-    formValues.preventDefault();
-    props.onSubmit(state);
-    setReadOnly(true);
+  useEffect(() => setReadOnly(props.display !== "shop"), [props.display]);
+
+  const onSubmit = (e) => {
+    props.setDisplay("menu");
+    e.preventDefault();
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setState({ ...state, [name]: value });
+    props.EditShop({ [name]: value });
   };
 
   return (
@@ -58,8 +43,9 @@ const ShopForm = (props) => {
             variant="outlined"
             onChange={handleChange}
             required
-            error={!state.shopName}
+            error={!shop.shopName}
             disabled={readOnly}
+            value={shop.shopName}
           ></TextField>
         </Grid>
         <Grid item xs={12}>
@@ -68,8 +54,8 @@ const ShopForm = (props) => {
             select
             label="Select Type of Shop"
             onChange={handleChange}
-            error={!state.shopType}
-            value={state.shopType}
+            error={!shop.shopType}
+            value={shop.shopType}
             required
             style={{ minWidth: "19.5ch" }}
             disabled={readOnly}
@@ -88,8 +74,9 @@ const ShopForm = (props) => {
             label="Phone Number"
             variant="outlined"
             onChange={handleChange}
-            error={!state.shopPhoneNumber.match(/^0[0-9]{1}-[0-9]{7,8}$/)}
+            error={!shop.shopPhoneNumber.match(/^0[0-9]{1}-[0-9]{7,8}$/)}
             placeholder="02-12345678"
+            value={shop.shopPhoneNumber}
             required
             disabled={readOnly}
           />
@@ -100,9 +87,10 @@ const ShopForm = (props) => {
             label="Address"
             variant="outlined"
             onChange={handleChange}
-            error={!state.shopAddress}
+            error={!shop.shopAddress}
             required
             disabled={readOnly}
+            value={shop.shopAddress}
           />
         </Grid>
         <Grid item xs={12}>
@@ -115,11 +103,12 @@ const ShopForm = (props) => {
             rows={3}
             onChange={handleChange}
             disabled={readOnly}
+            value={shop.shopInfo}
           />
         </Grid>
         <Grid item xs={12} mx={5}>
           <Button type="submit" variant="outlined" disabled={readOnly}>
-            {props.buttonName}
+            NEXT STEP
           </Button>
         </Grid>
       </Grid>
@@ -127,4 +116,4 @@ const ShopForm = (props) => {
   );
 };
 
-export default ShopForm;
+export default connect(null, { EditShop })(ShopForm);

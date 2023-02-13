@@ -1,10 +1,7 @@
 import userRequest from "./base";
+import { makeParams } from "./utils";
 
-const get_menu = (id) =>
-  userRequest.get("/get_menu", {
-    params: {
-      id,
-    },
-  });
+const getMenuByShopId = (shopId) =>
+  userRequest.get("/menu", makeParams({ shopId }));
 
-export { get_menu };
+export { getMenuByShopId };

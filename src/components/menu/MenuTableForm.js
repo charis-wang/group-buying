@@ -1,24 +1,27 @@
-import React, { useState } from "react";
+import { React, useEffect, useState } from "react";
+import { connect } from "react-redux";
 import { Box, TextField, IconButton, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-const MenuTableForm = (props) => {
-  const [state, setState] = useState({
-    groupName: "",
-    itemName: "",
-    price: "",
-    detail: "",
-  });
+import { CreateMenu } from "../../actions/menu";
 
-  const onSubmit = (formValues) => {
-    formValues.preventDefault();
-    props.onSubmit(state);
-    setState({
-      groupName: "",
-      itemName: "",
-      price: "",
-      detail: "",
-    });
+const initialState = {
+  groupName: "",
+  itemName: "",
+  price: "",
+  detail: "",
+};
+
+const MenuTableForm = (props) => {
+  const [state, setState] = useState({ ...initialState });
+  const [readOnly, setReadOnly] = useState(false);
+
+  useEffect(() => setReadOnly(props.display !== "menu"), [props.display]);
+
+  const onSubmit = (e) => {
+    props.CreateMenu(state);
+    setState({ ...initialState });
+    e.preventDefault();
   };
 
   const handleChange = (e) => {
@@ -53,6 +56,7 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.groupName}
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={2}>
@@ -64,6 +68,7 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.itemName}
+            disabled={readOnly}
           />
         </Grid>
 
@@ -80,6 +85,7 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.price}
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12} sm={5} md={2}>
@@ -91,10 +97,11 @@ const MenuTableForm = (props) => {
             required
             sx={{ width: "11ch" }}
             value={state.detail}
+            disabled={readOnly}
           />
         </Grid>
         <Grid item xs={12} sm={12} md={1}>
-          <IconButton type="submit" variant="outlined">
+          <IconButton type="submit" variant="outlined" disabled={readOnly}>
             <AddIcon />
           </IconButton>
         </Grid>
@@ -103,4 +110,4 @@ const MenuTableForm = (props) => {
   );
 };
 
-export default MenuTableForm;
+export default connect(null, { CreateMenu })(MenuTableForm);
