@@ -1,20 +1,36 @@
-import React from "react";
+import { React, useState } from "react";
+import { connect } from "react-redux";
+import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 
-import {
-  Grid,
-  Box,
-  Button,
-  TextField,
-  FormControlLabel,
-  Checkbox,
-  Typography,
-} from "@mui/material";
+import { login } from "../actions/account";
 
-const LoginForm = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+const initialState = {
+  username: "",
+  password: "",
+};
+
+const initialTouchedState = {
+  username: false,
+  password: false,
+};
+
+const LoginForm = (props) => {
+  const [state, setState] = useState({ ...initialState });
+  const [touched, setTouched] = useState({ ...initialTouchedState });
+
+  const onSubmit = (e) => {
+    console.log(state);
+    props.login(state);
+    setState({ ...initialState });
+    setTouched({ ...initialTouchedState });
+    e.preventDefault();
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
   return (
     <Box
       sx={{
@@ -24,21 +40,18 @@ const LoginForm = () => {
         margin: 8,
       }}
     >
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={{ maxWidth: "25rem" }}
-      >
+      <Box component="form" onSubmit={onSubmit} sx={{ maxWidth: "25rem" }}>
         <TextField
           margin="normal"
           required
           fullWidth
-          id="account"
-          label="Account"
-          name="account"
-          autoComplete="account"
-          autoFocus
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="username"
+          onChange={handleChange}
+          error={touched.username && state.username === ""}
+          onFocus={() => setTouched({ ...touched, username: true })}
         />
         <TextField
           margin="normal"
@@ -49,10 +62,9 @@ const LoginForm = () => {
           type="password"
           id="password"
           autoComplete="current-password"
-        />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
+          onChange={handleChange}
+          error={touched.password && state.password === ""}
+          onFocus={() => setTouched({ ...touched, password: true })}
         />
         <Button
           type="submit"
@@ -81,4 +93,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default connect(null, { login })(LoginForm);
