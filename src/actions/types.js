@@ -8,3 +8,5 @@ export const DELETE_MENU = "DELETE_MENU";
 
 export const CREATE_SHOP = "CREATE_SHOP";
 export const EDIT_SHOP = "EDIT_SHOP";
+
+export const CREATE_ACCOUNT = "CREATE_ACCOUNT";

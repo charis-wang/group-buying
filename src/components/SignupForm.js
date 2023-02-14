@@ -1,12 +1,40 @@
-import React from "react";
-
+import { React, useState } from "react";
+import { connect } from "react-redux";
 import { Box, Button, TextField } from "@mui/material";
 
-const SignupForm = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+import { signUp } from "../actions/account";
+
+const initialState = {
+  username: "",
+  password: "",
+  email: "",
+  phoneNumber: "",
+};
+
+const initialTouchedState = {
+  username: false,
+  password: false,
+  email: false,
+  phoneNumber: false,
+};
+
+const SignupForm = (props) => {
+  const [state, setState] = useState({ ...initialState });
+  const [touched, setTouched] = useState({ ...initialTouchedState });
+
+  const onSubmit = (e) => {
+    props.signUp(state);
+    setState({ ...initialState });
+    setTouched({ ...initialTouchedState });
+    e.preventDefault();
+    window.location.href = "/";
   };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setState({ ...state, [name]: value });
+  };
+
   return (
     <Box
       sx={{
@@ -17,21 +45,18 @@ const SignupForm = () => {
         my: 2,
       }}
     >
-      <Box
-        component="form"
-        onSubmit={handleSubmit}
-        noValidate
-        sx={{ maxWidth: "25rem" }}
-      >
+      <Box component="form" onSubmit={onSubmit} sx={{ maxWidth: "25rem" }}>
         <TextField
           margin="normal"
           required
           fullWidth
-          id="account"
-          label="Account"
-          name="account"
+          id="username"
+          label="Username"
+          name="username"
           autoComplete="account"
-          autoFocus
+          onChange={handleChange}
+          error={touched.username && state.username === ""}
+          onFocus={() => setTouched({ ...touched, username: true })}
         />
         <TextField
           margin="normal"
@@ -42,6 +67,9 @@ const SignupForm = () => {
           type="password"
           id="password"
           autoComplete="current-password"
+          onChange={handleChange}
+          error={touched.password && state.username === ""}
+          onFocus={() => setTouched({ ...touched, password: true })}
         />
         <TextField
           margin="normal"
@@ -51,6 +79,12 @@ const SignupForm = () => {
           type="email"
           id="email"
           autoComplete="email"
+          onChange={handleChange}
+          error={
+            touched.email &&
+            !state.email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]+$/i)
+          }
+          onFocus={() => setTouched({ ...touched, email: true })}
         />
         <TextField
           margin="normal"
@@ -58,6 +92,13 @@ const SignupForm = () => {
           name="phoneNumber"
           label="Phone Number"
           id="phoneNumber"
+          onChange={handleChange}
+          placeholder="02-12345678"
+          error={
+            touched.phoneNumber &&
+            !state.phoneNumber.match(/^0[0-9]{1}-[0-9]{7,8}$/)
+          }
+          onFocus={() => setTouched({ ...touched, phoneNumber: true })}
         />
         <Button
           type="submit"
@@ -75,5 +116,4 @@ const SignupForm = () => {
     </Box>
   );
 };
-
-export default SignupForm;
+export default connect(null, { signUp })(SignupForm);
