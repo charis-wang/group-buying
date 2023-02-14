@@ -13,7 +13,7 @@ export default function OrderDateTimePicker(props) {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateTimePicker
         type="datetime-local"
-        renderInput={(props) => <TextField {...props} />}
+        renderInput={(props) => <TextField sx={{ width: "15em" }} {...props} />}
         label="Order Deadline"
         value={value}
         onChange={(newValue) => {

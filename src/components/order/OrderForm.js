@@ -37,20 +37,12 @@ export default function OrderForm() {
   return (
     <Box
       component="form"
-      sx={{
-        "& > :not(style)": { m: 1, minWidth: "15ch", minHeight: "7ch" },
-      }}
       autoComplete="off"
       onSubmit={submitHandler}
+      mt={5}
+      mx={0}
     >
-      <Grid
-        container
-        spacing={3}
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-        style={{ height: "100%" }}
-      >
+      <Grid container spacing={4} direction="column" alignItems="center">
         <Grid item xs={12} md="auto">
           <TextField
             id="outlined-name"
@@ -61,6 +53,7 @@ export default function OrderForm() {
             error={!state.initiator}
             InputProps={{ inputProps: { minLength: 1, maxLength: 10 } }}
             required
+            sx={{ width: "15em" }}
           />
         </Grid>
 
@@ -73,7 +66,7 @@ export default function OrderForm() {
             onChange={handleChange}
             error={!state.shop}
             required
-            style={{ minWidth: "19.5ch" }}
+            sx={{ width: "15em" }}
           >
             {shopOptions.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -93,12 +86,17 @@ export default function OrderForm() {
 
         <Grid item xs={12} md="auto">
           <Button
-            sx={{ minHeight: "6.5ch", p: 1.5 }}
+            sx={{
+              width: "16em",
+              p: 1.5,
+              bgcolor: "#ABC270",
+              ":hover": { bgcolor: "#4E6C50" },
+            }}
             type="submit"
             size="large"
             variant="contained"
           >
-            create order form
+            create order
           </Button>
         </Grid>
       </Grid>
