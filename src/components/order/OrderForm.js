@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, TextField, Button } from "@mui/material";
+import { Box, TextField, Button, Grid, MenuItem } from "@mui/material";
 
 import OrderDateTimePicker from "./OrderDateTimePicker";
 
@@ -16,19 +16,20 @@ const shopOptions = [
 
 export default function OrderForm() {
   const [state, setState] = useState({
-    initiator: "Charis",
+    orderDatetime: "",
+    initiator: "",
     shop: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name, value);
+    if (name === "orderDatetime") setState({ ...state, orderDatetime: value });
     if (name === "initiator") setState({ ...state, initiator: value });
     if (name === "shop") setState({ ...state, shop: value });
-    //console.log('onChange:', state)
   };
 
   const submitHandler = (formValues) => {
-    console.log("submit called");
     formValues.preventDefault();
     console.log("onSubmit", state);
   };
@@ -36,53 +37,69 @@ export default function OrderForm() {
   return (
     <Box
       component="form"
-      sx={{
-        "& > :not(style)": { m: 1, minWidth: "15ch", minHeight: "7ch" },
-      }}
-      noValidate
       autoComplete="off"
       onSubmit={submitHandler}
+      mt={5}
+      mx={0}
     >
-      <OrderDateTimePicker />
+      <Grid container spacing={4} direction="column" alignItems="center">
+        <Grid item xs={12} md="auto">
+          <TextField
+            id="outlined-name"
+            label="Initiator"
+            name="initiator"
+            value={state.initiator}
+            onChange={handleChange}
+            error={!state.initiator}
+            InputProps={{ inputProps: { minLength: 1, maxLength: 10 } }}
+            required
+            sx={{ width: "15em" }}
+          />
+        </Grid>
 
-      <TextField
-        id="outlined-name"
-        label="Initiator"
-        name="initiator"
-        value={state.initiator}
-        onChange={handleChange}
-        helperText="Please enter the username of initiator"
-      />
+        <Grid item xs={12} md="auto">
+          <TextField
+            name="shop"
+            select
+            label="Select Shop"
+            value={state.shop}
+            onChange={handleChange}
+            error={!state.shop}
+            required
+            sx={{ width: "15em" }}
+          >
+            {shopOptions.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
 
-      <TextField
-        id="outlined-select-currency-native"
-        name="shop"
-        select
-        label="Select Shop"
-        defaultValue="KFC"
-        SelectProps={{
-          native: true,
-        }}
-        helperText="Please select a shop"
-        onChange={handleChange}
-      >
-        {shopOptions.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </TextField>
+        <Grid item xs={12} md="auto">
+          <OrderDateTimePicker
+            name="orderDatetime"
+            value={state.orderDatetime}
+            onChange={handleChange}
+          />
+        </Grid>
 
-      <Button
-        type="submit"
-        size="medium"
-        variant="contained"
-        onClick={() => {
-          console.log("click button");
-        }}
-      >
-        create order form
-      </Button>
+        <Grid item xs={12} md="auto">
+          <Button
+            sx={{
+              width: "16em",
+              p: 1.5,
+              bgcolor: "#ABC270",
+              ":hover": { bgcolor: "#4E6C50" },
+            }}
+            type="submit"
+            size="large"
+            variant="contained"
+          >
+            create order
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

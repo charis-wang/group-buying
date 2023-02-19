@@ -9,4 +9,6 @@ const saveShopWithMenu = (formValues) =>
 const deleteShopWithMenu = (id) =>
   userRequest.delete("/shop_with_menu", makeParams({ id }));
 
-export { getShop, saveShopWithMenu, deleteShopWithMenu };
+const getShops = () => userRequest.get("/shops");
+
+export { getShop, saveShopWithMenu, deleteShopWithMenu, getShops };
