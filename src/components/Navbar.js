@@ -1,9 +1,16 @@
 import { React } from "react";
+import { useSelector, connect } from "react-redux";
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
 import NavbarDrawer from "./NavbarDrawer.js";
+import { logout } from "../actions/account";
 
-const Navbar = () => {
+const Navbar = (props) => {
+  const status = useSelector((state) => state.account.login);
+  const logout = () => {
+    props.logout();
+  };
+
   return (
     <Box sx={{ flexGrow: 2, justifyContent: "space-between" }}>
       <AppBar position="static" sx={{ bgcolor: "#d7ccc8" }}>
@@ -57,35 +64,54 @@ const Navbar = () => {
             </Button>
             <Button color="inherit">Join Order</Button>
           </Box>
-          <Box sx={{ whiteSpace: "nowrap" }}>
-            <Button
-              color="inherit"
-              href="/login"
-              sx={{
-                "&:hover": {
-                  color: "unset",
-                },
-              }}
-            >
-              Login
-            </Button>
-            |
-            <Button
-              color="inherit"
-              href="/signup"
-              sx={{
-                "&:hover": {
-                  color: "unset",
-                },
-              }}
-            >
-              Sign Up
-            </Button>
-          </Box>
+
+          {status ? (
+            <Box sx={{ whiteSpace: "nowrap" }}>
+              <Button
+                color="inherit"
+                href="/login"
+                sx={{
+                  "&:hover": {
+                    color: "unset",
+                  },
+                }}
+                onClick={logout}
+              >
+                Logout
+              </Button>
+            </Box>
+          ) : (
+            <Box sx={{ whiteSpace: "nowrap" }}>
+              <Button
+                color="inherit"
+                href="/login"
+                sx={{
+                  "&:hover": {
+                    color: "unset",
+                  },
+                }}
+              >
+                Login
+              </Button>
+              |
+              <Button
+                color="inherit"
+                href="/signup"
+                sx={{
+                  "&:hover": {
+                    color: "unset",
+                  },
+                }}
+              >
+                Sign Up
+              </Button>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
   );
 };
 
-export default Navbar;
+//export default Navbar;
+export default connect(null, { logout })(Navbar);

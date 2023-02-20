@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Grid, Box } from "@mui/material";
 
 import "../components/index.css";

@@ -1,7 +1,7 @@
 import { React, useState } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { Grid, Box, Button, TextField, Typography } from "@mui/material";
-
+import { useSnackbar } from "notistack";
 import { login } from "../actions/account";
 
 const initialState = {
@@ -18,12 +18,16 @@ const LoginForm = (props) => {
   const [state, setState] = useState({ ...initialState });
   const [touched, setTouched] = useState({ ...initialTouchedState });
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const alertMessage = useSelector((state) => state.account.alert);
+
   const onSubmit = (e) => {
-    console.log(state);
     props.login(state);
     setState({ ...initialState });
     setTouched({ ...initialTouchedState });
     e.preventDefault();
+    if (alertMessage.length >= 1)
+      enqueueSnackbar(alertMessage, { variant: "error" });
   };
 
   const handleChange = (e) => {
