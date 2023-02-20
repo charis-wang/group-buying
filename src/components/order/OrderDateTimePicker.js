@@ -1,4 +1,4 @@
-import * as React from "react";
+import { React, useState } from "react";
 import dayjs from "dayjs";
 import TextField from "@mui/material/TextField";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -7,20 +7,22 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 export default function OrderDateTimePicker(props) {
   const now = dayjs().format();
-  const [value, setValue] = React.useState(now);
+  const [value, setValue] = useState(now);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateTimePicker
         type="datetime-local"
-        renderInput={(props) => <TextField sx={{ width: "15em" }} {...props} />}
+        renderInput={(props) => (
+          <TextField name="orderDeadline" sx={{ width: "15em" }} {...props} />
+        )}
         label="Order Deadline"
         value={value}
         onChange={(newValue) => {
           setValue(newValue);
           props.onChange({
             target: {
-              name: "orderDatetime",
+              name: "orderDeadline",
               value: +newValue,
             },
           });
