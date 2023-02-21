@@ -1,38 +1,41 @@
-import React, { useState } from "react";
+import { React, useEffect, useState } from "react";
+import { connect, useSelector } from "react-redux";
 import { Box, TextField, Button, Grid, MenuItem } from "@mui/material";
+import dayjs from "dayjs";
 
 import OrderDateTimePicker from "./OrderDateTimePicker";
+import { fetchShops } from "../../apis/shop";
+import { CreateOrder } from "../../actions/order";
 
-const shopOptions = [
-  {
-    value: "MOS",
-    label: "摩斯",
-  },
-  {
-    value: "KFC",
-    label: "肯德基",
-  },
-];
-
-export default function OrderForm() {
+const OrderForm = (props) => {
+  const username = useSelector((state) => state.account.username);
+  const [shopOptions, setShopOptions] = useState([]);
   const [state, setState] = useState({
-    orderDatetime: "",
-    initiator: "",
     shop: "",
+    initiator: username || "",
+    orderDeadline: dayjs().unix(),
+  });
+  const [touched, setTouched] = useState({
+    orderDeadline: false,
+    initiator: false,
+    shop: false,
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name, value);
-    if (name === "orderDatetime") setState({ ...state, orderDatetime: value });
-    if (name === "initiator") setState({ ...state, initiator: value });
-    if (name === "shop") setState({ ...state, shop: value });
+    setState({ ...state, [name]: value });
   };
 
-  const submitHandler = (formValues) => {
-    formValues.preventDefault();
-    console.log("onSubmit", state);
+  const submitHandler = (e) => {
+    props
+      .CreateOrder(state)
+      .then((res) => (window.location.href = `/order/${res.data.id}`));
+    e.preventDefault();
   };
+
+  useEffect(() => {
+    fetchShops().then((res) => setShopOptions(res.data.shops));
+  }, []);
 
   return (
     <Box
@@ -50,7 +53,8 @@ export default function OrderForm() {
             name="initiator"
             value={state.initiator}
             onChange={handleChange}
-            error={!state.initiator}
+            error={touched.initiator && state.initiator === ""}
+            onFocus={() => setTouched({ ...touched, initiator: true })}
             InputProps={{ inputProps: { minLength: 1, maxLength: 10 } }}
             required
             sx={{ width: "15em" }}
@@ -64,7 +68,8 @@ export default function OrderForm() {
             label="Select Shop"
             value={state.shop}
             onChange={handleChange}
-            error={!state.shop}
+            error={touched.shop && state.shop === ""}
+            onFocus={() => setTouched({ ...touched, shop: true })}
             required
             sx={{ width: "15em" }}
           >
@@ -78,8 +83,8 @@ export default function OrderForm() {
 
         <Grid item xs={12} md="auto">
           <OrderDateTimePicker
-            name="orderDatetime"
-            value={state.orderDatetime}
+            name="orderDeadline"
+            value={state.orderDeadline}
             onChange={handleChange}
           />
         </Grid>
@@ -102,4 +107,6 @@ export default function OrderForm() {
       </Grid>
     </Box>
   );
-}
+};
+
+export default connect(null, { CreateOrder })(OrderForm);

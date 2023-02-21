@@ -15,3 +15,5 @@ export const LOGOUT_ACCOUNT = "LOGOUT_ACCOUNT";
 
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const REMOVE_MESSAGE = "REMOVE_MESSAGE";
+
+export const CREATE_ORDER = "CREATE_ORDER";

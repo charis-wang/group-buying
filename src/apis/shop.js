@@ -11,4 +11,6 @@ const deleteShopWithMenu = (id) =>
 
 const getShops = () => userRequest.get("/shops");
 
-export { getShop, saveShopWithMenu, deleteShopWithMenu, getShops };
+const fetchShops = () => userRequest.post("/shop/showAll");
+
+export { getShop, saveShopWithMenu, deleteShopWithMenu, getShops, fetchShops };
