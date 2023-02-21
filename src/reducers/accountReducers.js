@@ -19,10 +19,6 @@ export default function accountReducers(state = initState, action) {
     case CREATE_ACCOUNT:
       return { ...action.payload };
     case LOGIN_ACCOUNT:
-      console.log("ac", {
-        ...action.payload,
-        login: true,
-      });
       return {
         ...action.payload,
         login: true,

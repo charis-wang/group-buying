@@ -57,7 +57,6 @@ export const getInfo = () => async (dispatch, getState) => {
     const response = await getAccountInfo();
 
     if (response.data.username) {
-      console.log("type", typeof response.data.username);
       await dispatch({
         type: LOGIN_ACCOUNT,
         payload: response.data,

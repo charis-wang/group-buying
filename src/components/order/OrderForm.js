@@ -37,6 +37,10 @@ const OrderForm = (props) => {
     fetchShops().then((res) => setShopOptions(res.data.shops));
   }, []);
 
+  useEffect(() => {
+    setState({ ...state, initiator: username });
+  }, [username]);
+
   return (
     <Box
       component="form"
