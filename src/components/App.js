@@ -11,7 +11,8 @@ import OrderJoin from "../contexts/OrderJoin";
 import OrderList from "../contexts/OrderList";
 import LoginPage from "../contexts/LoginPage";
 import SignupPage from "../contexts/SignupPage";
-import { resetAlertMessage } from "../actions/account";
+import { getInfo } from "../actions/account";
+import { Notification } from "./Notification";
 
 const router = createBrowserRouter([
   {
@@ -51,13 +52,14 @@ const router = createBrowserRouter([
 
 const AppProvider = (props) => {
   useEffect(() => {
-    props.resetAlertMessage();
+    props.getInfo();
   }, []);
   return (
-    <SnackbarProvider maxSnack={3}>
+    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+      <Notification />
       <RouterProvider router={router} />
     </SnackbarProvider>
   );
 };
 
-export default connect(null, { resetAlertMessage })(AppProvider);
+export default connect(null, { getInfo })(AppProvider);

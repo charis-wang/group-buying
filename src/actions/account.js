@@ -1,10 +1,10 @@
+import { LOGIN_ACCOUNT, LOGOUT_ACCOUNT, ADD_MESSAGE } from "./types";
 import {
-  LOGIN_ACCOUNT,
-  LOGOUT_ACCOUNT,
-  ADD_ALERT_MESSAGE,
-  REMOVE_ALERT_MESSAGE,
-} from "./types";
-import { signUpForAccount, loginAccount, logoutAccount } from "../apis/account";
+  signUpForAccount,
+  loginAccount,
+  logoutAccount,
+  getAccountInfo,
+} from "../apis/account";
 
 export const signUp = (userInfo) => async (dispatch, getState) => {
   await signUpForAccount(userInfo);
@@ -20,12 +20,19 @@ export const login = (userInfo) => async (dispatch, getState) => {
         type: LOGIN_ACCOUNT,
         payload: response.data.info,
       });
+      await dispatch({
+        type: ADD_MESSAGE,
+        payload: {
+          msg: `Hi, ${response.data.info.username} : you login successfully!`,
+          variant: "success",
+        },
+      });
     }
   } catch (error) {
     if (error.response.status) {
       await dispatch({
-        type: ADD_ALERT_MESSAGE,
-        payload: error.response.data.message,
+        type: ADD_MESSAGE,
+        payload: { msg: error.response.data.message, variant: "error" },
       });
     }
   }
@@ -35,11 +42,36 @@ export const logout = () => async (dispatch, getState) => {
   await dispatch({
     type: LOGOUT_ACCOUNT,
   });
+  await dispatch({
+    type: ADD_MESSAGE,
+    payload: {
+      msg: `Hi, you logout successfully!`,
+      variant: "success",
+    },
+  });
   await logoutAccount();
 };
 
-export const resetAlertMessage = () => async (dispatch, getState) => {
-  await dispatch({
-    type: REMOVE_ALERT_MESSAGE,
-  });
+export const getInfo = () => async (dispatch, getState) => {
+  try {
+    const response = await getAccountInfo();
+
+    if (response.data.username) {
+      console.log("type", typeof response.data.username);
+      await dispatch({
+        type: LOGIN_ACCOUNT,
+        payload: response.data,
+      });
+    }
+  } catch (error) {
+    if (error.response.status) {
+      await dispatch({
+        type: ADD_MESSAGE,
+        payload: {
+          msg: error.response.data.error,
+          variant: "error",
+        },
+      });
+    }
+  }
 };
