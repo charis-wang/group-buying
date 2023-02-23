@@ -2,7 +2,7 @@ import { React } from "react";
 import { Button, Box, Typography, Grid } from "@mui/material";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
-export const CartItem = (props) => {
+const CartItem = (props) => {
   const { item } = props;
 
   const updateAmount = (delta) => {
@@ -45,3 +45,5 @@ export const CartItem = (props) => {
     </Box>
   );
 };
+
+export default CartItem;

@@ -1,4 +1,3 @@
-import _ from "lodash";
 import { ADD_CART_ITEM, EDIT_CART_ITEM } from "../actions/types";
 
 export default function cartReducers(state = {}, action) {
@@ -12,7 +11,8 @@ export default function cartReducers(state = {}, action) {
       return { ...state, [key]: action.payload };
 
     case EDIT_CART_ITEM:
-      return { ...state, ...action.payload };
+      console.log("submit", { ...action.payload });
+      return { ...action.payload };
 
     default:
       return state;

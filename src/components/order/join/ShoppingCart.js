@@ -1,72 +1,58 @@
-import { React, setState, Fragment, Component } from "react";
+import { React, Fragment, useState } from "react";
+import { connect } from "react-redux";
 import { Badge, Fab } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
-import { connect } from "react-redux";
-import { EditCartItem } from "../../../actions";
-import { CartDialog } from "./cart/CartDialog";
+import { EditCartItem } from "../../../actions/cart";
+import CartDialog from "./cart/CartDialog";
 import { sum } from "../../../utils/base";
 
-class ShoppingCart extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      notificationNumber: "",
-    };
-  }
+const ShoppingCart = (props) => {
+  const [state, setState] = useState({
+    open: false,
+    notificationNumber: "",
+  });
 
-  open = {
+  const open = {
     get: () => {
-      return this.state.open;
+      return state.open;
     },
     set: (value) => {
-      this.setState({ open: value });
+      setState({ open: value });
     },
   };
 
-  onSubmit = (formValues) => {
-    this.props.EditCartItem(formValues);
+  const onSubmit = (formValues) => {
+    props.EditCartItem();
   };
 
-  notify = () => {
-    setState({ notificationNumber: 123 });
-    return this.state.notificationNumber;
-  };
-
-  render() {
-    return (
-      <Fragment>
-        <Fab
-          sx={{
-            position: "fixed",
-            bottom: 0,
-            right: 0,
-            backgroundColor: "#e6fad4",
-            "&:hover": {
-              backgroundColor: "#bde09f",
-            },
-          }}
-          onClick={() => this.open.set(true)}
+  return (
+    <Fragment>
+      <Fab
+        sx={{
+          position: "fixed",
+          bottom: "2%",
+          right: "2.5%",
+          backgroundColor: "#e6fad4",
+          "&:hover": {
+            backgroundColor: "#bde09f",
+          },
+        }}
+        onClick={() => open.set(true)}
+      >
+        <Badge
+          color="success"
+          badgeContent={sum(
+            Object.values(props.cart).map((item) => item.amount)
+          )}
         >
-          <Badge
-            color="success"
-            badgeContent={sum(
-              Object.values(this.props.cart).map((item) => item.amount)
-            )}
-          >
-            <ShoppingCartOutlinedIcon />
-          </Badge>
-        </Fab>
-        <CartDialog
-          open={this.open}
-          onSubmit={this.onSubmit}
-          cartValues={this.props.cart}
-        />
-      </Fragment>
-    );
-  }
-}
+          <ShoppingCartOutlinedIcon />
+        </Badge>
+      </Fab>
+      <CartDialog open={open} onSubmit={onSubmit} cartValues={props.cart} />
+    </Fragment>
+  );
+};
 
 const mapStateToProps = (state) => {
   return { cart: state.cart };

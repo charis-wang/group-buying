@@ -10,5 +10,5 @@ export const Notification = () => {
     if (message.msg !== "") {
       enqueueSnackbar(message.msg, { variant: message.variant });
     }
-  }, [message.msg]);
+  });
 };

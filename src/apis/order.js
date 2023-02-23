@@ -1,6 +1,7 @@
-import userRequest from "./base";
+import req from "./base";
 
-const createOrder = (formValues) =>
-  userRequest.post("/order/create", formValues);
+const createOrder = (payload) => req.post("/order/create", payload);
 
-export { createOrder };
+const getOrder = (id) => req.get("/order", { id });
+
+export { createOrder, getOrder };

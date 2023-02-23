@@ -63,7 +63,7 @@ export const getInfo = () => async (dispatch, getState) => {
       });
     }
   } catch (error) {
-    if (error.response.status) {
+    if (error.response.status !== 401) {
       await dispatch({
         type: ADD_MESSAGE,
         payload: {

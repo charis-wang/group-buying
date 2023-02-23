@@ -1,4 +1,5 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
+import { connect, useSelector } from "react-redux";
 import {
   MenuItem,
   ListItemText,
@@ -13,13 +14,14 @@ import {
   Box,
 } from "@mui/material";
 
-import { connect } from "react-redux";
-import { AddCartItem } from "../../../actions";
-import { detailTagOfDrinks } from "../../../utils/mockData";
+import { AddCartItem } from "../../../actions/cart";
+
 const getInit = (item) => {
   const initValue = {
-    id: item.itemId,
-    itemId: item.itemId,
+    buyer: "",
+    orderId: "",
+    id: item._id,
+    itemId: item._id,
     itemName: item.itemName,
     orderDetail: "",
     price: item.price,
@@ -34,6 +36,9 @@ const Item = (props) => {
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const buyer = useSelector((state) => state.account.username);
+  const orderId = useSelector((state) => state.order.orderId);
+
   const [state, setState] = useState(getInit(item));
   const handleChange = (e) => {
     const { name, type, value } = e.target;
@@ -44,7 +49,8 @@ const Item = (props) => {
     setState({ ...state, amount: state.amount + value });
   };
   const onSubmit = (e) => {
-    const newState = { ...state, id: item.itemId + state.orderDetail };
+    const newState = { ...state, id: item._id + state.orderDetail };
+
     setOpen(false);
     props.onSubmit(newState);
     e.preventDefault();
@@ -55,6 +61,10 @@ const Item = (props) => {
       amount: 1,
     });
   };
+
+  useEffect(() => {
+    setState({ ...state, buyer: buyer, orderId: orderId });
+  }, []);
 
   return (
     <Box>

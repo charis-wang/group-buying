@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import { connect, useSelector } from "react-redux";
 import {
   Button,
   Dialog,
@@ -8,12 +9,18 @@ import {
   DialogTitle,
 } from "@mui/material";
 
-import { CartItem } from "./CartItem";
+import CartItem from "./CartItem";
+import { EditCartItem } from "../../../../actions/cart";
+import SubmitDialog from "./SubmitDialog";
 
-export const CartDialog = (props) => {
+const CartDialog = (props) => {
   const { open } = props;
+
   const [cartValues, setCartValues] = useState([]);
-  const [disable, setDisable] = useState(true);
+  const [clickSubmit, setClickSubmit] = useState(false);
+
+  const initiator = useSelector((state) => state.order.initiator);
+  const username = useSelector((state) => state.account.username);
 
   const handleClose = () => open.set(false);
 
@@ -21,12 +28,16 @@ export const CartDialog = (props) => {
     const amount = cartValues[id].amount;
     const item = { ...cartValues[id], amount: amount + delta };
     const newCartValues = { ...cartValues, [id]: item };
+
     if (item.amount === 0) delete newCartValues[id];
     setCartValues(newCartValues);
   };
 
   const onSubmit = (e) => {
-    props.onSubmit(cartValues);
+    props.EditCartItem(cartValues);
+    if (username !== "") {
+      setClickSubmit(true);
+    }
     e.preventDefault();
   };
 
@@ -39,11 +50,19 @@ export const CartDialog = (props) => {
       open={open.get()}
       keepMounted
       onClose={handleClose}
-      sx={{ backgroundColor: "rgba(255,255,255,0.2)" }}
+      sx={{
+        backgroundColor: "rgba(255,255,255,0.2)",
+        "& .MuiDialog-container": {
+          "& .MuiPaper-root": {
+            width: "100%",
+            maxWidth: "500px", // Set your width here
+          },
+        },
+      }}
       onSubmit={onSubmit}
       component="form"
     >
-      <DialogTitle>Your Cart List of Dixon's group buying</DialogTitle>
+      <DialogTitle>{`Your Cart List of ${initiator}'s group buying`}</DialogTitle>
       <DialogContent>
         <DialogContentText>
           Check your cart list and submit!
@@ -55,14 +74,19 @@ export const CartDialog = (props) => {
         ))}
       </DialogContent>
       <DialogActions>
-        <Button
-          type="submit"
-          disabled={Object.values(cartValues).length ? false : true}
-        >
-          Save
-        </Button>
+        <div>
+          <Button
+            type="submit"
+            disabled={Object.values(cartValues).length ? false : true}
+          >
+            Save
+          </Button>
+          {clickSubmit ? <SubmitDialog open={clickSubmit} /> : null}
+        </div>
         <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>
     </Dialog>
   );
 };
+
+export default connect(null, { EditCartItem })(CartDialog);

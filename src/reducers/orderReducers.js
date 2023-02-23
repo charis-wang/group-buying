@@ -1,6 +1,7 @@
 import { CREATE_ORDER } from "../actions/types";
 
 const initState = {
+  orderId: "",
   initiator: "",
   shop: "",
   orderDeadline: "",
@@ -9,7 +10,12 @@ const initState = {
 export default function orderReducers(state = initState, action) {
   switch (action.type) {
     case CREATE_ORDER:
-      return { ...action.payload };
+      return {
+        orderId: action.payload._id,
+        initiator: action.payload.initiator,
+        shop: action.payload.shop.shopName,
+        orderDeadline: action.payload.orderDeadline,
+      };
     default:
       return state;
   }

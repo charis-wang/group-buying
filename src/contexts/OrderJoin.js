@@ -1,59 +1,57 @@
-import React from "react";
+import { React, useEffect } from "react";
+import { connect, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Typography, Grid, Box } from "@mui/material";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderMenu from "../components/order/join/OrderMenu";
 import ShoppingCart from "../components/order/join/ShoppingCart";
+import { FetchOrder } from "../actions/order";
 
-import { orderInfo } from "../utils/mockData";
 import { getDatetimeString } from "../utils/base";
 
-class OrderJoin extends React.Component {
-  render() {
-    return (
-      <Box>
-        <Navbar />
-        <BackgroundImagePage />
-        <Grid
-          container
-          justifyContent="center"
-          direction="row"
-          spacing={2}
-          my={2}
-        >
-          <Grid item xs={9} md={12}>
-            <Typography
-              m={0}
-              align="center"
-              variant="h5"
-              gutterBottom
-              sx={{
-                fontWeight: "bold",
-                fontStyle: "Italic",
-                color: "darkseagreen",
-              }}
-              component="h4"
-            >
-              Join {orderInfo.initiator} Order Now!
+const OrderJoin = (props) => {
+  const orderId = useParams().id;
+  const orderInfo = useSelector((state) => state.order);
+
+  useEffect(() => {
+    props.FetchOrder(orderId);
+  }, []);
+
+  return (
+    <Box>
+      <Navbar />
+      <BackgroundImagePage title="Join Order Now!" />
+      <Grid
+        container
+        justifyContent="center"
+        direction="row"
+        spacing={2}
+        my={2}
+      >
+        <Grid item xs={10.5} sm={8} md={8} lg={8}>
+          <Box justifyContent="center" alignItems="center">
+            <Typography gutterBottom>
+              OrderId: {orderInfo.orderId} <br />
+              Initiator: {orderInfo.initiator} <br />
+              shop: {orderInfo.shop}
             </Typography>
-          </Grid>
-          <Grid item xs={9} md={12}>
-            <Typography m={0} align="center" gutterBottom>
-              Deadline: {getDatetimeString(orderInfo.orderDeadlineTimestamp)}
+            <Typography gutterBottom>
+              Deadline: {getDatetimeString(orderInfo.orderDeadline)}
             </Typography>
             <br />
-          </Grid>
-          <Grid item xs={9} md={9} mb={3}>
-            <OrderMenu />
-          </Grid>
-          <Grid item xs={9} md={9} mb={3} alignItems="flex-end">
-            <ShoppingCart />
-          </Grid>
+          </Box>
         </Grid>
-      </Box>
-    );
-  }
-}
+        <Grid item xs={10.5} sm={8} mb={3}>
+          <OrderMenu />
+        </Grid>
+        <Grid item xs={10} md={9} mb={3} alignItems="flex-end">
+          <ShoppingCart />
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
 
-export default OrderJoin;
+export default connect(null, { FetchOrder })(OrderJoin);

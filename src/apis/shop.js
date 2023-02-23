@@ -1,16 +1,13 @@
-import userRequest from "./base";
-import { makeParams } from "./utils";
+import req from "./base";
 
-const getShop = (id) => userRequest.get("/shop", makeParams({ id }));
+const getShop = (id) => req.get("/shop", { id });
 
-const saveShopWithMenu = (formValues) =>
-  userRequest.post("/shop_with_menu", formValues);
+const saveShopWithMenu = (payload) => req.post("/shop_with_menu", payload);
 
-const deleteShopWithMenu = (id) =>
-  userRequest.delete("/shop_with_menu", makeParams({ id }));
+const deleteShopWithMenu = (id) => req.delete("/shop_with_menu", { id });
 
-const getShops = () => userRequest.get("/shops");
+const getShops = () => req.get("/shops");
 
-const fetchShops = () => userRequest.post("/shop/showAll");
+const fetchShops = () => req.post("/shop/showAll");
 
 export { getShop, saveShopWithMenu, deleteShopWithMenu, getShops, fetchShops };
