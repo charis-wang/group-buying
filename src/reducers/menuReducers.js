@@ -1,11 +1,13 @@
 import _ from "lodash";
 import { ADD_MENU, DELETE_MENU, EDIT_MENU, FETCH_MENU } from "../actions/types";
 
+const debug = false;
+
 export default function menuReducers(state = {}, action) {
   const key = (action.payload || {}).groupName;
 
   // Debugger Message
-  if ([ADD_MENU, DELETE_MENU].indexOf(action.type) !== -1) {
+  if (debug && [ADD_MENU, DELETE_MENU].indexOf(action.type) !== -1) {
     console.log(">>>", action.type);
     console.log("state: ", state);
     console.log("payload: ", action.payload);

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+const debug = true;
 const errorWhiteList = [{ path: "/account/info", code: 401 }];
 
 const userRequest = axios.create({
@@ -9,7 +10,20 @@ const userRequest = axios.create({
 });
 
 userRequest.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    if (debug) {
+      const method = response.config.method;
+      console.log(
+        `%c[${method.toUpperCase()}] ${response.config.url}`,
+        "color: blue; font-size:13px;"
+      );
+      console.log(response.config.params || "< No Params >");
+      console.log(response.data);
+      console.log("");
+    }
+
+    return response;
+  },
   (error) => {
     const currentPath = error.response.config.url;
     const currentStatus = error.response.status;
@@ -19,7 +33,7 @@ userRequest.interceptors.response.use(
     }
 
     if (error.response) {
-      console.log("[Error] Response: ", error.response);
+      if (debug) console.log("[Error] Response: ", error.response);
     }
 
     throw error;

@@ -4,24 +4,16 @@ import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 
 import { login } from "../actions/account";
 
-const initialState = {
-  username: "",
-  password: "",
-};
-
-const initialTouchedState = {
-  username: false,
-  password: false,
-};
-
 const LoginForm = (props) => {
-  const [state, setState] = useState({ ...initialState });
-  const [touched, setTouched] = useState({ ...initialTouchedState });
+  const [state, setState] = useState({});
+  const [touched, setTouched] = useState({});
 
   const onSubmit = (e) => {
-    props.login(state);
-    setState({ ...initialState });
-    setTouched({ ...initialTouchedState });
+    props.login(state).then(() => {
+      setState({});
+      setTouched({});
+    });
+
     e.preventDefault();
   };
 
@@ -49,7 +41,7 @@ const LoginForm = (props) => {
           name="username"
           autoComplete="username"
           onChange={handleChange}
-          error={touched.username && state.username === ""}
+          error={touched.username && !state.username}
           onFocus={() => setTouched({ ...touched, username: true })}
         />
         <TextField
@@ -62,7 +54,7 @@ const LoginForm = (props) => {
           id="password"
           autoComplete="current-password"
           onChange={handleChange}
-          error={touched.password && state.password === ""}
+          error={touched.password && !state.password}
           onFocus={() => setTouched({ ...touched, password: true })}
         />
         <Button

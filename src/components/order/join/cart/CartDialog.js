@@ -14,15 +14,14 @@ import { EditCartItem } from "../../../../actions/cart";
 import SubmitDialog from "./SubmitDialog";
 
 const CartDialog = (props) => {
-  const { open } = props;
+  const { open, setOpen } = props;
 
   const [cartValues, setCartValues] = useState([]);
   const [clickSubmit, setClickSubmit] = useState(false);
 
   const initiator = useSelector((state) => state.order.initiator);
-  const username = useSelector((state) => state.account.username);
 
-  const handleClose = () => open.set(false);
+  const handleClose = () => setOpen(false);
 
   const updateAmount = (id, delta) => {
     const amount = cartValues[id].amount;
@@ -34,10 +33,9 @@ const CartDialog = (props) => {
   };
 
   const onSubmit = (e) => {
-    props.EditCartItem(cartValues);
-    if (username !== "") {
-      setClickSubmit(true);
-    }
+    props.EditCartItem(cartValues).then((success) => {
+      if (success) setClickSubmit(true);
+    });
     e.preventDefault();
   };
 
@@ -47,7 +45,7 @@ const CartDialog = (props) => {
 
   return (
     <Dialog
-      open={open.get()}
+      open={open}
       keepMounted
       onClose={handleClose}
       sx={{
@@ -81,7 +79,7 @@ const CartDialog = (props) => {
           >
             Save
           </Button>
-          {clickSubmit ? <SubmitDialog open={clickSubmit} /> : null}
+          <SubmitDialog open={clickSubmit} />
         </div>
         <Button onClick={handleClose}>Cancel</Button>
       </DialogActions>

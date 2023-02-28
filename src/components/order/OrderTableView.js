@@ -9,6 +9,7 @@ import {
   Box,
   IconButton,
   Collapse,
+  Button,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -37,7 +38,11 @@ const CollapsibleRow = (props) => {
         </TableCell>
         {tableTitles.map((title) => (
           <TableCell align="center" key={title.key}>
-            {summary[title.key]}
+            {title.key === "status" ? (
+              <Button> {summary[title.key] ? "paid" : "unpaid"} </Button>
+            ) : (
+              summary[title.key]
+            )}
           </TableCell>
         ))}
       </TableRow>
@@ -59,12 +64,12 @@ const CollapsibleRow = (props) => {
                 </TableHead>
                 <TableBody>
                   {orders.map((row) => (
-                    <TableRow key={row.orderId}>
+                    <TableRow key={row.buyer + row.itemId + row.orderDetail}>
                       <TableCell />
                       {collapseTableTitles.map((title) => (
                         <TableCell
                           align="center"
-                          key={`${row.orderId}${title.key}${row[title.key]}`}
+                          key={row.id + title.key + row[title.key]}
                         >
                           {row[title.key]}
                         </TableCell>
@@ -83,18 +88,13 @@ const CollapsibleRow = (props) => {
 
 const OrderTableView = (props) => {
   const [allOpen, setAllOpen] = useState(false);
-  const {
-    type,
-    dataOfOrderCreate,
-    tableTitles,
-    collapseTableTitles,
-    orderData,
-  } = props;
-  const theDeadline = getDatetimeString(dataOfOrderCreate.deadline);
+  const { dataOfOrderCreate, tableTitles, collapseTableTitles, orderData } =
+    props;
+  const theDeadline = getDatetimeString(dataOfOrderCreate.orderDeadline);
   const rows = Object.entries(orderData);
   const total = Object.values(orderData)
     .map((orders) => orders.summary.sum)
-    .reduce(add);
+    .reduce(add, 0);
 
   return (
     <Table sx={{ minWidth: 100 }} aria-label="simple table">

@@ -14,6 +14,6 @@ const getGroupData = (data, field_name) => {
 const add = (x, y) => x + y;
 const sum = (arr) => arr.reduce(add, 0);
 const getDatetimeString = (timestamp) => new Date(timestamp * 1000).toString();
-const getOrderSubTotal = (order) => order.amount * order.price;
+const getOrderSubTotal = (order) => order.amount * order.subtotal;
 
 export { getDatetimeString, add, sum, getGroupData, getOrderSubTotal };

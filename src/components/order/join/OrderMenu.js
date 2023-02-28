@@ -1,5 +1,5 @@
 import { React } from "react";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Paper,
   MenuList,
@@ -10,14 +10,9 @@ import {
 } from "@mui/material";
 
 import Item from "./Item";
-import { AddCartItem } from "../../../actions/cart";
 
 const OrderMenu = (props) => {
   const groupMenus = useSelector((state) => state.menu);
-
-  const onSubmit = (formValues) => {
-    props.AddCartItem(formValues);
-  };
 
   return (
     <Paper sx={{ width: 4000, maxWidth: "100%" }}>
@@ -52,11 +47,7 @@ const OrderMenu = (props) => {
                   </MenuItem>
                   <Divider />
                   {group[1].map((item) => (
-                    <Item
-                      item={item}
-                      key={item._id + item.itemName}
-                      onSubmit={onSubmit}
-                    ></Item>
+                    <Item item={item} key={item._id + item.itemName}></Item>
                   ))}
                 </Grid>
               ))}
@@ -68,4 +59,4 @@ const OrderMenu = (props) => {
   );
 };
 
-export default connect(null, { AddCartItem })(OrderMenu);
+export default OrderMenu;

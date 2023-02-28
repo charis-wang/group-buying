@@ -1,12 +1,20 @@
-import { React } from "react";
-import { Typography, Grid, Box } from "@mui/material";
+import { React, useEffect } from "react";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
+import { Grid, Box, Button } from "@mui/material";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderListTable from "../components/order/OrderListTable";
-import { Button } from "react-bootstrap";
+import { FetchOrderInfo } from "../actions/order";
 
-const OrderListItem = () => {
+const OrderListItem = (props) => {
+  const orderId = useParams().id;
+
+  useEffect(() => {
+    props.FetchOrderInfo(orderId);
+  });
+
   return (
     <Box>
       <Navbar />
@@ -17,7 +25,9 @@ const OrderListItem = () => {
         </Grid>
         <Grid item xs={9} md={9} mb={3}>
           <Grid container justifyContent="center">
-            <Button color="success">join</Button>
+            <Button color="success" href={`/order/${orderId}/join`}>
+              join
+            </Button>
           </Grid>
         </Grid>
       </Grid>
@@ -25,4 +35,4 @@ const OrderListItem = () => {
   );
 };
 
-export default OrderListItem;
+export default connect(null, { FetchOrderInfo })(OrderListItem);

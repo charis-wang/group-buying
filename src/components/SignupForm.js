@@ -23,11 +23,14 @@ const SignupForm = (props) => {
   const [touched, setTouched] = useState({ ...initialTouchedState });
 
   const onSubmit = (e) => {
-    props.signUp(state);
-    setState({ ...initialState });
-    setTouched({ ...initialTouchedState });
+    props.signUp(state).then((success) => {
+      if (success) {
+        // setState({ ...initialState });
+        // setTouched({ ...initialTouchedState });
+        window.location.href = "/";
+      }
+    });
     e.preventDefault();
-    window.location.href = "/";
   };
 
   const handleChange = (e) => {

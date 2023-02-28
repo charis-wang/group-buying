@@ -1,16 +1,11 @@
 import { React, useState } from "react";
+import { useSelector } from "react-redux";
 import { TableContainer, Paper, Button, ButtonGroup } from "@mui/material";
 import ReorderOutlinedIcon from "@mui/icons-material/ReorderOutlined";
 import PeopleOutlineOutlinedIcon from "@mui/icons-material/PeopleOutlineOutlined";
-import { getGroupData, add, getOrderSubTotal } from "../../utils/base";
-import { orderRawData } from "../../utils/mockData";
-import OrderTableView from "./OrderTableView";
 
-const dataOfOrderCreate = {
-  initiator: "Charis",
-  shop: "KFC",
-  deadline: 1672985611,
-};
+import { getGroupData, add, getOrderSubTotal } from "../../utils/base";
+import OrderTableView from "./OrderTableView";
 
 const TableTitlesMap = {
   buyer: [
@@ -21,28 +16,34 @@ const TableTitlesMap = {
   ],
   item: [
     { key: "item", value: "Item" },
-    { key: "price", value: "Price" },
+    // { key: "price", value: "Price" },
     { key: "amount", value: "Amount" },
     { key: "sum", value: "Sum" },
-    { key: "detail", value: "Detail" },
+    // { key: "detail", value: "Detail" },
   ],
 };
 const CollapseTableTitlesMap = {
   buyer: [
-    { key: "item", value: "Item" },
+    { key: "itemName", value: "Item" },
     { key: "price", value: "Price" },
+    { key: "orderDetail", value: "Detail" },
+    { key: "extraCost", value: "Extra Cost" },
+
     { key: "amount", value: "Amount" },
+    { key: "subtotal", value: "Subtotal" },
   ],
   item: [
     { key: "buyer", value: "Buyer" },
-    { key: "item", value: "Item" },
+    { key: "itemName", value: "Item" },
+    { key: "orderDetail", value: "Detail" },
+    { key: "extraCost", value: "Extra Cost" },
     { key: "amount", value: "Amount" },
-    { key: "detail", value: "Detail" },
+    { key: "subtotal", value: "Subtotal" },
   ],
 };
 
 const getItemOrderMap = (data) => {
-  let itemOrderMap = getGroupData(data, "item");
+  let itemOrderMap = getGroupData(data, "itemName");
 
   for (let item in itemOrderMap) {
     const orders = itemOrderMap[item];
@@ -52,7 +53,7 @@ const getItemOrderMap = (data) => {
         price: orders[0].price,
         amount: orders.map((row) => row.amount).reduce(add),
         sum: orders.map(getOrderSubTotal).reduce(add),
-        detail: "hello world",
+        // detail: "hi",
       },
       orders: orders,
     };
@@ -71,7 +72,9 @@ const getBuyerOrderMap = (data) => {
         buyer,
         amount: orders.map((row) => row.amount).reduce(add),
         sum: orders.map(getOrderSubTotal).reduce(add),
-        status: orders[0].status == "paid" ? "收到錢" : "給我錢",
+        status: orders
+          .map((order) => order.status)
+          .every((status) => status === "paid"),
       },
       orders: orders,
     };
@@ -80,41 +83,46 @@ const getBuyerOrderMap = (data) => {
   return buyerOrderMap;
 };
 
-export default function OrderListTable() {
-  const [ViewStatus, setViewStatus] = useState("item");
+const OrderListTable = (props) => {
+  const orderInfo = useSelector((state) => state.order);
+  const orderItems = useSelector((state) => state.orderItem);
+  const [viewStatus, setViewStatus] = useState("item");
+
   return (
     <TableContainer component={Paper}>
       <ButtonGroup size="small" aria-label="small button group">
         <Button
-          variant={ViewStatus == "item" ? "contained" : "outlined"}
+          variant={viewStatus === "item" ? "contained" : "outlined"}
           startIcon={<ReorderOutlinedIcon />}
           onClick={() => setViewStatus("item")}
         >
           item view
         </Button>
         <Button
-          variant={ViewStatus == "buyer" ? "contained" : "outlined"}
+          variant={viewStatus === "buyer" ? "contained" : "outlined"}
           startIcon={<PeopleOutlineOutlinedIcon />}
           onClick={() => setViewStatus("buyer")}
         >
           buyer view
         </Button>
       </ButtonGroup>
-      {ViewStatus == "item" ? (
+      {viewStatus === "item" ? (
         <OrderTableView
-          dataOfOrderCreate={dataOfOrderCreate}
+          dataOfOrderCreate={orderInfo}
           tableTitles={TableTitlesMap.item}
           collapseTableTitles={CollapseTableTitlesMap.item}
-          orderData={getItemOrderMap(orderRawData)}
+          orderData={getItemOrderMap(orderItems)}
         />
       ) : (
         <OrderTableView
-          dataOfOrderCreate={dataOfOrderCreate}
+          dataOfOrderCreate={orderInfo}
           tableTitles={TableTitlesMap.buyer}
           collapseTableTitles={CollapseTableTitlesMap.buyer}
-          orderData={getBuyerOrderMap(orderRawData)}
+          orderData={getBuyerOrderMap(orderItems)}
         />
       )}
     </TableContainer>
   );
-}
+};
+
+export default OrderListTable;

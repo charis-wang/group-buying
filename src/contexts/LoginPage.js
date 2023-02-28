@@ -8,9 +8,9 @@ import BackgroundImagePage from "../components/Background";
 import LoginForm from "../components/LoginForm";
 
 const LoginPage = (props) => {
-  const status = useSelector((state) => state.account.status);
+  const login = useSelector((state) => state.account.login);
 
-  // if (status === "login") window.location.href = "/";
+  if (login) window.location.href = "/";
 
   return (
     <Grid

@@ -1,76 +1,45 @@
-import { LOGIN_ACCOUNT, LOGOUT_ACCOUNT, ADD_MESSAGE } from "./types";
+import { LOGIN_ACCOUNT, LOGOUT_ACCOUNT } from "./types";
 import {
   signUpForAccount,
   loginAccount,
   logoutAccount,
   getAccountInfo,
 } from "../apis/account";
+import { successMsg } from "./message";
+import { handleDefaultError } from "./base";
 
-export const signUp = (userInfo) => async (dispatch, getState) => {
-  await signUpForAccount(userInfo);
-  alert("register success, please login!!!!!");
-};
+export const signUp = (userInfo) => async (dispatch) =>
+  signUpForAccount(userInfo)
+    .then(() => {
+      alert("register success, please login!!!!!");
+      return true;
+    })
+    .catch((error) => handleDefaultError(error, dispatch));
 
-export const login = (userInfo) => async (dispatch, getState) => {
-  try {
-    const response = await loginAccount(userInfo);
+export const login = (userInfo) => async (dispatch) =>
+  loginAccount(userInfo)
+    .then((response) => {
+      dispatch({ type: LOGIN_ACCOUNT, payload: response.data.info });
 
-    if (response.data.success) {
-      await dispatch({
-        type: LOGIN_ACCOUNT,
-        payload: response.data.info,
-      });
-      await dispatch({
-        type: ADD_MESSAGE,
-        payload: {
-          msg: `Hi, ${response.data.info.username} : you login successfully!`,
-          variant: "success",
-        },
-      });
-    }
-  } catch (error) {
-    if (error.response.status) {
-      await dispatch({
-        type: ADD_MESSAGE,
-        payload: { msg: error.response.data.message, variant: "error" },
-      });
-    }
-  }
-};
+      const msg = `Hi, ${response.data.info.username} : you login successfully!`;
+      successMsg(msg)(dispatch);
+    })
+    .catch((error) => handleDefaultError(error, dispatch));
 
-export const logout = () => async (dispatch, getState) => {
-  await dispatch({
-    type: LOGOUT_ACCOUNT,
-  });
-  await dispatch({
-    type: ADD_MESSAGE,
-    payload: {
-      msg: `Hi, you logout successfully!`,
-      variant: "success",
-    },
-  });
-  await logoutAccount();
-};
+export const logout = () => (dispatch) =>
+  logoutAccount()
+    .then(() => {
+      dispatch({ type: LOGOUT_ACCOUNT });
+      successMsg("Hi, you logout successfully!")(dispatch);
+    })
+    .catch((error) => handleDefaultError(error, dispatch));
 
-export const getInfo = () => async (dispatch, getState) => {
-  try {
-    const response = await getAccountInfo();
-
-    if (response.data.username) {
-      await dispatch({
-        type: LOGIN_ACCOUNT,
-        payload: response.data,
-      });
-    }
-  } catch (error) {
-    if (error.response.status !== 401) {
-      await dispatch({
-        type: ADD_MESSAGE,
-        payload: {
-          msg: error.response.data.error,
-          variant: "error",
-        },
-      });
-    }
-  }
-};
+export const getInfo = () => (dispatch) =>
+  getAccountInfo()
+    .then((response) => {
+      dispatch({ type: LOGIN_ACCOUNT, payload: response.data });
+    })
+    .catch((error) => {
+      if (error.response.status !== 401) throw error;
+    })
+    .catch((error) => handleDefaultError(error, dispatch));

@@ -1,30 +1,14 @@
 import { React, Fragment, useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Badge, Fab } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 
-import { EditCartItem } from "../../../actions/cart";
 import CartDialog from "./cart/CartDialog";
 import { sum } from "../../../utils/base";
 
-const ShoppingCart = (props) => {
-  const [state, setState] = useState({
-    open: false,
-    notificationNumber: "",
-  });
-
-  const open = {
-    get: () => {
-      return state.open;
-    },
-    set: (value) => {
-      setState({ open: value });
-    },
-  };
-
-  const onSubmit = (formValues) => {
-    props.EditCartItem();
-  };
+const ShoppingCart = () => {
+  const cart = useSelector((state) => state.cart);
+  const [open, setOpen] = useState(false);
 
   return (
     <Fragment>
@@ -38,24 +22,18 @@ const ShoppingCart = (props) => {
             backgroundColor: "#bde09f",
           },
         }}
-        onClick={() => open.set(true)}
+        onClick={() => setOpen(true)}
       >
         <Badge
           color="success"
-          badgeContent={sum(
-            Object.values(props.cart).map((item) => item.amount)
-          )}
+          badgeContent={sum(Object.values(cart).map((item) => item.amount))}
         >
           <ShoppingCartOutlinedIcon />
         </Badge>
       </Fab>
-      <CartDialog open={open} onSubmit={onSubmit} cartValues={props.cart} />
+      <CartDialog open={open} setOpen={setOpen} cartValues={cart} />
     </Fragment>
   );
 };
 
-const mapStateToProps = (state) => {
-  return { cart: state.cart };
-};
-
-export default connect(mapStateToProps, { EditCartItem })(ShoppingCart);
+export default ShoppingCart;

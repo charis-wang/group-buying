@@ -1,5 +1,6 @@
+export const FETCH_CART_ITEMS = "FETCH_CART_ITEMS";
 export const ADD_CART_ITEM = "ADD_CART_ITEM";
-export const EDIT_CART_ITEM = "EDIT_CART_ITEM";
+export const UPDATE_CART_ITEMS = "UPDATE_CART_ITEMS";
 
 export const FETCH_MENU = "FETCH_MENU";
 export const ADD_MENU = "ADD_MENU";
@@ -9,11 +10,12 @@ export const DELETE_MENU = "DELETE_MENU";
 export const CREATE_SHOP = "CREATE_SHOP";
 export const EDIT_SHOP = "EDIT_SHOP";
 
-export const CREATE_ACCOUNT = "CREATE_ACCOUNT";
 export const LOGIN_ACCOUNT = "LOGIN_ACCOUNT";
 export const LOGOUT_ACCOUNT = "LOGOUT_ACCOUNT";
 
 export const ADD_MESSAGE = "ADD_MESSAGE";
 export const REMOVE_MESSAGE = "REMOVE_MESSAGE";
 
-export const CREATE_ORDER = "CREATE_ORDER";
+export const ADD_ORDER = "ADD_ORDER";
+
+export const FETCH_ORDER_ITEMS = "FETCH_ORDER_ITEMS";

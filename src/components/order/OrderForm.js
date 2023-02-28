@@ -4,8 +4,8 @@ import { Box, TextField, Button, Grid, MenuItem } from "@mui/material";
 import dayjs from "dayjs";
 
 import OrderDateTimePicker from "./OrderDateTimePicker";
-import { fetchShops } from "../../apis/shop";
-import { CreateOrder } from "../../actions/order";
+import { fetchShopOptions } from "../../apis/shop";
+import { AddOrder } from "../../actions/order";
 
 const OrderForm = (props) => {
   const username = useSelector((state) => state.account.username);
@@ -28,13 +28,13 @@ const OrderForm = (props) => {
 
   const submitHandler = (e) => {
     props
-      .CreateOrder(state)
+      .AddOrder(state)
       .then((res) => (window.location.href = `/order/${res.data.id}`));
     e.preventDefault();
   };
 
   useEffect(() => {
-    fetchShops().then((res) => setShopOptions(res.data.shops));
+    fetchShopOptions().then((res) => setShopOptions(res.data));
   }, []);
 
   useEffect(() => {
@@ -113,4 +113,4 @@ const OrderForm = (props) => {
   );
 };
 
-export default connect(null, { CreateOrder })(OrderForm);
+export default connect(null, { AddOrder })(OrderForm);

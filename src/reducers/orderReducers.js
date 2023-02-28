@@ -1,4 +1,4 @@
-import { CREATE_ORDER } from "../actions/types";
+import { ADD_ORDER } from "../actions/types";
 
 const initState = {
   orderId: "",
@@ -9,7 +9,7 @@ const initState = {
 
 export default function orderReducers(state = initState, action) {
   switch (action.type) {
-    case CREATE_ORDER:
+    case ADD_ORDER:
       return {
         orderId: action.payload._id,
         initiator: action.payload.initiator,

@@ -1,30 +1,23 @@
-import { ADD_CART_ITEM, EDIT_CART_ITEM, ADD_MESSAGE } from "./types";
-import { createOrderItems } from "../apis/orderItem";
+import { ADD_CART_ITEM, UPDATE_CART_ITEMS } from "./types";
+import { createOrderItems } from "../apis/order";
+import { handleDefaultError } from "./base";
 
 export const AddCartItem = (formValues) => (dispatch, getState) => {
+  const { order } = getState();
+
   dispatch({
     type: ADD_CART_ITEM,
-    payload: formValues,
+    payload: {
+      ...formValues,
+      order: order.orderId,
+    },
   });
 };
 
-export const EditCartItem = (formValues) => async (dispatch) => {
-  try {
-    await dispatch({
-      type: EDIT_CART_ITEM,
-      payload: formValues,
-    });
-
-    const response = await createOrderItems(formValues);
-  } catch (error) {
-    if (error.response.status === 401) {
-      await dispatch({
-        type: ADD_MESSAGE,
-        payload: {
-          msg: error.response.data.error,
-          variant: "error",
-        },
-      });
-    }
-  }
-};
+export const EditCartItem = (formValues) => (dispatch) =>
+  createOrderItems(formValues)
+    .then(() => {
+      dispatch({ type: UPDATE_CART_ITEMS, payload: formValues });
+      return true;
+    })
+    .catch((error) => handleDefaultError(error, dispatch));

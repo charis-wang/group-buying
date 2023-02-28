@@ -1,4 +1,5 @@
 import { React } from "react";
+import { useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 
 import "../components/index.css";
@@ -7,6 +8,10 @@ import BackgroundImagePage from "../components/Background";
 import SignupForm from "../components/SignupForm";
 
 const SignupPage = () => {
+  const login = useSelector((state) => state.account.login);
+
+  if (login) window.location.href = "/";
+
   return (
     <Grid
       container

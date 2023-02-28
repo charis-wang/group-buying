@@ -1,6 +1,6 @@
 import { React, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { SnackbarProvider } from "notistack";
 
 import HomePage from "../contexts/HomePage";
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "menu/new",
+    path: "/menu/new",
     element: <MenuCreate />,
   },
   {
@@ -51,9 +51,12 @@ const router = createBrowserRouter([
 ]);
 
 const AppProvider = (props) => {
+  const login = useSelector((state) => state.account.login);
+
   useEffect(() => {
     props.getInfo();
   }, []);
+
   return (
     <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
       <Notification />

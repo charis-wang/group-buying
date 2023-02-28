@@ -1,5 +1,6 @@
-import { React, useEffect, useState } from "react";
-import { connect, useSelector } from "react-redux";
+import { React, useState } from "react";
+import { connect } from "react-redux";
+import { useParams } from "react-router-dom";
 import {
   MenuItem,
   ListItemText,
@@ -16,11 +17,9 @@ import {
 
 import { AddCartItem } from "../../../actions/cart";
 
-const getInit = (item) => {
+const getInit = (orderId, item) => {
   const initValue = {
-    buyer: "",
-    orderId: "",
-    id: item._id,
+    order: orderId,
     itemId: item._id,
     itemName: item.itemName,
     orderDetail: "",
@@ -28,47 +27,43 @@ const getInit = (item) => {
     extraCost: 0,
     amount: 1,
   };
+
   return { ...initValue };
 };
+
 const Item = (props) => {
   const { item } = props;
+  const orderId = useParams().id;
+  const [state, setState] = useState(getInit(orderId, item));
   const [open, setOpen] = useState(false);
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
-  const buyer = useSelector((state) => state.account.username);
-  const orderId = useSelector((state) => state.order.orderId);
-
-  const [state, setState] = useState(getInit(item));
   const handleChange = (e) => {
     const { name, type, value } = e.target;
     setState({ ...state, [name]: type === "number" ? +value : value });
   };
+
   const computeAmount = (value) => {
     if (state.amount + value < 1) return;
     setState({ ...state, amount: state.amount + value });
   };
+
   const onSubmit = (e) => {
-    const newState = { ...state, id: item._id + state.orderDetail };
+    props.AddCartItem(state);
 
     setOpen(false);
-    props.onSubmit(newState);
-    e.preventDefault();
     setState({
-      ...newState,
+      ...state,
       orderDetail: "",
       extraCost: 0,
       amount: 1,
     });
-  };
 
-  useEffect(() => {
-    setState({ ...state, buyer: buyer, orderId: orderId });
-  }, []);
+    e.preventDefault();
+  };
 
   return (
     <Box>
-      <MenuItem name="itemName" onClick={handleClickOpen}>
+      <MenuItem name="itemName" onClick={() => setOpen(true)}>
         <ListItemText>
           {`${item.itemName} ${item.detail ? "(" + item.detail + ")" : ""}`}
         </ListItemText>
@@ -78,7 +73,7 @@ const Item = (props) => {
       <Dialog
         open={open}
         keepMounted
-        onClose={handleClose}
+        onClose={() => setOpen(false)}
         sx={{ backgroundColor: "rgba(255,255,255,0.2)" }}
         component="form"
         onSubmit={onSubmit}
@@ -124,7 +119,7 @@ const Item = (props) => {
         </DialogContent>
         <DialogActions>
           <Button type="submit">Add To Cart</Button>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
         </DialogActions>
       </Dialog>
     </Box>
