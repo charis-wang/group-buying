@@ -4,8 +4,21 @@ const createOrder = (payload) => req.post("/order/create", payload);
 
 const getOrder = (id) => req.get("/order", { id });
 
+const updateOrderStatus = (id, status) =>
+  req.get("/order/update", { id, status });
+
 const getOrderItem = (id) => req.get("/order/order_item", { id });
 
 const createOrderItems = (payload) => req.post("/order/order_item", payload);
 
-export { createOrder, getOrder, getOrderItem, createOrderItems };
+const updatePaymentStatus = (payload) =>
+  req.post("/order/payment_status", payload);
+
+export {
+  createOrder,
+  getOrder,
+  updateOrderStatus,
+  getOrderItem,
+  createOrderItems,
+  updatePaymentStatus,
+};

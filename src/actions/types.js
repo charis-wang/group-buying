@@ -17,5 +17,7 @@ export const ADD_MESSAGE = "ADD_MESSAGE";
 export const REMOVE_MESSAGE = "REMOVE_MESSAGE";
 
 export const ADD_ORDER = "ADD_ORDER";
+export const SET_ORDER_STATUS = "SET_ORDER_STATUS";
+export const SET_PAYMENT_STATUS = "SET_PAYMENT_STATUS";
 
 export const FETCH_ORDER_ITEMS = "FETCH_ORDER_ITEMS";

@@ -1,15 +1,26 @@
 import { React, useEffect } from "react";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Grid, Box, Button } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DoneIcon from "@mui/icons-material/Done";
+import ClearIcon from "@mui/icons-material/Clear";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderListTable from "../components/order/OrderListTable";
-import { FetchOrderInfo } from "../actions/order";
+import { FetchOrderInfo, SetOrderStatus } from "../actions/order";
 
 const OrderListItem = (props) => {
   const orderId = useParams().id;
+  const username = useSelector((state) => state.account.username);
+  const initiator = useSelector((state) => state.order.initiator);
+  const orderStatus = useSelector((state) => state.order.status);
+
+  const setStatus = (status) => {
+    if (window.confirm(`Are you sure to setting order ${status}? `))
+      props.SetOrderStatus(status);
+  };
 
   useEffect(() => {
     props.FetchOrderInfo(orderId);
@@ -25,9 +36,48 @@ const OrderListItem = (props) => {
         </Grid>
         <Grid item xs={9} md={9} mb={3}>
           <Grid container justifyContent="center">
-            <Button color="success" href={`/order/${orderId}/join`}>
-              join
-            </Button>
+            {username === initiator ? (
+              <div>
+                <Button
+                  disabled={
+                    orderStatus === "Completed" || orderStatus === "Cancelled"
+                  }
+                  color="success"
+                  href={`/order/${orderId}/join`}
+                >
+                  <EditIcon />
+                  edit
+                </Button>
+
+                <Button
+                  disabled={
+                    orderStatus === "Completed" || orderStatus === "Cancelled"
+                  }
+                  color="success"
+                  href={`/order/${orderId}/join`}
+                  onClick={() => setStatus("Cancelled")}
+                >
+                  <ClearIcon />
+                  cancel
+                </Button>
+
+                <Button
+                  disabled={
+                    orderStatus === "Completed" || orderStatus === "Cancelled"
+                  }
+                  color="success"
+                  href={`/order/${orderId}/join`}
+                  onClick={() => setStatus("Completed")}
+                >
+                  <DoneIcon />
+                  complete
+                </Button>
+              </div>
+            ) : (
+              <Button color="success" href={`/order/${orderId}/join`}>
+                join
+              </Button>
+            )}
           </Grid>
         </Grid>
       </Grid>
@@ -35,4 +85,4 @@ const OrderListItem = (props) => {
   );
 };
 
-export default connect(null, { FetchOrderInfo })(OrderListItem);
+export default connect(null, { FetchOrderInfo, SetOrderStatus })(OrderListItem);

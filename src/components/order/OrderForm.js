@@ -27,9 +27,7 @@ const OrderForm = (props) => {
   };
 
   const submitHandler = (e) => {
-    props
-      .AddOrder(state)
-      .then((res) => (window.location.href = `/order/${res.data.id}`));
+    props.AddOrder(state).then((id) => (window.location.href = `/order/${id}`));
     e.preventDefault();
   };
 

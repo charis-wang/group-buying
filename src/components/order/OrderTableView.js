@@ -1,4 +1,5 @@
 import { React, useEffect, useState, Fragment } from "react";
+import { connect, useSelector } from "react-redux";
 import {
   Table,
   TableBody,
@@ -9,7 +10,6 @@ import {
   Box,
   IconButton,
   Collapse,
-  Button,
 } from "@mui/material";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -17,12 +17,20 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
 import KeyboardDoubleArrowUpIcon from "@mui/icons-material/KeyboardDoubleArrowUp";
 import { getDatetimeString, add } from "../../utils/base";
+import OrderStatusDialog from "./OrderStatusDialog";
+import { SetPaymentStatus } from "../../actions/order";
 
 const CollapsibleRow = (props) => {
   const { allOpen, tableTitles, collapseTableTitles, summary, orders } = props;
   const [open, setOpen] = useState(false);
 
+  const username = useSelector((state) => state.account.username);
+  const initiator = useSelector((state) => state.order.initiator);
   useEffect(() => setOpen(allOpen), [allOpen]);
+
+  const onSubmit = (value) => {
+    props.SetPaymentStatus({ buyer: summary.buyer, status: value });
+  };
 
   return (
     <Fragment>
@@ -39,7 +47,11 @@ const CollapsibleRow = (props) => {
         {tableTitles.map((title) => (
           <TableCell align="center" key={title.key}>
             {title.key === "status" ? (
-              <Button> {summary[title.key] ? "paid" : "unpaid"} </Button>
+              <OrderStatusDialog
+                onSubmit={onSubmit}
+                display={summary[title.key]}
+                rejection={username !== initiator && username !== summary.buyer}
+              />
             ) : (
               summary[title.key]
             )}
@@ -90,6 +102,8 @@ const OrderTableView = (props) => {
   const [allOpen, setAllOpen] = useState(false);
   const { dataOfOrderCreate, tableTitles, collapseTableTitles, orderData } =
     props;
+
+  const orderStatus = useSelector((state) => state.order.status);
   const theDeadline = getDatetimeString(dataOfOrderCreate.orderDeadline);
   const rows = Object.entries(orderData);
   const total = Object.values(orderData)
@@ -100,6 +114,15 @@ const OrderTableView = (props) => {
     <Table sx={{ minWidth: 100 }} aria-label="simple table">
       <TableHead>
         <TableRow>
+          <TableCell
+            align="center"
+            sx={{
+              color: "#a1887f",
+              fontWeight: "bold",
+            }}
+          >
+            {orderStatus}
+          </TableCell>
           <TableCell align="left" colSpan={7}>
             Initiator: {dataOfOrderCreate.initiator} <br />
             Shop: {dataOfOrderCreate.shop} <br />
@@ -133,6 +156,7 @@ const OrderTableView = (props) => {
       <TableBody>
         {rows.map(([key, value]) => (
           <CollapsibleRow
+            SetPaymentStatus={props.SetPaymentStatus}
             key={key}
             allOpen={allOpen}
             tableTitles={tableTitles}
@@ -158,4 +182,4 @@ const OrderTableView = (props) => {
   );
 };
 
-export default OrderTableView;
+export default connect(null, { SetPaymentStatus })(OrderTableView);
