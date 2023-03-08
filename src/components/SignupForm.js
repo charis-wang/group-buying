@@ -25,8 +25,6 @@ const SignupForm = (props) => {
   const onSubmit = (e) => {
     props.signUp(state).then((success) => {
       if (success) {
-        // setState({ ...initialState });
-        // setTouched({ ...initialTouchedState });
         window.location.href = "/";
       }
     });

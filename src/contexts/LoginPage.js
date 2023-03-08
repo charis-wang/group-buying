@@ -10,7 +10,7 @@ import LoginForm from "../components/LoginForm";
 const LoginPage = (props) => {
   const login = useSelector((state) => state.account.login);
 
-  if (login) window.location.href = "/";
+  if (login) window.history.back();
 
   return (
     <Grid
