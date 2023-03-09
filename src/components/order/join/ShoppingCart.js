@@ -8,11 +8,13 @@ import { sum } from "../../../utils/base";
 
 const ShoppingCart = () => {
   const cart = useSelector((state) => state.cart);
+  const orderStatus = useSelector((state) => state.order.status);
   const [open, setOpen] = useState(false);
 
   return (
     <Fragment>
       <Fab
+        disabled={orderStatus !== "Processing"}
         sx={{
           position: "fixed",
           bottom: "2%",

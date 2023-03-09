@@ -17,6 +17,11 @@ const OrderListItem = (props) => {
   const initiator = useSelector((state) => state.order.initiator);
   const orderStatus = useSelector((state) => state.order.status);
 
+  const cart = useSelector(
+    (state) =>
+      state.orderItem.filter((item) => username === item.buyer).length > 0
+  );
+
   const setStatus = (status) => {
     if (window.confirm(`Are you sure to setting order ${status}? `))
       props.SetOrderStatus(status);
@@ -36,12 +41,10 @@ const OrderListItem = (props) => {
         </Grid>
         <Grid item xs={9} md={9} mb={3}>
           <Grid container justifyContent="center">
-            {username === initiator ? (
+            {username === initiator || cart !== false ? (
               <div>
                 <Button
-                  disabled={
-                    orderStatus === "Completed" || orderStatus === "Cancelled"
-                  }
+                  disabled={orderStatus !== "Processing"}
                   color="success"
                   href={`/order/${orderId}/join`}
                 >
@@ -51,7 +54,7 @@ const OrderListItem = (props) => {
 
                 <Button
                   disabled={
-                    orderStatus === "Completed" || orderStatus === "Cancelled"
+                    orderStatus !== "Processing" || username !== initiator
                   }
                   color="success"
                   href={`/order/${orderId}/join`}
@@ -63,7 +66,7 @@ const OrderListItem = (props) => {
 
                 <Button
                   disabled={
-                    orderStatus === "Completed" || orderStatus === "Cancelled"
+                    orderStatus !== "Processing" || username !== initiator
                   }
                   color="success"
                   href={`/order/${orderId}/join`}

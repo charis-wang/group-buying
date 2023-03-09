@@ -1,5 +1,5 @@
-import { ADD_CART_ITEM, UPDATE_CART_ITEMS } from "./types";
-import { createOrderItems } from "../apis/order";
+import { ADD_CART_ITEM, FETCH_CART_ITEMS, UPDATE_CART_ITEMS } from "./types";
+import { createOrderItems, getOrderItem } from "../apis/order";
 import { handleDefaultError } from "./base";
 
 export const AddCartItem = (formValues) => (dispatch, getState) => {
@@ -14,10 +14,19 @@ export const AddCartItem = (formValues) => (dispatch, getState) => {
   });
 };
 
-export const EditCartItem = (formValues) => (dispatch) =>
-  createOrderItems(formValues)
+export const EditCartItem = (formValues) => (dispatch, getState) => {
+  const { order } = getState();
+  return createOrderItems({ orderId: order.orderId, orderItems: formValues })
     .then(() => {
       dispatch({ type: UPDATE_CART_ITEMS, payload: formValues });
       return true;
+    })
+    .catch((error) => handleDefaultError(error, dispatch));
+};
+
+export const FetchCartItem = (orderId) => (dispatch) =>
+  getOrderItem(orderId, true)
+    .then((res) => {
+      dispatch({ type: FETCH_CART_ITEMS, payload: res.data.orderItems });
     })
     .catch((error) => handleDefaultError(error, dispatch));

@@ -7,7 +7,8 @@ const getOrder = (id) => req.get("/order", { id });
 const updateOrderStatus = (id, status) =>
   req.get("/order/update", { id, status });
 
-const getOrderItem = (id) => req.get("/order/order_item", { id });
+const getOrderItem = (id, personal) =>
+  req.get("/order/order_item", { id, personal });
 
 const createOrderItems = (payload) => req.post("/order/order_item", payload);
 

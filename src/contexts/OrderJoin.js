@@ -8,6 +8,7 @@ import BackgroundImagePage from "../components/Background";
 import OrderMenu from "../components/order/join/OrderMenu";
 import ShoppingCart from "../components/order/join/ShoppingCart";
 import { FetchOrder } from "../actions/order";
+import { FetchCartItem } from "../actions/cart";
 
 import { getDatetimeString } from "../utils/base";
 
@@ -17,6 +18,7 @@ const OrderJoin = (props) => {
 
   useEffect(() => {
     props.FetchOrder(orderId);
+    props.FetchCartItem(orderId);
   }, []);
 
   return (
@@ -54,4 +56,4 @@ const OrderJoin = (props) => {
   );
 };
 
-export default connect(null, { FetchOrder })(OrderJoin);
+export default connect(null, { FetchOrder, FetchCartItem })(OrderJoin);
