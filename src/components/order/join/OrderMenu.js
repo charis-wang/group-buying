@@ -13,7 +13,7 @@ import Item from "./Item";
 
 const OrderMenu = (props) => {
   const groupMenus = useSelector((state) => state.menu);
-
+  const { available } = props;
   return (
     <Paper sx={{ width: 4000, maxWidth: "100%" }}>
       <Grid
@@ -47,7 +47,11 @@ const OrderMenu = (props) => {
                   </MenuItem>
                   <Divider />
                   {group[1].map((item) => (
-                    <Item item={item} key={item._id + item.itemName}></Item>
+                    <Item
+                      available={available}
+                      item={item}
+                      key={item._id + item.itemName}
+                    ></Item>
                   ))}
                 </Grid>
               ))}

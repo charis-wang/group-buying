@@ -6,6 +6,7 @@ import { SnackbarProvider } from "notistack";
 import HomePage from "../contexts/HomePage";
 import MenuCreate from "../contexts/MenuCreate";
 import MenuEdit from "../contexts/MenuEdit";
+import MenuList from "../contexts/MenuList";
 import OrderCreate from "../contexts/OrderCreate";
 import OrderJoin from "../contexts/OrderJoin";
 import OrderList from "../contexts/OrderList";
@@ -29,7 +30,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/menu/:id",
-    element: "",
+    element: <MenuList />,
   },
   {
     path: "/order/new",

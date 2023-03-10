@@ -32,7 +32,7 @@ const getInit = (orderId, item) => {
 };
 
 const Item = (props) => {
-  const { item } = props;
+  const { item, available } = props;
   const orderId = useParams().id;
   const [state, setState] = useState(getInit(orderId, item));
   const [open, setOpen] = useState(false);
@@ -63,7 +63,12 @@ const Item = (props) => {
 
   return (
     <Box>
-      <MenuItem name="itemName" onClick={() => setOpen(true)}>
+      <MenuItem
+        name="itemName"
+        disabled={!available}
+        sx={[{ "&.Mui-disabled": { opacity: "unset" } }]}
+        onClick={() => setOpen(true)}
+      >
         <ListItemText>
           {`${item.itemName} ${item.detail ? "(" + item.detail + ")" : ""}`}
         </ListItemText>
