@@ -8,7 +8,7 @@ const deleteShopWithMenu = (id) => req.delete("/shop_with_menu", { id });
 
 const getShops = () => req.get("/shops");
 
-const fetchShopOptions = () => req.post("/shop/shop_options");
+const fetchShopOptions = () => req.get("/shop/shop_options");
 
 export {
   getShop,

@@ -62,7 +62,6 @@ const Navbar = (props) => {
             >
               Create Order
             </Button>
-            <Button color="inherit">Join Order</Button>
           </Box>
 
           {status ? (
@@ -113,5 +112,4 @@ const Navbar = (props) => {
   );
 };
 
-//export default Navbar;
 export default connect(null, { logout })(Navbar);

@@ -1,14 +1,17 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 import { Grid, Box } from "@mui/material";
 
 import "../components/index.css";
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import Sidebar from "../components/Sidebar";
-import MenuGallery from "../components/MenuGallery";
+import MenuGallery from "../components/menu-gallery/MenuGallery";
 
 const HomePage = () => {
+  const [selectedType, setSelectedType] = useState();
+  const selectOne = (value) => {
+    setSelectedType(value);
+  };
   return (
     <Grid
       container
@@ -30,10 +33,10 @@ const HomePage = () => {
         md={2}
         display={{ xs: "none", sm: "flex", md: "flex" }}
       >
-        <Sidebar />
+        <Sidebar select={selectOne} />
       </Box>
       <Grid item xs={12} sm={9} md={10}>
-        <MenuGallery />
+        <MenuGallery selected={selectedType} />
       </Grid>
     </Grid>
   );
