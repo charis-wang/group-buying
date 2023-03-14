@@ -15,7 +15,7 @@ const OrderMenu = (props) => {
   const groupMenus = useSelector((state) => state.menu);
   const { available } = props;
   return (
-    <Paper sx={{ width: 4000, maxWidth: "100%" }}>
+    <Paper variant="menu">
       <Grid
         container
         spacing={1}
@@ -24,7 +24,7 @@ const OrderMenu = (props) => {
         alignItems="center"
       >
         <Grid item xs={12} md={12} lg={12}>
-          <Typography align="center" variant="h3" fontFamily="Kaushan Script">
+          <Typography align="center" variant="h3">
             MENU
           </Typography>
         </Grid>
@@ -34,16 +34,7 @@ const OrderMenu = (props) => {
               {Object.entries(groupMenus).map((group) => (
                 <Grid item xs={12} md={6} lg={4} key={group[1][0].groupName}>
                   <MenuItem disabled style={{ opacity: "unset" }}>
-                    <Typography
-                      sx={{
-                        fontSize: "1.2rem",
-                        fontWeight: "bold",
-                        color: "rgb(103, 131, 104)",
-                        pr: 2,
-                      }}
-                    >
-                      {group[0]}
-                    </Typography>
+                    <Typography variant="groupName">{group[0]}</Typography>
                   </MenuItem>
                   <Divider />
                   {group[1].map((item) => (

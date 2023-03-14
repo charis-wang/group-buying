@@ -2,7 +2,6 @@ import { React } from "react";
 import { useSelector } from "react-redux";
 import { Grid } from "@mui/material";
 
-import "../components/index.css";
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import LoginForm from "../components/LoginForm";

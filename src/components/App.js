@@ -2,6 +2,7 @@ import { React, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import { SnackbarProvider } from "notistack";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 import HomePage from "../contexts/HomePage";
 import MenuCreate from "../contexts/MenuCreate";
@@ -14,6 +15,7 @@ import LoginPage from "../contexts/LoginPage";
 import SignupPage from "../contexts/SignupPage";
 import { getInfo } from "../actions/account";
 import { Notification } from "./Notification";
+import { themeOption } from "./Theme";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +53,8 @@ const router = createBrowserRouter([
   },
 ]);
 
+const theme = createTheme(themeOption);
+
 const AppProvider = (props) => {
   const login = useSelector((state) => state.account.login);
 
@@ -59,10 +63,12 @@ const AppProvider = (props) => {
   }, []);
 
   return (
-    <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
-      <Notification />
-      <RouterProvider router={router} />
-    </SnackbarProvider>
+    <ThemeProvider theme={theme}>
+      <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
+        <Notification />
+        <RouterProvider router={router} />
+      </SnackbarProvider>
+    </ThemeProvider>
   );
 };
 

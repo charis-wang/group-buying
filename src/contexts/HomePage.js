@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Box } from "@mui/material";
 
-import "../components/index.css";
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import Sidebar from "../components/Sidebar";

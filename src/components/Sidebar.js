@@ -1,8 +1,6 @@
 import { React, useEffect } from "react";
 import { Box, List, ListItem, ListItemText, Typography } from "@mui/material";
 
-import "./index.css";
-
 const shopTypes = [
   { value: "all", label: "All" },
   { value: "boxedMeal", label: "便當" },

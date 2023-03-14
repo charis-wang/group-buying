@@ -13,7 +13,7 @@ const Navbar = (props) => {
 
   return (
     <Box sx={{ flexGrow: 2, justifyContent: "space-between" }}>
-      <AppBar position="static" sx={{ bgcolor: "#d7ccc8" }}>
+      <AppBar position="static" sx={{ backgroundColor: "#d7ccc8" }}>
         <Toolbar>
           <NavbarDrawer />
           <Typography
@@ -39,7 +39,6 @@ const Navbar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <Button color="inherit">Menu</Button>
             <Button
               color="inherit"
               href="/menu/new"

@@ -1,8 +1,8 @@
 import { React, useEffect } from "react";
-
 import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Fab } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
@@ -13,7 +13,7 @@ import { FetchMenu } from "../actions/menu";
 const MenuList = (props) => {
   const shopId = useParams().id;
   const shopInfo = useSelector((state) => state.shop);
-  //initial (from api)
+  //initialization (from api)
   useEffect(() => {
     props.FetchShop(shopId);
     props.FetchMenu(shopId);
@@ -46,6 +46,11 @@ const MenuList = (props) => {
         </Grid>
         <Grid item xs={10.5} sm={8} mb={3}>
           <OrderMenu available={false} />
+        </Grid>
+        <Grid item xs={10} md={9} mb={3} alignItems="flex-end">
+          <Fab variant="edit" href={`/menu/${shopId}/edit`}>
+            <EditIcon />
+          </Fab>
         </Grid>
       </Grid>
     </Box>
