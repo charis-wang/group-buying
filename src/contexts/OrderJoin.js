@@ -1,7 +1,8 @@
 import { React, useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Typography, Grid, Box } from "@mui/material";
+import { Typography, Grid, Box, Link } from "@mui/material";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
@@ -34,19 +35,26 @@ const OrderJoin = (props) => {
       >
         <Grid item xs={10.5} sm={8} md={8} lg={8}>
           <Box justifyContent="center" alignItems="center">
-            <Typography gutterBottom>
+            <Link href="./" underline="hover">
+              <Typography mb={2}>
+                <KeyboardArrowLeftIcon />
+                view order detail
+              </Typography>
+            </Link>
+
+            <Typography ml={1} gutterBottom>
               OrderId: {orderInfo.orderId} <br />
               Initiator: {orderInfo.initiator} <br />
               shop: {orderInfo.shop}
             </Typography>
-            <Typography gutterBottom>
+            <Typography ml={1} gutterBottom>
               Deadline: {getDatetimeString(orderInfo.orderDeadline)}
             </Typography>
             <br />
           </Box>
         </Grid>
         <Grid item xs={10.5} sm={8} mb={3}>
-          <OrderMenu />
+          <OrderMenu available={true} />
         </Grid>
         <Grid item xs={10} md={9} mb={3} alignItems="flex-end">
           <ShoppingCart />
