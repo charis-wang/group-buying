@@ -8,10 +8,10 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-
 import MenuIcon from "@mui/icons-material/Menu";
 
 const pages = ["Homepage", "Create Menu", "Create Order"];
+
 const ref = (text) => {
   if (text === "Create Menu") return "/menu/new";
   else if (text === "Create Order") return "/order/new";

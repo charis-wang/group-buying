@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import Sidebar from "../components/Sidebar";
 import MenuGallery from "../components/menu-gallery/MenuGallery";
+import HorizontalBar from "../components/HorizontalBar";
 
 const HomePage = () => {
   const [selectedType, setSelectedType] = useState();
@@ -34,7 +35,15 @@ const HomePage = () => {
       >
         <Sidebar select={selectOne} />
       </Box>
-      <Grid item xs={12} sm={9} md={10}>
+      <Box
+        component={Grid}
+        item
+        sm={3}
+        display={{ xs: "flex", sm: "none", md: "none" }}
+      >
+        <HorizontalBar select={selectOne} />
+      </Box>
+      <Grid item xs={12} sm={9} md={10} mb={3}>
         <MenuGallery selected={selectedType} />
       </Grid>
     </Grid>

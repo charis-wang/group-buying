@@ -10,6 +10,13 @@ import {
 
 import { fetchShopOptions } from "../../apis/shop";
 
+const typeImageSource = {
+  vegan: "vegan-food.jpeg",
+  fastFood: "fast-food.jpeg",
+  boxedMeal: "boxed-meal.jpeg",
+  beverage: "bubble-tea.jpeg",
+};
+
 const ShopCard = (props) => {
   const [shopOptions, setShopOptions] = useState([]);
 
@@ -25,16 +32,12 @@ const ShopCard = (props) => {
         )
         .map((shop) => (
           <Grid item key={shop.value}>
-            <Card sx={{ maxWidth: 345 }} key={shop.value}>
+            <Card sx={{ maxWidth: 200 }} key={shop.value}>
               <CardActionArea href={`/menu/${shop.value}`}>
                 <CardMedia
-                  width="140"
                   height="140"
                   component="img"
-                  image={
-                    // shop.type === "beverage" ? "background-image.jpeg" : null
-                    "background-image.jpeg"
-                  }
+                  image={typeImageSource[shop.type]}
                 />
                 <CardContent>
                   <Typography
@@ -44,7 +47,7 @@ const ShopCard = (props) => {
                       "&:hover": { color: "black", opacity: 1 },
                     }}
                   >
-                    {shop.type + "/" + shop.label}
+                    {shop.label}
                   </Typography>
                 </CardContent>
               </CardActionArea>
