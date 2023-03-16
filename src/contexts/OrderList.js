@@ -57,7 +57,6 @@ const OrderListItem = (props) => {
                     orderStatus !== "Processing" || username !== initiator
                   }
                   color="success"
-                  href={`/order/${orderId}/join`}
                   onClick={() => setStatus("Cancelled")}
                 >
                   <ClearIcon />
@@ -69,7 +68,6 @@ const OrderListItem = (props) => {
                     orderStatus !== "Processing" || username !== initiator
                   }
                   color="success"
-                  href={`/order/${orderId}/join`}
                   onClick={() => setStatus("Completed")}
                 >
                   <DoneIcon />
