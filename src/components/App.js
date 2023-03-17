@@ -56,8 +56,6 @@ const router = createBrowserRouter([
 const theme = createTheme(themeOption);
 
 const AppProvider = (props) => {
-  const login = useSelector((state) => state.account.login);
-
   useEffect(() => {
     props.getInfo();
   }, []);

@@ -8,7 +8,7 @@ import { fetchShopOptions } from "../../apis/shop";
 import { AddOrder } from "../../actions/order";
 
 const OrderForm = (props) => {
-  const username = useSelector((state) => state.account.username);
+  const { username, login } = useSelector((state) => state.account);
   const [shopOptions, setShopOptions] = useState([]);
   const [state, setState] = useState({
     shop: "",
@@ -36,8 +36,9 @@ const OrderForm = (props) => {
   }, []);
 
   useEffect(() => {
+    if (login === false) window.location.href = "/login?err=loginRequired";
     setState({ ...state, initiator: username });
-  }, [username]);
+  }, [username, login]);
 
   return (
     <Box
@@ -50,6 +51,7 @@ const OrderForm = (props) => {
       <Grid container spacing={4} direction="column" alignItems="center">
         <Grid item xs={12} md="auto">
           <TextField
+            disabled
             id="outlined-name"
             label="Initiator"
             name="initiator"

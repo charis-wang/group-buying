@@ -40,6 +40,7 @@ export const getInfo = () => (dispatch) =>
       dispatch({ type: LOGIN_ACCOUNT, payload: response.data });
     })
     .catch((error) => {
-      if (error.response.status !== 401) throw error;
+      if (error.response.status === 401) dispatch({ type: LOGOUT_ACCOUNT });
+      else throw error;
     })
     .catch((error) => handleDefaultError(error, dispatch));

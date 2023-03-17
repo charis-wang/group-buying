@@ -1,12 +1,21 @@
-import { React, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import { Grid, Box, Button, TextField, Typography } from "@mui/material";
 
 import { login } from "../actions/account";
+import { errorMsg } from "../actions/message";
+
+const errorMessageMap = {
+  loginRequired: "login required",
+};
 
 const LoginForm = (props) => {
   const [state, setState] = useState({});
   const [touched, setTouched] = useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const errorMessage = errorMessageMap[searchParams.get("err")];
 
   const onSubmit = (e) => {
     props.login(state).then(() => {
@@ -21,6 +30,13 @@ const LoginForm = (props) => {
     const { name, value } = e.target;
     setState({ ...state, [name]: value });
   };
+
+  useEffect(() => {
+    if (errorMessage) {
+      props.errorMsg(errorMessage);
+      setSearchParams({});
+    }
+  }, []);
 
   return (
     <Box
@@ -84,4 +100,4 @@ const LoginForm = (props) => {
   );
 };
 
-export default connect(null, { login })(LoginForm);
+export default connect(null, { login, errorMsg })(LoginForm);

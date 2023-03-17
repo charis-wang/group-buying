@@ -4,7 +4,7 @@ const initState = {
   username: "",
   email: "",
   phoneNumber: "",
-  login: false,
+  login: undefined,
 };
 
 export default function accountReducers(state = initState, action) {
@@ -12,7 +12,7 @@ export default function accountReducers(state = initState, action) {
     case LOGIN_ACCOUNT:
       return { ...action.payload, login: true };
     case LOGOUT_ACCOUNT:
-      return { ...initState };
+      return { ...initState, login: false };
     default:
       return state;
   }
