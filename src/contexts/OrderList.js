@@ -1,15 +1,17 @@
 import { React, useEffect } from "react";
 import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Grid, Box, Button } from "@mui/material";
+import { Grid, Box, Button, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderListTable from "../components/order/OrderListTable";
 import { FetchOrderInfo, SetOrderStatus } from "../actions/order";
+import { successMsg } from "../actions/message";
 
 const OrderListItem = (props) => {
   const orderId = useParams().id;
@@ -25,6 +27,12 @@ const OrderListItem = (props) => {
   const setStatus = (status) => {
     if (window.confirm(`Are you sure to setting order ${status}? `))
       props.SetOrderStatus(status);
+  };
+
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(window.location.href);
+    const msg = "copy to clipboard";
+    props.successMsg(msg);
   };
 
   useEffect(() => {
@@ -75,9 +83,14 @@ const OrderListItem = (props) => {
                 </Button>
               </div>
             ) : (
-              <Button color="success" href={`/order/${orderId}/join`}>
-                join
-              </Button>
+              <div>
+                <Button color="success" href={`/order/${orderId}/join`}>
+                  join
+                </Button>
+                <IconButton color="success" onClick={copyToClipboard}>
+                  <ContentCopyIcon fontSize="small" />
+                </IconButton>
+              </div>
             )}
           </Grid>
         </Grid>
@@ -86,4 +99,6 @@ const OrderListItem = (props) => {
   );
 };
 
-export default connect(null, { FetchOrderInfo, SetOrderStatus })(OrderListItem);
+export default connect(null, { FetchOrderInfo, SetOrderStatus, successMsg })(
+  OrderListItem
+);
