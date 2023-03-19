@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Typography, Grid, Box, Fab } from "@mui/material";
@@ -7,17 +7,22 @@ import EditIcon from "@mui/icons-material/Edit";
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderMenu from "../components/order/join/OrderMenu";
+import NotFoundPage from "./NotFoundPage";
 import { FetchShop } from "../actions/shop";
 import { FetchMenu } from "../actions/menu";
 
 const MenuList = (props) => {
   const shopId = useParams().id;
   const shopInfo = useSelector((state) => state.shop);
+  const [notFound, setNotFound] = useState(false);
   //initialization (from api)
   useEffect(() => {
-    props.FetchShop(shopId);
-    props.FetchMenu(shopId);
+    props.FetchShop(shopId).catch(() => setNotFound(true));
+    props.FetchMenu(shopId).catch(() => setNotFound(true));
   }, []);
+
+  if (notFound) return <NotFoundPage />;
+
   return (
     <Box>
       <Navbar />

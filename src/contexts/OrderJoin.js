@@ -20,10 +20,8 @@ const OrderJoin = (props) => {
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    props.FetchOrder(orderId).catch(() => {
-      setNotFound(true);
-    });
-    props.FetchCartItem(orderId);
+    props.FetchOrder(orderId).catch(() => setNotFound(true));
+    props.FetchCartItem(orderId).catch(() => setNotFound(true));
   }, []);
 
   if (notFound) return <NotFoundPage />;
