@@ -39,15 +39,22 @@ export const FetchOrder = (orderId) => (dispatch) =>
     .catch((error) => handleDefaultError(error, dispatch));
 
 export const FetchOrderInfo = (orderId) => (dispatch) => {
-  getOrder(orderId)
-    .then((res) => dispatch({ type: ADD_ORDER, payload: res.data.orderData }))
-    .catch((error) => handleDefaultError(error, dispatch));
-
-  getOrderItem(orderId)
-    .then((res) =>
-      dispatch({ type: FETCH_ORDER_ITEMS, payload: res.data.orderItems })
-    )
-    .catch((error) => handleDefaultError(error, dispatch));
+  return new Promise((resolve, reject) => {
+    getOrder(orderId)
+      .then((res) => {
+        dispatch({ type: ADD_ORDER, payload: res.data.orderData });
+        return getOrderItem(orderId);
+      })
+      .then((res) => {
+        dispatch({ type: FETCH_ORDER_ITEMS, payload: res.data.orderItems });
+        resolve();
+      })
+      .catch((error) => {
+        if (error.response.status === 404) reject(error);
+        else throw error;
+      })
+      .catch((error) => handleDefaultError(error, dispatch));
+  });
 };
 
 export const SetPaymentStatus = (value) => (dispatch, getState) => {

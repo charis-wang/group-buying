@@ -16,6 +16,7 @@ import SignupPage from "../contexts/SignupPage";
 import { getInfo } from "../actions/account";
 import { Notification } from "./Notification";
 import { themeOption } from "./Theme";
+import NotFoundPage from "../contexts/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignupPage />,
+  },
+  {
+    path: "*",
+    element: <NotFoundPage />,
   },
 ]);
 

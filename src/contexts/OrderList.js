@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Grid, Box, Button, IconButton } from "@mui/material";
@@ -12,12 +12,14 @@ import BackgroundImagePage from "../components/Background";
 import OrderListTable from "../components/order/OrderListTable";
 import { FetchOrderInfo, SetOrderStatus } from "../actions/order";
 import { successMsg } from "../actions/message";
+import NotFoundPage from "./NotFoundPage";
 
 const OrderListItem = (props) => {
   const orderId = useParams().id;
   const username = useSelector((state) => state.account.username);
   const initiator = useSelector((state) => state.order.initiator);
   const orderStatus = useSelector((state) => state.order.status);
+  const [notFound, setNotFound] = useState(false);
 
   const cart = useSelector(
     (state) =>
@@ -36,8 +38,12 @@ const OrderListItem = (props) => {
   };
 
   useEffect(() => {
-    props.FetchOrderInfo(orderId);
+    props.FetchOrderInfo(orderId).catch(() => {
+      setNotFound(true);
+    });
   });
+
+  if (notFound) return <NotFoundPage />;
 
   return (
     <Box>
