@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { Typography, Grid, Box, Link } from "@mui/material";
@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderMenu from "../components/order/join/OrderMenu";
 import ShoppingCart from "../components/order/join/ShoppingCart";
+import NotFoundPage from "./NotFoundPage";
 import { FetchOrder } from "../actions/order";
 import { FetchCartItem } from "../actions/cart";
 
@@ -16,11 +17,16 @@ import { getDatetimeString } from "../utils/base";
 const OrderJoin = (props) => {
   const orderId = useParams().id;
   const orderInfo = useSelector((state) => state.order);
+  const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    props.FetchOrder(orderId);
+    props.FetchOrder(orderId).catch(() => {
+      setNotFound(true);
+    });
     props.FetchCartItem(orderId);
   }, []);
+
+  if (notFound) return <NotFoundPage />;
 
   return (
     <Box>
