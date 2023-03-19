@@ -8,13 +8,14 @@ import BackgroundImagePage from "../components/Background";
 import ShopForm from "../components/menu/ShopForm";
 import MenuTable from "../components/menu/MenuTable";
 import MenuTableForm from "../components/menu/MenuTableForm";
+import NotFoundPage from "./NotFoundPage";
 import { FetchShop, SaveShopAndMenu, DeleteShopAndMenu } from "../actions/shop";
 import { FetchMenu } from "../actions/menu";
 
 const MenuEdit = (props) => {
   const shopId = useParams().id;
-
   const [display, setDisplay] = useState("shop");
+  const [notFound, setNotFound] = useState(false);
 
   const saveShop = () => {
     props.SaveShopAndMenu().then(() => {
@@ -28,9 +29,11 @@ const MenuEdit = (props) => {
 
   // initial (from api)
   useEffect(() => {
-    props.FetchShop(shopId);
-    props.FetchMenu(shopId);
+    props.FetchShop(shopId).catch(() => setNotFound(true));
+    props.FetchMenu(shopId).catch(() => setNotFound(true));
   }, []);
+
+  if (notFound) return <NotFoundPage />;
 
   return (
     <Box>
