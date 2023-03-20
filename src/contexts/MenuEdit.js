@@ -11,6 +11,7 @@ import MenuTableForm from "../components/menu/MenuTableForm";
 import NotFoundPage from "./NotFoundPage";
 import { FetchShop, SaveShopAndMenu, DeleteShopAndMenu } from "../actions/shop";
 import { FetchMenu } from "../actions/menu";
+import { successMsg } from "../actions/message";
 
 const MenuEdit = (props) => {
   const shopId = useParams().id;
@@ -24,7 +25,10 @@ const MenuEdit = (props) => {
   };
 
   const deleteShop = () => {
-    props.DeleteShopAndMenu(shopId);
+    props.DeleteShopAndMenu(shopId).then(() => {
+      props.successMsg("delete successfully");
+      setTimeout(() => (window.location.href = "/"), 3000);
+    });
   };
 
   // initial (from api)
@@ -103,4 +107,5 @@ export default connect(mapStateToProps, {
   FetchMenu,
   SaveShopAndMenu,
   DeleteShopAndMenu,
+  successMsg,
 })(MenuEdit);
