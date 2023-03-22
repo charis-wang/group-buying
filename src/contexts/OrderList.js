@@ -98,11 +98,19 @@ const OrderListItem = (props) => {
               </div>
             ) : (
               <div>
-                <Button color="success" href={`/order/${orderId}/join`}>
+                <Button
+                  disabled={orderStatus !== "Processing"}
+                  color="success"
+                  href={`/order/${orderId}/join`}
+                >
                   <ShoppingCartOutlinedIcon />
                   join
                 </Button>
-                <Button color="success" onClick={copyToClipboard}>
+                <Button
+                  disabled={orderStatus !== "Processing"}
+                  color="success"
+                  onClick={copyToClipboard}
+                >
                   <ContentCopyIcon fontSize="small" />
                   share
                 </Button>
