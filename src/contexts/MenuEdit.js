@@ -68,7 +68,7 @@ const MenuEdit = (props) => {
           </Typography>
 
           <MenuTableForm display={display} />
-          <MenuTable />
+          <MenuTable display={display} />
         </Grid>
 
         <Grid item xs={12} md={12}>

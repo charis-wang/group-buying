@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   Table,
@@ -21,6 +21,10 @@ const unzipMenuByGroup = (menu) => {
 
 export default function MenuTable(props) {
   const menus = useSelector((state) => unzipMenuByGroup(state.menu));
+
+  const [readOnly, setReadOnly] = useState(false);
+
+  useEffect(() => setReadOnly(props.display !== "menu"), [props.display]);
 
   return (
     <Grid container justifyContent="center">
@@ -45,7 +49,11 @@ export default function MenuTable(props) {
           </TableHead>
           <TableBody>
             {menus.map((row) => (
-              <MenuTableRow key={row.groupName + row.itemName} row={row} />
+              <MenuTableRow
+                key={row.groupName + row.itemName}
+                row={row}
+                display={readOnly}
+              />
             ))}
           </TableBody>
         </Table>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { React, useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { TableCell, TableRow, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -8,6 +8,9 @@ import { DeleteMenu } from "../../actions/menu";
 const MenuTableRow = (props) => {
   const { row } = props;
   const [removed, setRemoved] = useState(false);
+  const [readOnly, setReadOnly] = useState(false);
+
+  useEffect(() => setReadOnly(props.display), [props.display]);
 
   if (removed) return;
 
@@ -24,6 +27,7 @@ const MenuTableRow = (props) => {
       <TableCell align="left">{row.detail}</TableCell>
       <TableCell align="left">
         <IconButton
+          disabled={readOnly}
           onClick={() => {
             setRemoved(true);
             props.DeleteMenu(row);
