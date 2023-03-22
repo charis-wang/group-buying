@@ -1,8 +1,8 @@
 import { React, useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Grid, Box, Button, IconButton } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
+import { Grid, Box, Button, IconButton, Typography } from "@mui/material";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
@@ -62,8 +62,16 @@ const OrderListItem = (props) => {
                   color="success"
                   href={`/order/${orderId}/join`}
                 >
-                  <EditIcon />
-                  edit
+                  <ShoppingCartOutlinedIcon />
+                  cart
+                </Button>
+                <Button
+                  disabled={orderStatus !== "Processing"}
+                  color="success"
+                  onClick={copyToClipboard}
+                >
+                  <ContentCopyIcon fontSize="small" />
+                  share
                 </Button>
 
                 <Button
@@ -91,11 +99,13 @@ const OrderListItem = (props) => {
             ) : (
               <div>
                 <Button color="success" href={`/order/${orderId}/join`}>
+                  <ShoppingCartOutlinedIcon />
                   join
                 </Button>
-                <IconButton color="success" onClick={copyToClipboard}>
+                <Button color="success" onClick={copyToClipboard}>
                   <ContentCopyIcon fontSize="small" />
-                </IconButton>
+                  share
+                </Button>
               </div>
             )}
           </Grid>
