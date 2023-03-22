@@ -41,10 +41,10 @@ const CollapseTableTitlesMap = {
 };
 
 const getStatus = (statuses) => {
-  let status = "paid";
+  let status = "unpaid";
 
   if (statuses.every((status) => status === "confirmed")) status = "confirmed";
-  if (statuses.some((status) => status === "unpaid")) status = "unpaid";
+  if (statuses.some((status) => status === "paid")) status = "paid";
 
   return status;
 };
