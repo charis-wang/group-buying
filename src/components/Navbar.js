@@ -59,7 +59,18 @@ const Navbar = (props) => {
                 },
               }}
             >
-              Create Order
+              Create Group Order
+            </Button>
+            <Button
+              color="inherit"
+              href="/myorder"
+              sx={{
+                "&:hover": {
+                  color: "unset",
+                },
+              }}
+            >
+              My Order
             </Button>
           </Box>
 

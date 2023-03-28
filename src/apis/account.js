@@ -8,4 +8,13 @@ const logoutAccount = () => req.post("/account/logout");
 
 const getAccountInfo = () => req.get("/account/info");
 
-export { signUpForAccount, loginAccount, logoutAccount, getAccountInfo };
+const getAccountOrders = (username) =>
+  req.get("/account/myOrders", { username });
+
+export {
+  signUpForAccount,
+  loginAccount,
+  logoutAccount,
+  getAccountInfo,
+  getAccountOrders,
+};

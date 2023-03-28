@@ -7,6 +7,7 @@ import accountReducers from "./accountReducers";
 import messageReducers from "./messageReducers";
 import orderReducers from "./orderReducers";
 import orderItemReducers from "./orderItemReducers";
+import myOrdersReducers from "./myOrdersReducers";
 
 export default combineReducers({
   cart: cartReducers,
@@ -16,4 +17,5 @@ export default combineReducers({
   message: messageReducers,
   order: orderReducers,
   orderItem: orderItemReducers,
+  myOrders: myOrdersReducers,
 });

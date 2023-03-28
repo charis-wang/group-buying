@@ -17,6 +17,7 @@ import { getInfo } from "../actions/account";
 import { Notification } from "./Notification";
 import { themeOption } from "./Theme";
 import NotFoundPage from "../contexts/NotFoundPage";
+import MyOrder from "../contexts/MyOrder";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/menu/:id",
     element: <MenuList />,
+  },
+  {
+    path: "/myorder",
+    element: <MyOrder />,
   },
   {
     path: "/order/new",

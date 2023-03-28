@@ -1,9 +1,10 @@
-import { LOGIN_ACCOUNT, LOGOUT_ACCOUNT } from "./types";
+import { ADD_MY_ORDERS, LOGIN_ACCOUNT, LOGOUT_ACCOUNT } from "./types";
 import {
   signUpForAccount,
   loginAccount,
   logoutAccount,
   getAccountInfo,
+  getAccountOrders,
 } from "../apis/account";
 import { successMsg } from "./message";
 import { handleDefaultError } from "./base";
@@ -43,4 +44,11 @@ export const getInfo = () => (dispatch) =>
       if (error.response.status === 401) dispatch({ type: LOGOUT_ACCOUNT });
       else throw error;
     })
+    .catch((error) => handleDefaultError(error, dispatch));
+
+export const getOrders = (username) => (dispatch) =>
+  getAccountOrders(username)
+    .then((response) =>
+      dispatch({ type: ADD_MY_ORDERS, payload: response.data.orders })
+    )
     .catch((error) => handleDefaultError(error, dispatch));
