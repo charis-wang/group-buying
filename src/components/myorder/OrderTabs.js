@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import { Box, Tabs, Tab } from "@mui/material/";
+import { Box, Tabs, Tab, Grid } from "@mui/material/";
 import OrderInfoList from "./OrderInfoList";
 import { getOrders } from "../../actions/account";
 
@@ -34,9 +34,9 @@ const OrderTabs = (props) => {
   }, [username, login]);
 
   return (
-    <Box sx={{ width: "90%", backgroundColor: "background.paper" }}>
+    <Box sx={{ maxWidth: { xs: 350, sm: 480 } }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs variant="fullWidth" value={value} onChange={handleChange}>
+        <Tabs variant={"scrollable"} value={value} onChange={handleChange}>
           <Tab label="All" />
           <Tab label="Processing" />
           <Tab label="Completed" />
