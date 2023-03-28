@@ -1,5 +1,6 @@
 import { React } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 
 import Navbar from "../components/Navbar";
@@ -8,8 +9,9 @@ import LoginForm from "../components/LoginForm";
 
 const LoginPage = (props) => {
   const login = useSelector((state) => state.account.login);
+  const navigate = useNavigate();
 
-  if (login) window.history.back();
+  if (login) navigate("/");
 
   return (
     <Grid
