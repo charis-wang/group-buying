@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { connect, useSelector } from "react-redux";
-import { Box, Tabs, Tab, Grid } from "@mui/material/";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import { Box, Tabs, Tab } from "@mui/material/";
 import OrderInfoList from "./OrderInfoList";
 import { getOrders } from "../../actions/account";
 
@@ -21,6 +22,9 @@ const TabPanel = (props) => {
 };
 
 const OrderTabs = (props) => {
+  // const navigate = useNavigate();
+  // const { isLoggedIn } = useLoaderData();
+  // console.log("hi", isLoggedIn);
   const [value, setValue] = useState(0);
   const { username, login } = useSelector((state) => state.account);
   const handleChange = (event, newValue) => {
@@ -28,8 +32,7 @@ const OrderTabs = (props) => {
   };
 
   useEffect(() => {
-    if (login === false) window.location.href = "/login?err=loginRequired";
-
+    //if (isLoggedIn === false) navigate("/login?err=loginRequired"
     props.getOrders(username);
   }, [username, login]);
 

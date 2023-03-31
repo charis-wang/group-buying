@@ -3,7 +3,6 @@ import { Grid, Box } from "@mui/material";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
-
 import OrderTabs from "../components/myorder/OrderTabs";
 
 const MyOrder = () => {

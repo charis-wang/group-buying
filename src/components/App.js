@@ -19,6 +19,12 @@ import { themeOption } from "./Theme";
 import NotFoundPage from "../contexts/NotFoundPage";
 import MyOrder from "../contexts/MyOrder";
 
+const LoginRequiredRoute = (props) => {
+  const status = useSelector((state) => state.account.login);
+  if (status === true) return props.component;
+  else if (status === false) return <LoginPage />;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -38,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/myorder",
-    element: <MyOrder />,
+    element: <LoginRequiredRoute component={<MyOrder />} />,
   },
   {
     path: "/order/new",
