@@ -1,6 +1,11 @@
 import { ADD_CART_ITEM, FETCH_CART_ITEMS, UPDATE_CART_ITEMS } from "./types";
-import { createOrderItems, getOrderItem } from "../apis/order";
+import {
+  createOrderItems,
+  getOrderItem,
+  deleteOrderItems,
+} from "../apis/order";
 import { handleDefaultError } from "./base";
+import { successMsg } from "./message";
 
 export const AddCartItem = (formValues) => (dispatch, getState) => {
   const { order } = getState();
@@ -30,3 +35,11 @@ export const FetchCartItem = (orderId) => (dispatch) =>
       dispatch({ type: FETCH_CART_ITEMS, payload: res.data.orderItems });
     })
     .catch((error) => handleDefaultError(error, dispatch));
+
+export const RemoveCartItem = (orderId, username) => (dispatch) => {
+  deleteOrderItems(orderId, username)
+    .then(() => {
+      successMsg("Remove Successfully")(dispatch);
+    })
+    .catch((error) => handleDefaultError(error, dispatch));
+};

@@ -1,16 +1,18 @@
 import { React, useEffect, useState } from "react";
 import { connect, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { Grid, Box, Button, IconButton, Typography } from "@mui/material";
+import { useParams, useNavigate } from "react-router-dom";
+import { Grid, Box, Button } from "@mui/material";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import DoneIcon from "@mui/icons-material/Done";
 import ClearIcon from "@mui/icons-material/Clear";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import Navbar from "../components/Navbar";
 import BackgroundImagePage from "../components/Background";
 import OrderListTable from "../components/order/OrderListTable";
 import { FetchOrderInfo, SetOrderStatus } from "../actions/order";
+import { RemoveCartItem } from "../actions/cart";
 import { successMsg } from "../actions/message";
 import NotFoundPage from "./NotFoundPage";
 
@@ -20,6 +22,7 @@ const OrderListItem = (props) => {
   const initiator = useSelector((state) => state.order.initiator);
   const orderStatus = useSelector((state) => state.order.status);
   const [notFound, setNotFound] = useState(false);
+  const navigate = useNavigate();
 
   const cart = useSelector(
     (state) =>
@@ -35,6 +38,14 @@ const OrderListItem = (props) => {
     navigator.clipboard.writeText(window.location.href);
     const msg = "copy to clipboard";
     props.successMsg(msg);
+  };
+
+  const outOfOrder = () => {
+    if (window.confirm("Are you sure to be out of this group buying order?")) {
+      console.log("ready to delete");
+      props.RemoveCartItem(orderId, username);
+      navigate();
+    }
   };
 
   useEffect(() => {
@@ -59,26 +70,35 @@ const OrderListItem = (props) => {
               <div>
                 <Button
                   disabled={orderStatus !== "Processing"}
+                  color="info"
+                  onClick={copyToClipboard}
+                >
+                  <ContentCopyIcon fontSize="small" />
+                  share
+                </Button>
+                <Button
+                  disabled={orderStatus !== "Processing"}
                   color="success"
                   href={`/order/${orderId}/join`}
                 >
                   <ShoppingCartOutlinedIcon />
                   cart
                 </Button>
+
                 <Button
-                  disabled={orderStatus !== "Processing"}
+                  hidden={orderStatus !== "Processing" || cart === false}
                   color="success"
-                  onClick={copyToClipboard}
+                  onClick={() => outOfOrder()}
                 >
-                  <ContentCopyIcon fontSize="small" />
-                  share
+                  <ExitToAppIcon />
+                  remove cart
                 </Button>
 
                 <Button
-                  disabled={
+                  hidden={
                     orderStatus !== "Processing" || username !== initiator
                   }
-                  color="success"
+                  color="secondary"
                   onClick={() => setStatus("Cancelled")}
                 >
                   <ClearIcon />
@@ -86,10 +106,10 @@ const OrderListItem = (props) => {
                 </Button>
 
                 <Button
-                  disabled={
+                  hidden={
                     orderStatus !== "Processing" || username !== initiator
                   }
-                  color="success"
+                  color="secondary"
                   onClick={() => setStatus("Completed")}
                 >
                   <DoneIcon />
@@ -123,6 +143,9 @@ const OrderListItem = (props) => {
   );
 };
 
-export default connect(null, { FetchOrderInfo, SetOrderStatus, successMsg })(
-  OrderListItem
-);
+export default connect(null, {
+  FetchOrderInfo,
+  SetOrderStatus,
+  RemoveCartItem,
+  successMsg,
+})(OrderListItem);

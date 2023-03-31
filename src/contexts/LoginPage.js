@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
@@ -11,7 +11,9 @@ const LoginPage = (props) => {
   const login = useSelector((state) => state.account.login);
   const navigate = useNavigate();
 
-  if (login) navigate("/");
+  useEffect(() => {
+    if (login) navigate("/");
+  });
 
   return (
     <Grid

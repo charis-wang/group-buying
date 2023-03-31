@@ -15,6 +15,8 @@ const createOrderItems = (payload) => req.post("/order/order_item", payload);
 const updatePaymentStatus = (payload) =>
   req.post("/order/payment_status", payload);
 
+const deleteOrderItems = (id, personal) =>
+  req.delete("/order/order_item", { id, personal });
 export {
   createOrder,
   getOrder,
@@ -22,4 +24,5 @@ export {
   getOrderItem,
   createOrderItems,
   updatePaymentStatus,
+  deleteOrderItems,
 };
