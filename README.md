@@ -1,4 +1,4 @@
-# group-buying service
+# group-buying 
 
 ## Objective and Motivation
 
@@ -18,10 +18,10 @@ The **group-buying** system includes features such as an office group purchase e
 
 ```bash
 # clone repo
-git clone https://github.com/charis-wang/group-buying-service.git
+git clone https://github.com/charis-wang/group-buying.git
 
 # change directory to the folder of repo
-cd group-buying-service 
+cd group-buying
 
 # install required modules
 npm install
@@ -71,10 +71,10 @@ npm start
 
 ```bash
 # 下載repo
-git clone https://github.com/charis-wang/group-buying-service.git
+git clone https://github.com/charis-wang/group-buying.git
 
 # 切換至repo之資料夾
-cd group-buying-service 
+cd group-buying 
 
 # 安裝所需模組
 npm install
