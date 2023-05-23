@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+# group-buying service
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Objective and Motivation
 
-## Available Scripts
 
-In the project directory, you can run:
+The repo provides the frontend system for **group-buying** system.
 
-### `npm start`
+The **group-buying** system is aims to address the challenges faced during office group purchases. It is designed to effectively handle the intricacies of splitting bills during group buying.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The **group-buying** system includes features such as an office group purchase expense splitting system. Users can create a list of frequently used store menus. Group members can select their desired items, set a deadline for order submission, and the organizer can verify if payments have been received from group members. Additionally, users can view the status of past orders.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+[enter the website](http://138.2.12.55:3000/)
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# clone repo
+git clone https://github.com/charis-wang/group-buying-service.git
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# change directory to the folder of repo
+cd group-buying-service 
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# install required modules
+npm install
+```
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Usage
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Pages
 
-## Learn More
+  | URL | 描述 |
+  |----  |---- |
+  |/|home page|
+  |/signup|sign up|
+  |/login|login|
+  |/myorder|view user's order history|
+  |/menu/new |create a menu of the shop|
+  |/menu/:id|view the menu of the shop|
+  |/menu/:id/edit|edit the menu of the shop|
+  |/order/new|create an group-buying order|
+  |/order/:id|view the group-buying order|
+  |/order/:id/join|join the group-buying order|
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 動機與目的
 
-### Code Splitting
+此專案為提供**group-buying**系統之前端。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**group-buying**系統 以解決辦公室團購時的困擾為出發點，希望團購時能有效處理分帳瑣事，因而著手建立辦公室團購分帳系統。
 
-### Analyzing the Bundle Size
+**group-buying**系統可自行建立常用店家菜單，團員能自行點選所需品項，設定團購收單截止時間，主揪能確認是否收到團員的款項，各使用者也能查看歷史訂單狀態。
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+[進入網站](http://138.2.12.55:3000/)
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 安裝
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```bash
+# 下載repo
+git clone https://github.com/charis-wang/group-buying-service.git
 
-### Deployment
+# 切換至repo之資料夾
+cd group-buying-service 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+# 安裝所需模組
+npm install
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 使用方法
+
+```bash
+npm start
+```
+
+---
+
+
+
+## 頁面組成
+  
+  | URL | 描述 |
+  |----  |---- |
+  |/|首頁|
+  |/signup|註冊|
+  |/login|登入|
+  |/myorder|查看使用者歷史訂單|
+  |/menu/new |建立菜單|
+  |/menu/:id|查看一店家菜單|
+  |/menu/:id/edit|編輯ㄧ店家菜單|
+  |/order/new|建立團購訂單|
+  |/order/:id|查看一團購訂單|
+  |/order/:id/join|加入一團購訂單|
+
+  
+
+
