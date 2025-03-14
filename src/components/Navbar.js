@@ -1,19 +1,32 @@
-import { React } from "react";
-import { useSelector, connect } from "react-redux";
+import { React, useEffect, useState } from "react";
+import { useSelector, connect, useDispatch } from "react-redux";
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
 import NavbarDrawer from "./NavbarDrawer.js";
 import { logout } from "../actions/account";
+import SwitchOfMode from "./SwitchOfMode.js";
+import { ChangeThemeMode } from "../actions/theme.js";
 
 const Navbar = (props) => {
   const status = useSelector((state) => state.account.login);
+
+  const dispatch = useDispatch()
+  const theme = useSelector((state) => state.themeMode.themeMode);
+
   const logout = () => {
     props.logout();
   };
 
+  const toggleTheme = () => {
+      const prevTheme = theme;
+      const newTheme = prevTheme === "light" ? "dark" : "light";
+      localStorage.setItem("theme", newTheme);
+      dispatch(ChangeThemeMode({themeMode: newTheme}));
+  };
+  
   return (
     <Box sx={{ flexGrow: 2, justifyContent: "space-between" }}>
-      <AppBar position="static" sx={{ backgroundColor: "#d7ccc8" }}>
+      <AppBar position="static" >
         <Toolbar>
           <NavbarDrawer />
           <Typography
@@ -73,6 +86,7 @@ const Navbar = (props) => {
               My Order
             </Button>
           </Box>
+          <SwitchOfMode checked={theme === "dark"} onChange={toggleTheme} />
 
           {status ? (
             <Box sx={{ whiteSpace: "nowrap" }}>

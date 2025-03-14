@@ -40,13 +40,7 @@ const ShopCard = (props) => {
                   image={typeImageSource[shop.type]}
                 />
                 <CardContent>
-                  <Typography
-                    sx={{
-                      color: "#8d6e63",
-                      opacity: "0.8",
-                      "&:hover": { color: "black", opacity: 1 },
-                    }}
-                  >
+                  <Typography>
                     {shop.label}
                   </Typography>
                 </CardContent>

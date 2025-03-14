@@ -1,22 +1,47 @@
-export const themeOption = {
-  overrides: {
+import { createTheme } from "@mui/material";
+
+const darkPrimaryColor = "#000";
+const darkSecondaryColor = "#545342";
+const darkTextColor = "#7A8463";
+
+const lightPrimaryColor = "#ECD7A9";
+const lightSecondaryColor = "#C8B592";
+const lightTextColor = "#8d6e63";
+
+export const themeOption = (mode) => createTheme({
+  palette: {
+    mode: mode,     
+  },
+
+  components: {
     MuiCssBaseline: {
-      "@global": {
+      styleOverrides: {
         body: {
           height: "100%",
+          backgroundColor: mode === "dark" ? darkPrimaryColor : lightPrimaryColor, 
+        },
+        '@keyframes moveRight': {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(10px)' },
         },
       },
     },
-  },
-  components: {
+
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: mode === "dark" ? darkSecondaryColor : lightSecondaryColor,
+          boxShadow: "none",
+        },
+      },
+    },
+
     MuiPaper: {
       variants: [
         {
           props: { variant: "background" },
           style: {
-            backgroundImage: `url(
-              https://res.cloudinary.com/dzufwjonc/image/upload/v1675419632/Group%20Buying/img/ella-olsson-oPBjWBCcAEo-unsplash_ioulr3.jpg
-            )`,
+            backgroundImage: `url(https://res.cloudinary.com/dzufwjonc/image/upload/v1675419632/Group%20Buying/img/ella-olsson-oPBjWBCcAEo-unsplash_ioulr3.jpg)`,
             backgroundColor: "white",
             height: "35vh",
             backgroundOrigin: "border-box",
@@ -28,15 +53,15 @@ export const themeOption = {
         {
           props: { variant: "menu" },
           style: {
-            width: 4000,
+            width: "4000px",
             maxWidth: "100%",
             borderRadius: "4px",
-            boxShadow:
-              "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+            boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
           },
         },
       ],
     },
+
     MuiFab: {
       variants: [
         {
@@ -54,6 +79,7 @@ export const themeOption = {
         },
       ],
     },
+
     MuiTypography: {
       variants: [
         {
@@ -62,7 +88,7 @@ export const themeOption = {
             fontSize: "1.2rem",
             fontWeight: "bold",
             color: "rgb(103, 131, 104)",
-            pr: 2,
+            paddingRight: "8px",
           },
         },
         {
@@ -71,8 +97,48 @@ export const themeOption = {
             fontFamily: "Kaushan Script",
           },
         },
+        {
+          props: { variant: "body1" },
+          style: {
+            "&:hover": {
+              color: mode === "dark" ? darkTextColor : lightTextColor,
+              fontWeight: "bold",
+            },
+          },
+        },
+        {
+          props: { variant: "sidebar" },
+          style: {
+            "&:hover": {
+              color: mode === "dark" ? darkTextColor : lightTextColor,
+              fontWeight: "bold",
+              animation: "moveRight .1s ease-in-out forwards",
+            },
+            "&:hover::before": {
+              content: '"\\2794"',  // Unicode 右箭頭
+              fontFamily: "Material Icons", 
+              marginRight: "8px",
+              opacity: 1, 
+            },
+          },
+        },
       ],
     },
+
+    MuiButtonBase: {
+      styleOverrides: {
+        root: {
+          "&:hover": {
+            color: mode === "dark" ? darkTextColor : lightTextColor,
+            fontWeight: "bold",
+            "& .MuiTypography-root": {
+              fontWeight: "bold",
+            },
+          },
+        },
+      },
+    },
+
     MuiMenuList: {
       variants: [
         {
@@ -82,4 +148,4 @@ export const themeOption = {
       ],
     },
   },
-};
+});

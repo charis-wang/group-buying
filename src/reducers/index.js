@@ -8,6 +8,7 @@ import messageReducers from "./messageReducers";
 import orderReducers from "./orderReducers";
 import orderItemReducers from "./orderItemReducers";
 import myOrdersReducers from "./myOrdersReducers";
+import themeModeReducers from "./themeModeReducers";
 
 export default combineReducers({
   cart: cartReducers,
@@ -18,4 +19,5 @@ export default combineReducers({
   order: orderReducers,
   orderItem: orderItemReducers,
   myOrders: myOrdersReducers,
+  themeMode: themeModeReducers,
 });

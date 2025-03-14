@@ -1,8 +1,8 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState, useMemo } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { connect, useSelector } from "react-redux";
 import { SnackbarProvider } from "notistack";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 
 import HomePage from "../contexts/HomePage";
 import MenuCreate from "../contexts/MenuCreate";
@@ -69,15 +69,19 @@ const router = createBrowserRouter([
   },
 ]);
 
-const theme = createTheme(themeOption);
 
 const AppProvider = (props) => {
+  const themeMode = useSelector((state) => state.themeMode.themeMode);
+
+  const theme = useMemo(() => createTheme(themeOption(themeMode)), [themeMode]);
+
   useEffect(() => {
     props.getInfo();
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <SnackbarProvider maxSnack={3} autoHideDuration={3000}>
         <Notification />
         <RouterProvider router={router} />

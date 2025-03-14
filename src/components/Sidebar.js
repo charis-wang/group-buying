@@ -24,11 +24,7 @@ const Sidebar = (props) => {
           >
             <ListItemText
               primary={
-                <Typography
-                  sx={{ color: "#8d6e63", "&:hover": { color: "black" } }}
-                >
-                  {type.label}
-                </Typography>
+                <Typography variant="sidebar">{type.label}</Typography>
               }
             />
           </ListItem>
